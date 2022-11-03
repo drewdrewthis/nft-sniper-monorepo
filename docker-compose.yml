@@ -1,0 +1,45 @@
+version: '3.8'
+
+## This doesn't work, unfortunately
+# name: "sniper-staging-compose"
+
+services:
+  gateway-core:
+    image: drewdrewthis/nft-sniper:latest
+    x-aws-pull_credentials: "arn:aws:secretsmanager:us-east-1:218278947951:secret:pullcred-ViM6rh"
+    entrypoint: 'node dist/src/main'
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+
+  # redis:
+  #   image: redis:6.2-alpine
+  #   restart: always
+  #   ports:
+  #     - '6379:6379'
+  #   volumes: 
+  #   - cache:/data
+  #   networks:
+  #   - snipernetwork
+
+  # dev-db:
+  #   image: postgres:13
+  #   ports:
+  #     - 5432:5432
+  #   environment:
+  #     POSTGRES_USER: admin
+  #     POSTGRES_DB: crawler
+  #   env_file:
+  #     - .env
+  #   networks:
+  #   - snipernetwork
+
+
+volumes:
+  cache:
+    driver: local
+
+networks:
+  snipernetwork:
