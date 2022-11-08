@@ -4,9 +4,10 @@ import { PrismaService } from '../prisma/prisma.service';
 import { X2y2Service } from '../apis/x2y2/x2y2.service';
 import { CrawlerServerService } from '../apis/crawler-server/crawler-server.service';
 import { ExpressAdapter } from '@bull-board/express';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [],
+  imports: [HttpModule],
   providers: [BullmqService, PrismaService, X2y2Service, CrawlerServerService],
 })
 export class BullmqModule {
