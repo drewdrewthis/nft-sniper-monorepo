@@ -1,21 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import IORedis from 'ioredis';
+import { ConfigService } from '@nestjs/config';
+import { PrismaService } from '../prisma';
+import { X2Y2Scheduler } from './schedulers/x2y2';
+import { CrawlerServerService } from '../apis/crawler-server/crawler-server.service';
+import { OpenSeaScheduler } from './schedulers/opensea';
+import { Scheduler } from '../types';
+import { X2y2Service } from '../apis/x2y2';
 import {
   addQueueEventListeners,
   addWorkerListeners,
   cleanUpQueue,
 } from './helpers';
-import { PrismaService } from '../prisma';
-import { X2Y2Scheduler } from './schedulers/x2y2';
-import { ConfigService } from '@nestjs/config';
-import IORedis from 'ioredis';
-import { OpenSeaScheduler } from './schedulers/opensea';
-import { CrawlerServerService } from '../apis/crawler-server/crawler-server.service';
-import { X2y2Service } from '../apis/x2y2';
-import { Scheduler } from '../types';
+import { Queue } from 'bullmq';
+import { ExpressAdapter } from '@bull-board/express';
+import { createBullBoard } from '@bull-board/api';
+import { BullAdapter } from '@bull-board/api/bullAdapter';
 
 @Injectable()
 export class BullmqService {
+  private readonly logger = new Logger(BullmqService.name);
   redis: IORedis;
+  queues: Queue[];
 
   constructor(
     private prisma: PrismaService,
@@ -42,22 +48,24 @@ export class BullmqService {
     });
   }
 
-  start() {
+  async start() {
     const x2y2 = new X2Y2Scheduler(this.prisma, this.x2yx, this.redis);
     const opensea = new OpenSeaScheduler(this.redis, this.crawlerServerService);
 
-    console.log('Starting BullMQ');
-    console.log('Cleaning up');
+    ('Starting BullMQ');
+    this.logger.log('Cleaning up');
     const schedulers = [x2y2, opensea];
-    schedulers.map(cleanUpQueue);
+    await Promise.all(schedulers.map(cleanUpQueue));
     schedulers.map(addWorkerListeners);
     schedulers.map((scheduler) =>
       addQueueEventListeners(scheduler, this.redis),
     );
 
     console.log('Adding jobs and starting scheduler');
-    this.addX2Y2Job(x2y2);
+    await this.addX2Y2Job(x2y2);
     // addOpenSeaJob(opensea);
+
+    this.queues = [x2y2.queue, opensea.queue];
   }
 
   async addX2Y2Job({ queue }: Scheduler) {
@@ -67,7 +75,11 @@ export class BullmqService {
         { msg: 'Running job' },
         {
           repeat: {
-            every: Number(this.configService.get('SCHEDULER_FREQUENCY_MS')),
+            every: Number(
+              this.configService.get('X2Y2_SCHEDULER_FREQUENCY_MS', {
+                infer: true,
+              }),
+            ),
             immediately: true,
             jobId: 'x2y2-token-fetcher',
           },
@@ -95,12 +107,23 @@ export class BullmqService {
         },
       )
       .then(({ id, repeatJobKey }) =>
-        console.log('Job added successfully:', { id, repeatJobKey }),
+        this.logger.log('Job added successfully:', { id, repeatJobKey }),
       )
       .catch((e) => {
-        console.error('Failed to add job to opensea scheduler', e);
+        this.logger.error('Failed to add job to opensea scheduler', e);
       });
   }
 
-  // startBullboard() {}
+  startBullboard(serverAdapter: ExpressAdapter) {
+    this.logger.log('Starting bullboard');
+
+    try {
+      createBullBoard({
+        queues: this.queues.map((queue) => new BullAdapter(queue)),
+        serverAdapter,
+      });
+    } catch (e) {
+      this.logger.error(e);
+    }
+  }
 }

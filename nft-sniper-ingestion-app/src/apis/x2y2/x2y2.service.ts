@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import axios from 'axios';
 import { groupBy } from 'lodash/fp';
 import { NormalizedNftData, Token } from '../../types';
 
@@ -38,11 +39,11 @@ async function fetchIndividualTokenData(token: Token) {
 }
 
 async function fetchPrice(token: Token): Promise<PricesReturnType> {
-  return fetch('');
+  return {};
 }
 
 async function fetchOffer(token: Token): Promise<OffersReturnType> {
-  return fetch('');
+  return {};
 }
 
 function normalizeData(data: any): NormalizedNftData[] {

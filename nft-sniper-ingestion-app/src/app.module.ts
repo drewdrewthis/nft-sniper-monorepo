@@ -32,11 +32,4 @@ import { schema } from './joi.schema';
     X2y2Service,
   ],
 })
-export class AppModule {
-  constructor(private bullmq: BullmqService) {}
-
-  onModuleInit() {
-    console.log(`Initializing Bullmq`);
-    this.bullmq.start();
-  }
-}
+export class AppModule {}
