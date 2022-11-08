@@ -28,7 +28,7 @@ async function fetchTokenData(tokens: Token[]) {
 
   console.warn('Failed to get data for the following: ', groups.rejected);
 
-  return groups.fulfilled.map(
+  return groups.fulfilled?.map(
     (result) => (result as PromiseFulfilledResult<unknown>).value,
   );
 }
