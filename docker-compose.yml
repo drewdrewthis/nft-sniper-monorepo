@@ -19,7 +19,6 @@ services:
   crawler:
     image: drewdrewthis/nft-sniper-crawler:latest
     x-aws-pull_credentials: "arn:aws:secretsmanager:us-east-1:218278947951:secret:pullcred-ViM6rh"
-    restart: unless-stopped
     command: >
         bash -c "
         npx prisma migrate deploy
@@ -33,19 +32,20 @@ services:
       - REDIS_HOST=redis-server
       - REDIS_PORT=6379
       - RUN_SCRAPER_FILE=dist/opensea/main.js
-      - DATABASE_URL=postgresql://admin1:somethingcool@crawler-postgres:5432/crawler?schema=public
-      - SCHEDULER_FREQUENCY_MS=300002
+      - SCHEDULER_FREQUENCY_MS=300008
       - NODE_OPTIONS=--max_old_space_size=4096
     depends_on:
       - redis-server
       - crawler-postgres
+    env_file:
+      - .env
     networks:
     - snipernetwork
     # deploy:
     #   resources:
     #     limits:
-          # cpus: '0.5'
-          # memory: 2Gb
+    #       # cpus: '0.5'
+    #       memory: 1Gb
 
   # redis:
   #   image: redis:6.2-alpine
@@ -57,21 +57,15 @@ services:
 
   redis-server:
     image: redis:6.2-alpine
-    restart: always
     networks:
     - snipernetwork
 
   crawler-postgres:
     image: postgres:13
-    restart: always
     # ports:
     #   - 5432:5432
-    environment:
-      POSTGRES_USER: admin1
-      POSTGRES_DB: crawler
-      POSTGRES_PASSWORD: somethingcool
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
     networks:
     - snipernetwork
 

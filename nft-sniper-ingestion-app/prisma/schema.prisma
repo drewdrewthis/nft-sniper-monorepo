@@ -1,0 +1,126 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TrackedNfts {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tokenId         Int
+  contractAddress String
+
+  @@unique([contractAddress, tokenId])
+}
+
+// Main data dump
+model RawScrapeData {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  url String
+
+  // This is the raw dump from the page
+  rawData            Json
+  HistoricalNftPrice HistoricalNftPrice[]
+  HistoricalNftOffer HistoricalNftOffer[]
+}
+
+// Normalized historical data
+model HistoricalNftPrice {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // If there is no price, then it is currently unlisted or unknown
+  priceAmount   String?
+  priceCurrency String?
+
+  fiatPrice    String?
+  fiatCurrency String?
+
+  marketplaceId Int
+  marketplace   Marketplace @relation(fields: [marketplaceId], references: [id])
+
+  tokenId         Int
+  contractAddress String
+  // token           NFT    @relation(fields: [tokenId, contractAddress], references: [tokenId, contractAddress])
+
+  rawScrapeDataId Int
+  rawScrapeData   RawScrapeData @relation(fields: [rawScrapeDataId], references: [id])
+  NFT             NFT?          @relation(fields: [nFTId], references: [id])
+  nFTId           Int?
+}
+
+model HistoricalNftOffer {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // All/some of these might be missing at the time of scraping
+  expiresAt     DateTime?
+  priceAmount   String?
+  priceCurrency String?
+  fiatPrice     String?
+  fiatCurrency  String?
+  from          String?
+
+  marketplaceId Int
+  marketplace   Marketplace @relation(fields: [marketplaceId], references: [id])
+
+  tokenId         Int
+  contractAddress String
+  // token           NFT    @relation(fields: [contractAddress, tokenId], references: [contractAddress, tokenId])
+
+  rawScrapeDataId Int
+  rawScrapeData   RawScrapeData @relation(fields: [rawScrapeDataId], references: [id])
+}
+
+// Domain Models
+model NFT {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tokenId         Int
+  contractAddress String
+
+  // Not sure if this is a good idea
+  attributesJson Json
+
+  collection       Collection           @relation(fields: [contractAddress], references: [contractAddress])
+  historicalPrices HistoricalNftPrice[]
+  // historicalOffers HistoricalNftOffer[]
+
+  @@unique([contractAddress, tokenId])
+}
+
+model Collection {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  contractAddress String @unique
+  floorPrice      String
+  priceCurrency   String
+  tokens          NFT[]
+}
+
+model Marketplace {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  name String @unique
+
+  historicalNftPrices HistoricalNftPrice[]
+  historicalNftOffers HistoricalNftOffer[]
+}
