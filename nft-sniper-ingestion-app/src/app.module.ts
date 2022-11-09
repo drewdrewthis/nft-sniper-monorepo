@@ -12,6 +12,7 @@ import { BullmqService } from './bullmq/bullmq.service';
 import { schema } from './config/joi.schema';
 import { HttpModule } from '@nestjs/axios';
 import { HistoricalNftPriceModule } from './historical-nft-price/historical-nft-price.module';
+import { HistoricalNftOfferModule } from './historical-nft-offer/historical-nft-offer.module';
 import endpoints from './config/endpoints';
 
 @Module({
@@ -28,6 +29,7 @@ import endpoints from './config/endpoints';
     X2y2Module,
     HttpModule,
     HistoricalNftPriceModule,
+    HistoricalNftOfferModule,
   ],
   controllers: [AppController],
   providers: [

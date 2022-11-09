@@ -2,16 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
-export class HistoricalNftPriceService {
+export class HistoricalNftOfferService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getHistoricalPrices(options: {
+  async getHistoricalOffers(options: {
     tokenIds?: number[];
     contractAddress?: string;
     limit?: number;
   }) {
     console.log(options.tokenIds);
-    const data = await this.prisma.historicalNftPrice.findMany({
+    const data = await this.prisma.historicalNftOffer.findMany({
       orderBy: {
         createdAt: 'desc',
       },
@@ -37,22 +37,23 @@ export class HistoricalNftPriceService {
     });
   }
 
-  /**
-   * This could potentially return extra items if
-   * someone adds tracked tokens between pulls (where there's no data
-   * for a particular token. In this case, it will grab an extra item)
-   */
-  async getLastestPrices() {
+  async getLastestOffers() {
     const trackedNfts = await this.prisma.nFT.findMany();
-    const data = await this.prisma.historicalNftPrice.findMany({
-      orderBy: [
-        {
-          rawScrapeDataId: 'desc',
+
+    const latestScrape =
+      (await this.prisma.rawScrapeData.findMany({
+        orderBy: {
+          id: 'desc',
         },
-        { contractAddress: 'desc' },
-        { tokenId: 'desc' },
-      ],
+        select: {
+          id: true,
+        },
+        take: 1,
+      })) || [];
+
+    const data = await this.prisma.historicalNftOffer.findMany({
       where: {
+        rawScrapeDataId: latestScrape[0].id,
         tokenId: {
           in: trackedNfts.map((t) => t.tokenId),
         },
@@ -60,7 +61,6 @@ export class HistoricalNftPriceService {
           in: trackedNfts.map((t) => t.contractAddress),
         },
       },
-      take: trackedNfts.length,
     });
 
     return data.map((item) => {

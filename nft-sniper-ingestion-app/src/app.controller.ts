@@ -16,13 +16,13 @@ export class AppController {
 
   @Post('tracked-nfts/add')
   async remove(token: { tokenId: number; contractAddress: string }) {
-    return this.prisma.trackedNfts.create({
+    return this.prisma.nFT.create({
       data: token,
     });
   }
 
   async addTrackedNft(token: { tokenId: number; contractAddress: string }) {
-    return this.prisma.trackedNfts.create({
+    return this.prisma.nFT.create({
       data: token,
     });
   }

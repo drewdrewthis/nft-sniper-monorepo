@@ -1,9 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { HistoricalNftPriceService } from './historical-nft-price.service';
+import { HistoricalNftOfferService } from './historical-nft-offer.service';
 
-@Controller('prices')
-export class HistoricalNftPriceController {
-  constructor(private readonly service: HistoricalNftPriceService) {}
+@Controller('offers')
+export class HistoricalNftOfferController {
+  constructor(private readonly service: HistoricalNftOfferService) {}
 
   @Get('/all')
   async getHistoricalPrices(
@@ -14,7 +14,7 @@ export class HistoricalNftPriceController {
       limit?: number;
     },
   ) {
-    return this.service.getHistoricalPrices({
+    return this.service.getHistoricalOffers({
       ...options,
       tokenIds: options.tokenIds?.split(',').map(Number),
     });
@@ -25,6 +25,6 @@ export class HistoricalNftPriceController {
     @Query()
     options: {},
   ) {
-    return this.service.getLastestPrices();
+    return this.service.getLastestOffers();
   }
 }

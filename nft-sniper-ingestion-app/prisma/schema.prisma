@@ -10,7 +10,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TrackedNfts {
+// Domain Models
+model NFT {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -18,21 +19,23 @@ model TrackedNfts {
   tokenId         Int
   contractAddress String
 
+  // Not sure if this is a good idea
+  attributesJson Json @default("{}")
+
+  historicalPrices HistoricalNftPrice[]
+  historicalOffers HistoricalNftOffer[]
+
   @@unique([contractAddress, tokenId])
 }
 
-// Main data dump
-model RawScrapeData {
+model Marketplace {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  url String
+  name String @unique
 
-  // This is the raw dump from the page
-  rawData            Json
-  HistoricalNftPrice HistoricalNftPrice[]
-  HistoricalNftOffer HistoricalNftOffer[]
+  historicalNftPrices HistoricalNftPrice[]
+  historicalNftOffers HistoricalNftOffer[]
 }
 
 // Normalized historical data
@@ -49,17 +52,15 @@ model HistoricalNftPrice {
   fiatPrice    String?
   fiatCurrency String?
 
+  tokenId         Int
+  contractAddress String
+  NFT             NFT    @relation(fields: [contractAddress, tokenId], references: [contractAddress, tokenId])
+
   marketplaceId Int
   marketplace   Marketplace @relation(fields: [marketplaceId], references: [id])
 
-  tokenId         Int
-  contractAddress String
-  // token           NFT    @relation(fields: [tokenId, contractAddress], references: [tokenId, contractAddress])
-
   rawScrapeDataId Int
   rawScrapeData   RawScrapeData @relation(fields: [rawScrapeDataId], references: [id])
-  NFT             NFT?          @relation(fields: [nFTId], references: [id])
-  nFTId           Int?
 }
 
 model HistoricalNftOffer {
@@ -76,53 +77,27 @@ model HistoricalNftOffer {
   fiatCurrency  String?
   from          String?
 
-  marketplaceId Int
-  marketplace   Marketplace @relation(fields: [marketplaceId], references: [id])
-
   tokenId         Int
   contractAddress String
-  // token           NFT    @relation(fields: [contractAddress, tokenId], references: [contractAddress, tokenId])
+  NFT             NFT    @relation(fields: [contractAddress, tokenId], references: [contractAddress, tokenId])
+
+  marketplaceId Int
+  marketplace   Marketplace @relation(fields: [marketplaceId], references: [id])
 
   rawScrapeDataId Int
   rawScrapeData   RawScrapeData @relation(fields: [rawScrapeDataId], references: [id])
 }
 
-// Domain Models
-model NFT {
+// Main data dump
+model RawScrapeData {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tokenId         Int
-  contractAddress String
+  url String
 
-  // Not sure if this is a good idea
-  attributesJson Json
-
-  collection       Collection           @relation(fields: [contractAddress], references: [contractAddress])
-  historicalPrices HistoricalNftPrice[]
-  // historicalOffers HistoricalNftOffer[]
-
-  @@unique([contractAddress, tokenId])
-}
-
-model Collection {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  contractAddress String @unique
-  floorPrice      String
-  priceCurrency   String
-  tokens          NFT[]
-}
-
-model Marketplace {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-
-  name String @unique
-
-  historicalNftPrices HistoricalNftPrice[]
-  historicalNftOffers HistoricalNftOffer[]
+  // This is the raw dump from the page
+  rawData            Json
+  HistoricalNftPrice HistoricalNftPrice[]
+  HistoricalNftOffer HistoricalNftOffer[]
 }
