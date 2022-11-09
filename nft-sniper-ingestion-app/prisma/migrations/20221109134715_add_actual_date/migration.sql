@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "HistoricalNftOffer" ADD COLUMN     "actualDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "HistoricalNftPrice" ADD COLUMN     "actualDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

@@ -5,22 +5,42 @@ version: '3.8'
 
 services:
   ingestion-server:
-    image: drewdrewthis/nft-sniper:latest
+    image: drewdrewthis/alpha-sniper:ingestion-server
     x-aws-pull_credentials: "arn:aws:secretsmanager:us-east-1:218278947951:secret:pullcred-ViM6rh"
     command: >
         bash -c "
-        yarn prisma migrate deploy
-        && yarn prisma db seed
-        && yarn prisma studio"
-        & yarn start:prod
-    restart: unless-stopped
+        yarn prisma generate &&
+        yarn prisma migrate deploy &&
+        yarn prisma db seed &&
+        (yarn prisma studio & yarn start:prod)"
     ports:
       - 3000:3000
       - 5555:5555
+    environment:
+      - REDIS_HOST=redis-server
+      - REDIS_PORT=6379
+      - X2Y2_SCHEDULER_FREQUENCY_MS=60000
     env_file:
       - .env
     networks:
       - snipernetwork
+
+  redis-server:
+    image: redis:6.2-alpine
+    networks:
+    - snipernetwork
+
+  crawler-postgres:
+    image: postgres:13
+    # ports:
+    #   - 5432:5432
+    env_file:
+      - .env
+    networks:
+    - snipernetwork
+
+networks:
+  snipernetwork:
 
   # gateway-core:
   #   image: drewdrewthis/nft-sniper:latest
@@ -72,20 +92,3 @@ services:
   #   #   - '6379:6379'
   #   networks:
   #   - snipernetwork
-
-  redis-server:
-    image: redis:6.2-alpine
-    networks:
-    - snipernetwork
-
-  crawler-postgres:
-    image: postgres:13
-    # ports:
-    #   - 5432:5432
-    env_file:
-      - .env
-    networks:
-    - snipernetwork
-
-networks:
-  snipernetwork:

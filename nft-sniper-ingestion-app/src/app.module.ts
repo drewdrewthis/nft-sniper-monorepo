@@ -11,6 +11,7 @@ import { X2y2Module, X2y2Service } from './apis/x2y2';
 import { BullmqService } from './bullmq/bullmq.service';
 import { schema } from './config/joi.schema';
 import { HttpModule } from '@nestjs/axios';
+import { HistoricalNftPriceModule } from './historical-nft-price/historical-nft-price.module';
 import endpoints from './config/endpoints';
 
 @Module({
@@ -26,6 +27,7 @@ import endpoints from './config/endpoints';
     CrawlerServerModule,
     X2y2Module,
     HttpModule,
+    HistoricalNftPriceModule,
   ],
   controllers: [AppController],
   providers: [

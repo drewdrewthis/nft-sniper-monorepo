@@ -27,6 +27,9 @@ export function normalizeData(rawData: {
       priceCurrency: 'ETH',
       fiatPrice: '',
       fiatCurrency: '',
+      actualDate: latestValidListing?.created_at
+        ? new Date(latestValidListing?.created_at * 1000)
+        : undefined,
     },
     offers: offers.map((offer) => ({
       from: offer.maker,
@@ -34,6 +37,7 @@ export function normalizeData(rawData: {
       priceCurrency: 'ETH',
       fiatPrice: '',
       fiatCurrency: '',
+      actualDate: new Date(offer.created_at * 1000),
     })),
     rawJson: rawData,
   };

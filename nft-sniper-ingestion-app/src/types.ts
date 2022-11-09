@@ -16,6 +16,7 @@ export interface NormalizedNftData {
     priceCurrency: string;
     fiatPrice: string;
     fiatCurrency: string;
+    actualDate?: Date;
   };
   offers: {
     from: string;
@@ -23,6 +24,7 @@ export interface NormalizedNftData {
     priceCurrency: string;
     fiatPrice: string;
     fiatCurrency: string;
+    actualDate?: Date;
   }[];
   rawJson: Record<string, unknown>;
 }

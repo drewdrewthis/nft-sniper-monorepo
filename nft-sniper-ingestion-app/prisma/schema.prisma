@@ -37,9 +37,10 @@ model RawScrapeData {
 
 // Normalized historical data
 model HistoricalNftPrice {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  actualDate DateTime @default(now())
 
   // If there is no price, then it is currently unlisted or unknown
   priceAmount   String?
@@ -62,9 +63,10 @@ model HistoricalNftPrice {
 }
 
 model HistoricalNftOffer {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  actualDate DateTime @default(now())
 
   // All/some of these might be missing at the time of scraping
   expiresAt     DateTime?
