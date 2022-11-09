@@ -7,7 +7,7 @@ export interface Scheduler {
 }
 
 export interface NormalizedNftData {
-  url?: string;
+  url: string;
   tokenId: number;
   contractAddress: string;
   marketplaceName: string;

@@ -4,6 +4,24 @@ version: '3.8'
 # name: "sniper-staging-compose"
 
 services:
+  ingestion-server:
+    image: drewdrewthis/nft-sniper:latest
+    x-aws-pull_credentials: "arn:aws:secretsmanager:us-east-1:218278947951:secret:pullcred-ViM6rh"
+    command: >
+        bash -c "
+        yarn prisma migrate deploy
+        && yarn prisma db seed
+        && yarn prisma studio"
+        & yarn start:prod
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+      - 5555:5555
+    env_file:
+      - .env
+    networks:
+      - snipernetwork
+
   # gateway-core:
   #   image: drewdrewthis/nft-sniper:latest
   #   x-aws-pull_credentials: "arn:aws:secretsmanager:us-east-1:218278947951:secret:pullcred-ViM6rh"
@@ -16,31 +34,31 @@ services:
   #   networks:
   #     - snipernetwork
 
-  crawler:
-    image: drewdrewthis/nft-sniper-crawler:latest
-    x-aws-pull_credentials: "arn:aws:secretsmanager:us-east-1:218278947951:secret:pullcred-ViM6rh"
-    command: >
-        bash -c "
-        npx prisma migrate deploy
-        && npx prisma db seed
-        && node dist/scheduler/index.js
-        & npx prisma studio"
-    ports:
-      - '3001:3001'
-      - '5555:5555'
-    environment:
-      - REDIS_HOST=redis-server
-      - REDIS_PORT=6379
-      - RUN_SCRAPER_FILE=dist/opensea/main.js
-      - SCHEDULER_FREQUENCY_MS=300008
-      - NODE_OPTIONS=--max_old_space_size=4096
-    depends_on:
-      - redis-server
-      - crawler-postgres
-    env_file:
-      - .env
-    networks:
-    - snipernetwork
+  # crawler:
+  #   image: drewdrewthis/nft-sniper-crawler:latest
+  #   x-aws-pull_credentials: "arn:aws:secretsmanager:us-east-1:218278947951:secret:pullcred-ViM6rh"
+  #   command: >
+  #       bash -c "
+  #       npx prisma migrate deploy
+  #       && npx prisma db seed
+  #       && node dist/scheduler/index.js
+  #       & npx prisma studio"
+  #   ports:
+  #     - '3001:3001'
+  #     - '5555:5555'
+  #   environment:
+  #     - REDIS_HOST=redis-server
+  #     - REDIS_PORT=6379
+  #     - RUN_SCRAPER_FILE=dist/opensea/main.js
+  #     - SCHEDULER_FREQUENCY_MS=300008
+  #     - NODE_OPTIONS=--max_old_space_size=4096
+  #   depends_on:
+  #     - redis-server
+  #     - crawler-postgres
+  #   env_file:
+  #     - .env
+  #   networks:
+  #   - snipernetwork
     # deploy:
     #   resources:
     #     limits:

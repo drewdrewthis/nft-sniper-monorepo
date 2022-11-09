@@ -1,6 +1,28 @@
 version: '3.8'
 
 services:
+  ingestion-server:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command: >
+        bash -c "
+        yarn prisma generate &&
+        yarn prisma migrate deploy &&
+        yarn prisma db seed &&
+        (yarn prisma studio & yarn start:prod)"
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+      - 5555:5555
+    env_file:
+      - .env
+    # environment:
+    #   - REDIS_HOST=redis
+    #   - POSTGRES_HOST=postgres
+    networks:
+      - snipernetwork
+
   redis:
     image: redis:6.2-alpine
     restart: unless-stopped

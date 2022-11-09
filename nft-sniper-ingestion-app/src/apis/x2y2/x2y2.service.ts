@@ -1,15 +1,14 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { compact, groupBy, orderBy } from 'lodash/fp';
-import { Token } from '../../types';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
+import { Injectable, Logger } from '@nestjs/common';
 import { RawAxiosRequestHeaders } from 'axios';
+import { Token } from '../../types';
 import {
-  X2Y2OffersRequestResult,
   X2Y2ListingsRequestResult,
+  X2Y2OffersRequestResult,
 } from '../../bullmq/types';
+import { compact, groupBy } from 'lodash/fp';
 import { normalizeData } from './helpers';
-import { inspect } from 'util';
 
 @Injectable()
 export class X2y2Service {
@@ -31,7 +30,6 @@ export class X2y2Service {
 
   async fetchNormalizedTokenData(tokens: Token[]) {
     const data = await this.fetchTokenData(tokens);
-    console.log('the data', inspect(data, false, 4));
     return compact(data).map(normalizeData);
   }
 
