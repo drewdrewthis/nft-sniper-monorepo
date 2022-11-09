@@ -7,7 +7,7 @@ export interface Scheduler {
 }
 
 export interface NormalizedNftData {
-  url: string;
+  url?: string;
   tokenId: number;
   contractAddress: string;
   marketplaceName: string;
@@ -24,7 +24,7 @@ export interface NormalizedNftData {
     fiatPrice: string;
     fiatCurrency: string;
   }[];
-  rawJson: {};
+  rawJson: Record<string, unknown>;
 }
 
 export interface Token {

@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { Job, Queue, Worker } from 'bullmq';
 import IORedis from 'ioredis';
 import { X2y2Service } from '../../apis/x2y2';
@@ -5,6 +6,8 @@ import { PrismaService } from '../../prisma';
 import { Scheduler } from '../../types';
 
 export class X2Y2Scheduler implements Scheduler {
+  logger = new Logger(X2Y2Scheduler.name);
+
   constructor(
     private prisma: PrismaService,
     private x2y2: X2y2Service,
@@ -23,7 +26,10 @@ export class X2Y2Scheduler implements Scheduler {
   ingest = async () => {
     const tokens = await this.prisma.getTrackedNfts();
     const data = await this.x2y2.fetchNormalizedTokenData(tokens);
-    await this.prisma.saveMultipleNftData(data);
+    this.logger.log('New data received');
+
+    console.log(data);
+    // await this.prisma.saveMultipleNftData(data);
   };
 
   processor = async (job: Job) => {

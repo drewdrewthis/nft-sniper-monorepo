@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { groupBy, orderBy } from 'lodash/fp';
-import { NormalizedNftData, Token } from '../../types';
+import { compact, groupBy, orderBy } from 'lodash/fp';
+import { Token } from '../../types';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { RawAxiosRequestHeaders } from 'axios';
@@ -8,7 +8,8 @@ import {
   X2Y2OffersRequestResult,
   X2Y2ListingsRequestResult,
 } from '../../bullmq/types';
-import axiosThrottle from 'axios-request-throttle';
+import { normalizeData } from './helpers';
+import { inspect } from 'util';
 
 @Injectable()
 export class X2y2Service {
@@ -20,8 +21,6 @@ export class X2y2Service {
     private configService: ConfigService,
     private readonly httpService: HttpService,
   ) {
-    axiosThrottle.use(httpService.axiosRef, { requestsPerSecond: 4 });
-
     this.headers = {
       'X-API-Key': configService.getOrThrow('X2Y2_API_KEY'),
       accept: 'application/json',
@@ -32,7 +31,8 @@ export class X2y2Service {
 
   async fetchNormalizedTokenData(tokens: Token[]) {
     const data = await this.fetchTokenData(tokens);
-    return normalizeData(data);
+    console.log('the data', inspect(data, false, 4));
+    return compact(data).map(normalizeData);
   }
 
   // Helpers
@@ -53,21 +53,37 @@ export class X2y2Service {
       );
     }
 
-    return groups.fulfilled?.map(
-      (result) => (result as PromiseFulfilledResult<unknown>).value,
-    );
+    return results.map((result, idx) => {
+      // Unecessary check
+      if (result.status === 'fulfilled') {
+        return {
+          ...tokens[idx],
+          ...result.value,
+        };
+      }
+    });
   }
 
   fetchIndividualTokenData = async (token: Token) => {
-    const price = await this.fetchPrice(token);
-    const offers = await this.fetchOffer(token);
+    const listings = await this.fetchListings(token).catch((e) => {
+      this.logger.error(e);
+      return [];
+    });
+
+    const offers = await this.fetchOffer(token).catch((e) => {
+      this.logger.error(e);
+      return [];
+    });
+
     return {
-      price,
+      listings,
       offers,
     };
   };
 
-  async fetchPrice(token: Token): Promise<X2Y2ListingsRequestResult['data']> {
+  async fetchListings(
+    token: Token,
+  ): Promise<X2Y2ListingsRequestResult['data']> {
     const url = this.endpoint + '/events';
 
     const result =
@@ -80,10 +96,10 @@ export class X2y2Service {
         headers: this.headers,
       });
 
-    this.logger.log('Data Received: Fetch Price', {
-      token,
-      data: orderBy(['created_at'], ['desc'], result.data.data),
-    });
+    // this.logger.debug('Data Received: Fetch Listings', {
+    //   token,
+    //   data: result.data.data,
+    // });
 
     return result.data.data;
   }
@@ -98,20 +114,17 @@ export class X2y2Service {
         params: {
           contract: token.contractAddress,
           token_id: token.tokenId,
+          sort: 'price',
         },
         headers: this.headers,
       },
     );
 
-    this.logger.log('Data Received: Fetch Offers', {
-      token,
-      data: result.data,
-    });
+    // this.logger.debug('Data Received: Fetch Offers', {
+    //   token,
+    //   data: result.data,
+    // });
 
     return result.data.data;
   };
-}
-
-function normalizeData(data: any): NormalizedNftData[] {
-  return [];
 }

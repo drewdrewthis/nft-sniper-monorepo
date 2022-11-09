@@ -19,9 +19,9 @@ export class PrismaService extends PrismaClient {
     return this.trackedNfts.findMany();
   }
 
-  async saveMultipleNftData(_data: NormalizedNftData[]) {}
+  async saveMultipleNftData(_data: Required<NormalizedNftData>[]) {}
 
-  async saveSingleNftData(data: NormalizedNftData) {
+  async saveSingleNftData(data: Required<NormalizedNftData>) {
     const {
       url,
       offers,
