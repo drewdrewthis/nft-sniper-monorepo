@@ -48,6 +48,14 @@ async function main() {
         },
       })
       .catch(console.error),
+    await prisma.nFT
+      .create({
+        data: {
+          tokenId: 8841,
+          contractAddress: '0x60E4d786628Fea6478F785A6d7e704777c86a7c6',
+        },
+      })
+      .catch(console.error),
   );
 }
 main()

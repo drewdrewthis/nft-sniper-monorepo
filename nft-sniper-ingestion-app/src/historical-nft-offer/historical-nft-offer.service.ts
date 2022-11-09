@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { compact, groupBy } from 'lodash/fp';
 
 @Injectable()
 export class HistoricalNftOfferService {
@@ -38,35 +39,30 @@ export class HistoricalNftOfferService {
   }
 
   async getLastestOffers() {
-    const trackedNfts = await this.prisma.nFT.findMany();
-
-    const latestScrape =
-      (await this.prisma.rawScrapeData.findMany({
-        orderBy: {
-          id: 'desc',
-        },
-        select: {
-          id: true,
-        },
-        take: 1,
-      })) || [];
-
-    const data = await this.prisma.historicalNftOffer.findMany({
-      where: {
-        rawScrapeDataId: latestScrape[0].id,
-        tokenId: {
-          in: trackedNfts.map((t) => t.tokenId),
-        },
-        contractAddress: {
-          in: trackedNfts.map((t) => t.contractAddress),
+    const nfts = await this.prisma.nFT.findMany({
+      select: {
+        historicalOffers: {
+          orderBy: {
+            rawScrapeDataId: 'desc',
+          },
+          take: 1,
         },
       },
     });
 
-    return data.map((item) => {
-      return {
-        ...item,
-      };
+    const ids = compact(
+      nfts.map((nft) => nft.historicalOffers[0]?.rawScrapeDataId),
+    );
+
+    return await this.prisma.historicalNftOffer.findMany({
+      orderBy: {
+        rawScrapeDataId: 'desc',
+      },
+      where: {
+        rawScrapeDataId: {
+          in: ids,
+        },
+      },
     });
   }
 }
