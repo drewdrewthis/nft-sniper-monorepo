@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule, PrismaService } from './prisma';
@@ -13,7 +13,9 @@ import { schema } from './config/joi.schema';
 import { HttpModule } from '@nestjs/axios';
 import { HistoricalNftPriceModule } from './historical-nft-price/historical-nft-price.module';
 import { HistoricalNftOfferModule } from './historical-nft-offer/historical-nft-offer.module';
+import { AlchemyModule } from './apis/alchemy/alchemy.module';
 import endpoints from './config/endpoints';
+import { AlchemyService } from './apis/alchemy/alchemy.service';
 
 @Module({
   imports: [
@@ -30,9 +32,14 @@ import endpoints from './config/endpoints';
     HttpModule,
     HistoricalNftPriceModule,
     HistoricalNftOfferModule,
+    AlchemyModule,
+    CacheModule.register({
+      isGlobal: true,
+    }),
   ],
   controllers: [AppController],
   providers: [
+    AlchemyService,
     AppService,
     PrismaService,
     CrawlerServerService,

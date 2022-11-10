@@ -36,8 +36,6 @@ export class PrismaService extends PrismaClient {
       contractAddress,
     } = data;
 
-    console.log(data);
-
     // Save rawJson
     const rawScrapeData = await this.rawScrapeData.create({
       data: {

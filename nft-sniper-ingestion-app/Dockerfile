@@ -2,7 +2,7 @@
 FROM node:19-buster AS build
 WORKDIR /app
 
-COPY package* yarn.lock .yarnclean ./
+COPY package* yarn.lock ./
 RUN yarn install --network-timeout 600000
 RUN yarn autoclean --force
 COPY tsconfig* nest-cli.json ./
