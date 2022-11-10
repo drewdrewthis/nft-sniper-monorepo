@@ -4,6 +4,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { RawAxiosRequestHeaders } from 'axios';
 import { Token } from '../../types';
 import {
+  Listing,
+  Offer,
   X2Y2ListingsRequestResult,
   X2Y2OffersRequestResult,
 } from '../../bullmq/types';
@@ -29,13 +31,13 @@ export class X2y2Service {
   }
 
   async fetchNormalizedTokenData(tokens: Token[]) {
-    const data = await this.fetchTokenData(tokens);
+    const data = await this.fetchAllTokensSyncWithRateLimiter(tokens);
     return compact(data).map(normalizeData);
   }
 
   // Helpers
 
-  async fetchTokenData(tokens: Token[]) {
+  private async fetchTokenData(tokens: Token[]) {
     const results = await Promise.allSettled(
       tokens.map(this.fetchIndividualTokenData),
     );
@@ -62,7 +64,35 @@ export class X2y2Service {
     });
   }
 
-  fetchIndividualTokenData = async (token: Token) => {
+  private fetchAllTokensSyncWithRateLimiter(tokens: Token[]): Promise<
+    | ({
+        listings: Listing[];
+        offers: Offer[];
+        contractAddress: string;
+        tokenId: number;
+      } | void)[]
+  > {
+    return new Promise(async (resolve, reject) => {
+      const data = [];
+
+      for (const token of tokens) {
+        const result = await this.fetchIndividualTokenData(token).catch(reject);
+
+        if (result) {
+          data.push({
+            ...token,
+            ...result,
+          });
+        }
+
+        await sleep(500);
+      }
+
+      return resolve(data);
+    });
+  }
+
+  private fetchIndividualTokenData = async (token: Token) => {
     const listings = await this.fetchListings(token).catch((e) => {
       this.logger.error(e);
       return [];
@@ -79,7 +109,7 @@ export class X2y2Service {
     };
   };
 
-  async fetchListings(
+  private async fetchListings(
     token: Token,
   ): Promise<X2Y2ListingsRequestResult['data']> {
     const url = this.endpoint + '/events';
@@ -102,7 +132,7 @@ export class X2y2Service {
     return result.data.data;
   }
 
-  fetchOffer = async (
+  private fetchOffer = async (
     token: Token,
   ): Promise<X2Y2OffersRequestResult['data']> => {
     const url = this.endpoint + '/offers';
@@ -125,4 +155,9 @@ export class X2y2Service {
 
     return result.data.data;
   };
+}
+
+function sleep(ms: number) {
+  console.log('sleep', ms);
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

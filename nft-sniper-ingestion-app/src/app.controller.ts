@@ -1,4 +1,5 @@
 import { Controller, Get, Post } from '@nestjs/common';
+import { NFT } from '@prisma/client';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma/prisma.service';
 
@@ -12,6 +13,16 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Get('tracked-nfts')
+  getNfts(): Promise<Pick<NFT, 'contractAddress' | 'tokenId'>[]> {
+    return this.prisma.nFT.findMany({
+      select: {
+        contractAddress: true,
+        tokenId: true,
+      },
+    });
   }
 
   @Post('tracked-nfts/add')

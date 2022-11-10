@@ -1,0 +1,27 @@
+[
+  {
+    "amount": 1,
+    "created_at": 1667126439,
+    "currency": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "end_at": 1669718431,
+    "erc_type": 0,
+    "id": 19092293,
+    "is_bundle": false,
+    "is_collection_offer": false,
+    "is_private": false,
+    "item_hash": "0xd96c7debb8a5fb604e830bb00ceb0672558201d6472fff8d9f44ee7f45dc862e",
+    "maker": "0x9907b9cc887d3f1c1af13f1b78e1d6dd8bdfda21",
+    "price": "7700000000000000",
+    "royalty_fee": 0,
+    "side": 0,
+    "status": "open",
+    "taker": "0xed2ab4948ba6a909a7751dec4f34f303eb8c7236",
+    "token": {
+      "contract": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+      "erc_type": "erc721",
+      "token_id": "4860"
+    },
+    "type": "buy",
+    "updated_at": 1667126439
+  }
+]

@@ -19,7 +19,8 @@ services:
     environment:
       - REDIS_HOST=redis-server
       - REDIS_PORT=6379
-      - X2Y2_SCHEDULER_FREQUENCY_MS=60000
+      # 2 mins
+      - X2Y2_SCHEDULER_FREQUENCY_MS=120000
     env_file:
       - .env
     networks:
@@ -38,57 +39,21 @@ services:
       - .env
     networks:
     - snipernetwork
+  
+  crawler-server:
+    image: drewdrewthis/alpha-sniper:crawler-server
+    command: >
+        bash -c "
+        npm run start:prod
+        "
+    ports:
+      - 3001:3001
+    env_file:
+      - .env
+    environment:
+      - INGESTION_SERVER_URL=http://host.docker.internal:3000
+    networks:
+      - snipernetwork
 
 networks:
   snipernetwork:
-
-  # gateway-core:
-  #   image: drewdrewthis/nft-sniper:latest
-  #   x-aws-pull_credentials: "arn:aws:secretsmanager:us-east-1:218278947951:secret:pullcred-ViM6rh"
-  #   entrypoint: 'node dist/src/main'
-  #   restart: unless-stopped
-  #   ports:
-  #     - 3000:3000
-  #   env_file:
-  #     - .env
-  #   networks:
-  #     - snipernetwork
-
-  # crawler:
-  #   image: drewdrewthis/nft-sniper-crawler:latest
-  #   x-aws-pull_credentials: "arn:aws:secretsmanager:us-east-1:218278947951:secret:pullcred-ViM6rh"
-  #   command: >
-  #       bash -c "
-  #       npx prisma migrate deploy
-  #       && npx prisma db seed
-  #       && node dist/scheduler/index.js
-  #       & npx prisma studio"
-  #   ports:
-  #     - '3001:3001'
-  #     - '5555:5555'
-  #   environment:
-  #     - REDIS_HOST=redis-server
-  #     - REDIS_PORT=6379
-  #     - RUN_SCRAPER_FILE=dist/opensea/main.js
-  #     - SCHEDULER_FREQUENCY_MS=300008
-  #     - NODE_OPTIONS=--max_old_space_size=4096
-  #   depends_on:
-  #     - redis-server
-  #     - crawler-postgres
-  #   env_file:
-  #     - .env
-  #   networks:
-  #   - snipernetwork
-    # deploy:
-    #   resources:
-    #     limits:
-    #       # cpus: '0.5'
-    #       memory: 1Gb
-
-  # redis:
-  #   image: redis:6.2-alpine
-  #   restart: always
-  #   # ports:
-  #   #   - '6379:6379'
-  #   networks:
-  #   - snipernetwork
