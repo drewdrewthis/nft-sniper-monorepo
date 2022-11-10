@@ -56,7 +56,7 @@ export class HistoricalNftOfferService {
 
     return await this.prisma.historicalNftOffer.findMany({
       orderBy: {
-        rawScrapeDataId: 'desc',
+        priceAmount: 'desc',
       },
       where: {
         rawScrapeDataId: {
