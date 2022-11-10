@@ -19,8 +19,8 @@ services:
     environment:
       - REDIS_HOST=redis-server
       - REDIS_PORT=6379
-      # 2 mins
-      - X2Y2_SCHEDULER_FREQUENCY_MS=120000
+      # 1 mins
+      - X2Y2_SCHEDULER_FREQUENCY_MS=60001
     env_file:
       - .env
     networks:
@@ -54,6 +54,11 @@ services:
       - INGESTION_SERVER_URL=http://host.docker.internal:3000
     networks:
       - snipernetwork
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2.5Gb
 
 networks:
   snipernetwork:

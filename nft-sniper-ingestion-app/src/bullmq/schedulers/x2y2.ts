@@ -27,7 +27,8 @@ export class X2Y2Scheduler implements Scheduler {
   ingest = async () => {
     const tokens = await this.prisma.getTrackedNfts();
     const data = await this.x2y2.fetchNormalizedTokenData(tokens);
-    this.logger.log('New data received', data);
+    this.logger.log('New data received');
+    // this.logger.debug('New data received', data);
     await this.prisma.saveMultipleNftData(data);
   };
 
