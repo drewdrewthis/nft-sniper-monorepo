@@ -30,9 +30,13 @@ export class AppController {
   @Get('tracked-nfts')
   getNfts(): Promise<Pick<NFT, 'contractAddress' | 'tokenId'>[]> {
     return this.prisma.nFT.findMany({
-      select: {
-        contractAddress: true,
-        tokenId: true,
+      include: {
+        historicalPrices: {
+          orderBy: {
+            actualDate: 'desc',
+          },
+          take: 1,
+        },
       },
     });
   }

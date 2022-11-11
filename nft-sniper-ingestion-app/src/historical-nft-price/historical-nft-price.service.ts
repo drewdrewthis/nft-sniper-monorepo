@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { compact } from 'lodash/fp';
 
 @Injectable()
 export class HistoricalNftPriceService {
@@ -43,30 +44,18 @@ export class HistoricalNftPriceService {
    * for a particular token. In this case, it will grab an extra item)
    */
   async getLastestPrices() {
-    const trackedNfts = await this.prisma.nFT.findMany();
-    const data = await this.prisma.historicalNftPrice.findMany({
-      orderBy: [
-        {
-          rawScrapeDataId: 'desc',
-        },
-        { contractAddress: 'desc' },
-        { tokenId: 'desc' },
-      ],
-      where: {
-        tokenId: {
-          in: trackedNfts.map((t) => t.tokenId),
-        },
-        contractAddress: {
-          in: trackedNfts.map((t) => t.contractAddress),
+    const trackedNfts = await this.prisma.nFT.findMany({
+      orderBy: [{ contractAddress: 'asc' }, { tokenId: 'asc' }],
+      select: {
+        historicalPrices: {
+          orderBy: {
+            actualDate: 'desc',
+          },
+          take: 1,
         },
       },
-      take: trackedNfts.length,
     });
 
-    return data.map((item) => {
-      return {
-        ...item,
-      };
-    });
+    return compact(trackedNfts.map((nft) => nft.historicalPrices[0]));
   }
 }

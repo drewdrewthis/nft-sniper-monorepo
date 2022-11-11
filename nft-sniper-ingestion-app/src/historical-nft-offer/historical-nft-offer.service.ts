@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { compact, groupBy } from 'lodash/fp';
+import { compact } from 'lodash/fp';
 
 @Injectable()
 export class HistoricalNftOfferService {
