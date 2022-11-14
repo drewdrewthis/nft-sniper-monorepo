@@ -16,6 +16,7 @@ import { HistoricalNftOfferModule } from './historical-nft-offer/historical-nft-
 import { AlchemyModule } from './apis/alchemy/alchemy.module';
 import endpoints from './config/endpoints';
 import { AlchemyService } from './apis/alchemy/alchemy.service';
+import { NftController } from './nft/nft.controller';
 
 @Module({
   imports: [
@@ -37,7 +38,7 @@ import { AlchemyService } from './apis/alchemy/alchemy.service';
       isGlobal: true,
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, NftController],
   providers: [
     AlchemyService,
     AppService,
