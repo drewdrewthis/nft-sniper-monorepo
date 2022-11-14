@@ -21,6 +21,9 @@ services:
       - REDIS_PORT=6379
       # 1 mins
       - X2Y2_SCHEDULER_FREQUENCY_MS=60001
+      - CRAWLER_SERVER_CRAWL_ENDPOINT=http://172.31.50.255:3001/crawl
+      - OPENSEA_SCHEDULER_FREQUENCY_MS=360000
+
     env_file:
       - .env
     networks:

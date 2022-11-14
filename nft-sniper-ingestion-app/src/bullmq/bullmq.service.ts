@@ -63,7 +63,7 @@ export class BullmqService {
 
     console.log('Adding jobs and starting scheduler');
     await this.addX2Y2Job(x2y2);
-    // addOpenSeaJob(opensea);
+    await this.addOpenSeaJob(opensea);
 
     this.queues = [x2y2.queue, opensea.queue];
   }
@@ -100,7 +100,7 @@ export class BullmqService {
         { msg: 'Running job' },
         {
           repeat: {
-            every: Number(process.env.SCHEDULER_FREQUENCY_MS),
+            every: Number(process.env.OPENSEA_SCHEDULER_FREQUENCY_MS),
             immediately: true,
             jobId: 'scrape-opensea',
           },

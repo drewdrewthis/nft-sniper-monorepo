@@ -1,7 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { Job, Queue, Worker } from 'bullmq';
 import IORedis from 'ioredis';
-import { inspect } from 'util';
 import { X2y2Service } from '../../apis/x2y2';
 import { PrismaService } from '../../prisma';
 import { Scheduler } from '../../types';
