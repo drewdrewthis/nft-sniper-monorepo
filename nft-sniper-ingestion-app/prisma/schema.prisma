@@ -24,6 +24,21 @@ model NFT {
 
   historicalPrices HistoricalNftPrice[]
   historicalOffers HistoricalNftOffer[]
+  TrackedNft       TrackedNft?
+
+  @@unique([contractAddress, tokenId])
+}
+
+model TrackedNft {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tokenId         Int
+  contractAddress String
+  walletAddress   String
+
+  NFT NFT @relation(fields: [contractAddress, tokenId], references: [contractAddress, tokenId])
 
   @@unique([contractAddress, tokenId])
 }

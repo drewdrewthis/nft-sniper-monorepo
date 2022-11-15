@@ -1,47 +1,32 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  Logger,
-  Post,
-} from '@nestjs/common';
-import { AlchemyService } from '../apis/alchemy/alchemy.service';
-import { PrismaService } from '../prisma';
+import { Body, Controller, Get, Logger, Post, Query } from '@nestjs/common';
 import { NFT } from '@prisma/client';
-import * as ethers from 'ethers';
+import { NftService } from './nft.service';
 
 @Controller('nft')
 export class NftController {
   logger = new Logger(NftController.name);
 
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly alchemy: AlchemyService,
-  ) {}
+  constructor(private readonly service: NftService) {}
 
   @Get('all-metadata')
   async getAllNFTMetadata() {
-    const tokens = await this.prisma.nFT.findMany();
-    const result = await this.alchemy.getNFTMetadataBatch(tokens);
-
-    console.log('got data', result);
-
-    return result;
+    return this.service.getAllNFTMetadata();
   }
 
   @Get('all')
   getNfts(): Promise<Pick<NFT, 'contractAddress' | 'tokenId'>[]> {
-    return this.prisma.nFT.findMany({
-      include: {
-        historicalPrices: {
-          orderBy: {
-            actualDate: 'desc',
-          },
-          take: 1,
-        },
-      },
-    });
+    return this.service.getNfts();
+  }
+
+  @Get('tracked-data')
+  getTrackedDataForWallet(
+    @Query()
+    payload: {
+      walletAddress: string;
+    },
+  ): Promise<Pick<NFT, 'contractAddress' | 'tokenId'>[]> {
+    console.log('tracled', payload);
+    return this.service.getTrackedNftDataForWallet(payload.walletAddress);
   }
 
   @Post('add')
@@ -58,31 +43,22 @@ export class NftController {
     },
   ) {
     this.logger.log('Received request to add nft', payload);
+    return this.service.add({ ...payload, tokenId: Number(payload.tokenId) });
+  }
 
-    const { signedMessage, walletAddress, tokenId, contractAddress } = payload;
-
-    // Validate addresses
-    ethers.utils.getAddress(contractAddress);
-    ethers.utils.getAddress(walletAddress);
-
-    // Verify signature
-    const signerAddress = ethers.utils.verifyMessage(
-      signedMessage.message,
-      signedMessage.signature,
-    );
-
-    if (signerAddress.toLowerCase() !== walletAddress.toLowerCase()) {
-      throw new HttpException(
-        'You are unauthorized to add NFTs for this account',
-        401,
-      );
-    }
-
-    return this.prisma.nFT.create({
-      data: {
-        tokenId: Number(tokenId),
-        contractAddress,
-      },
+  @Post('remove')
+  async remove(
+    @Body()
+    payload: {
+      tokenId: string;
+      contractAddress: string;
+      walletAddress: string;
+    },
+  ) {
+    this.logger.log('Received request to remove nft', payload);
+    return this.service.remove({
+      ...payload,
+      tokenId: Number(payload.tokenId),
     });
   }
 }

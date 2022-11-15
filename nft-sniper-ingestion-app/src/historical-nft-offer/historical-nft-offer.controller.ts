@@ -25,6 +25,6 @@ export class HistoricalNftOfferController {
     @Query()
     options: {},
   ) {
-    return this.service.getLastestOffers();
+    return this.service.getAllLastestOffers();
   }
 }

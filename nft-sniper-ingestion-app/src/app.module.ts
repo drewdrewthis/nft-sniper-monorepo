@@ -17,6 +17,9 @@ import { AlchemyModule } from './apis/alchemy/alchemy.module';
 import endpoints from './config/endpoints';
 import { AlchemyService } from './apis/alchemy/alchemy.service';
 import { NftController } from './nft/nft.controller';
+import { NftService } from './nft/nft.service';
+import { NftModule } from './nft/nft.module';
+import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft-offer.service';
 
 @Module({
   imports: [
@@ -37,6 +40,7 @@ import { NftController } from './nft/nft.controller';
     CacheModule.register({
       isGlobal: true,
     }),
+    NftModule,
   ],
   controllers: [AppController, NftController],
   providers: [
@@ -44,8 +48,10 @@ import { NftController } from './nft/nft.controller';
     AppService,
     PrismaService,
     CrawlerServerService,
+    HistoricalNftOfferService,
     BullmqService,
     X2y2Service,
+    NftService,
   ],
 })
 export class AppModule {}

@@ -25,35 +25,33 @@ async function main() {
       },
     }),
     await prisma.nFT
-      .create({
-        data: {
+      .upsert({
+        where: {
+          contractAddress_tokenId: {
+            tokenId: 4860,
+            contractAddress: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
+          },
+        },
+        create: {
           tokenId: 4860,
           contractAddress: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
         },
+        update: {},
       })
       .catch(console.error),
     await prisma.nFT
-      .create({
-        data: {
-          tokenId: 6781,
-          contractAddress: '0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91',
+      .upsert({
+        where: {
+          contractAddress_tokenId: {
+            tokenId: 6781,
+            contractAddress: '0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91',
+          },
         },
-      })
-      .catch(console.error),
-    await prisma.nFT
-      .create({
-        data: {
-          tokenId: 5341,
-          contractAddress: '0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91',
+        create: {
+          tokenId: 4860,
+          contractAddress: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
         },
-      })
-      .catch(console.error),
-    await prisma.nFT
-      .create({
-        data: {
-          tokenId: 8841,
-          contractAddress: '0x60E4d786628Fea6478F785A6d7e704777c86a7c6',
-        },
+        update: {},
       })
       .catch(console.error),
   );

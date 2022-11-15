@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { NFT } from '@prisma/client';
 import * as hash from 'object-hash';
 import { Cache } from 'cache-manager';
+import { Alchemy } from '../../types';
 
 @Injectable()
 export class AlchemyService {
@@ -22,7 +23,7 @@ export class AlchemyService {
 
   async getNFTMetadataBatch(
     tokens: Pick<NFT, 'contractAddress' | 'tokenId'>[],
-  ) {
+  ): Promise<Alchemy.NftMetadata[] | void> {
     const path = '/getNFTMetadataBatch';
     const options = {
       method: 'POST',
@@ -38,7 +39,9 @@ export class AlchemyService {
 
     const key = hash(tokens);
 
-    const value = await this.cacheManager.get(key);
+    const value: Alchemy.NftMetadata[] | void = await this.cacheManager.get(
+      key,
+    );
 
     if (value) {
       return value;
@@ -47,7 +50,7 @@ export class AlchemyService {
     console.log('Fetching token metadata from Alchemy', tokens);
 
     const data = await this.httpService.axiosRef
-      .request(options)
+      .request<Alchemy.NftMetadata[]>(options)
       .then(function (response) {
         return response.data;
       })
