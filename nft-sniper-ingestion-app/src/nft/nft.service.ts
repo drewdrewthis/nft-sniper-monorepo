@@ -57,7 +57,7 @@ export class NftService {
     const metadatas = await this.getNFTMetadataForTokens(tokens);
 
     return trackedNfts.map((trackedNft) => {
-      const offers = latestOffers.find((offer) => {
+      const offers = latestOffers.filter((offer) => {
         return (
           offer.contractAddress.toLowerCase() ===
             trackedNft.contractAddress.toLowerCase() &&

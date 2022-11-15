@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Logger, Post, Query } from '@nestjs/common';
-import { NFT } from '@prisma/client';
+import { HistoricalNftOffer, HistoricalNftPrice, NFT } from '@prisma/client';
+import { Alchemy } from '../types';
 import { NftService } from './nft.service';
 
 @Controller('nft')
@@ -24,7 +25,15 @@ export class NftController {
     payload: {
       walletAddress: string;
     },
-  ): Promise<Pick<NFT, 'contractAddress' | 'tokenId'>[]> {
+  ): Promise<
+    {
+      tokenId: number;
+      contractAddress: string;
+      offers: HistoricalNftOffer[];
+      historicalPrices: HistoricalNftPrice[];
+      metadata?: Alchemy.NftMetadata;
+    }[]
+  > {
     console.log('tracled', payload);
     return this.service.getTrackedNftDataForWallet(payload.walletAddress);
   }
