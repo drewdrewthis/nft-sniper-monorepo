@@ -23,7 +23,9 @@ export function normalizeData(rawData: {
     contractAddress,
     marketplaceName: 'X2Y2',
     price: {
-      priceAmount: String(latestValidListing?.order.price || ''),
+      priceAmount: String(
+        Number(latestValidListing?.order.price) / 10 ** 18 || '',
+      ),
       priceCurrency: 'ETH',
       fiatPrice: '',
       fiatCurrency: '',
@@ -33,7 +35,7 @@ export function normalizeData(rawData: {
     },
     offers: offers.map((offer) => ({
       from: offer.maker,
-      priceAmount: offer.price,
+      priceAmount: String(Number(offer.price) / 10 ** 18),
       priceCurrency: 'ETH',
       fiatPrice: '',
       fiatCurrency: '',

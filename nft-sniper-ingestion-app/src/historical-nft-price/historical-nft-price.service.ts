@@ -51,6 +51,9 @@ export class HistoricalNftPriceService {
           orderBy: {
             actualDate: 'desc',
           },
+          include: {
+            marketplace: true,
+          },
           take: 1,
         },
       },

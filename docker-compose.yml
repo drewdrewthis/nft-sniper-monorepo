@@ -21,7 +21,7 @@ services:
       - REDIS_PORT=6379
       # 1 mins
       - X2Y2_SCHEDULER_FREQUENCY_MS=60001
-      - CRAWLER_SERVER_CRAWL_ENDPOINT=http://172.31.50.255:3001/crawl
+      - CRAWLER_SERVER_CRAWL_ENDPOINT=http://nft-s-LoadB-1KDIVO32FBA42-623d747c98bbc393.elb.us-east-1.amazonaws.com:3001/crawl
       - OPENSEA_SCHEDULER_FREQUENCY_MS=360000
 
     env_file:
@@ -55,7 +55,7 @@ services:
     env_file:
       - .env
     environment:
-      - INGESTION_SERVER_URL=http://172.31.50.255:3000
+      - INGESTION_SERVER_URL=http://nft-s-LoadB-1KDIVO32FBA42-623d747c98bbc393.elb.us-east-1.amazonaws.com:3000
     networks:
       - snipernetwork
     deploy:
