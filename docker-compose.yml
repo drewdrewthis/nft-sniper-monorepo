@@ -22,7 +22,7 @@ services:
       # 1 mins
       - X2Y2_SCHEDULER_FREQUENCY_MS=300000
       - CRAWLER_SERVER_CRAWL_ENDPOINT=http://nft-s-LoadB-1KDIVO32FBA42-623d747c98bbc393.elb.us-east-1.amazonaws.com:3001/crawl
-      - OPENSEA_SCHEDULER_FREQUENCY_MS=1200000
+      - OPENSEA_SCHEDULER_FREQUENCY_MS=600000
 
     env_file:
       - .env
