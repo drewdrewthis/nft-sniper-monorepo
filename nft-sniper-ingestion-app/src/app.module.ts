@@ -20,6 +20,7 @@ import { NftController } from './nft/nft.controller';
 import { NftService } from './nft/nft.service';
 import { NftModule } from './nft/nft.module';
 import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft-offer.service';
+import { ResevoirModule } from './apis/resevoir/resevoir.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft
       isGlobal: true,
     }),
     NftModule,
+    ResevoirModule,
   ],
   controllers: [AppController, NftController],
   providers: [

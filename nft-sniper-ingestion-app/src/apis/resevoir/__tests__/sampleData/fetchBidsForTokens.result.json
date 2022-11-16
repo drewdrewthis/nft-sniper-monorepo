@@ -1,0 +1,124 @@
+{
+  "0x60E4d786628Fea6478F785A6d7e704777c86a7c6:9018": {
+    "id": "0xce9a993ab7e1402993e8765e50d74eef4b1d45dce1cbe9d0772b8908f8e49bb8",
+    "kind": "looks-rare",
+    "side": "sell",
+    "status": "active",
+    "tokenSetId": "token:0x60e4d786628fea6478f785a6d7e704777c86a7c6:9018",
+    "tokenSetSchemaHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "contract": "0x60e4d786628fea6478f785a6d7e704777c86a7c6",
+    "maker": "0xc05669e488f0942ff1c3e2f6921a7a1942dd6ca2",
+    "taker": "0x0000000000000000000000000000000000000000",
+    "price": {
+      "currency": {
+        "contract": "0x0000000000000000000000000000000000000000",
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "amount": {
+        "raw": "10990000000000000000",
+        "decimal": 10.99,
+        "usd": 13767.24697,
+        "native": 10.99
+      },
+      "netAmount": {
+        "raw": "10770200000000000000",
+        "decimal": 10.7702,
+        "usd": 13491.90203,
+        "native": 10.7702
+      }
+    },
+    "validFrom": 1668605777,
+    "validUntil": 1669210505,
+    "quantityFilled": 0,
+    "quantityRemaining": 1,
+    "source": {
+      "id": "0x5924a28caaf1cc016617874a2f0c3710d881f3c1",
+      "domain": "looksrare.org",
+      "name": "LooksRare",
+      "icon": "https://raw.githubusercontent.com/reservoirprotocol/indexer/v5/src/models/sources/looksrare-logo.svg",
+      "url": "https://looksrare.org/collections/0x60e4d786628fea6478f785a6d7e704777c86a7c6/9018"
+    },
+    "feeBps": 200,
+    "feeBreakdown": [
+      {
+        "bps": 150,
+        "kind": "marketplace",
+        "recipient": "0x5924a28caaf1cc016617874a2f0c3710d881f3c1"
+      },
+      {
+        "bps": 50,
+        "kind": "royalty",
+        "recipient": "0xaae7ac476b117bccafe2f05f582906be44bc8ff1"
+      }
+    ],
+    "expiration": 1669210505,
+    "isReservoir": null,
+    "isDynamic": false,
+    "createdAt": "2022-11-16T13:36:35.208Z",
+    "updatedAt": "2022-11-16T13:36:35.208Z"
+  },
+  "0x60E4d786628Fea6478F785A6d7e704777c86a7c6:3927": undefined,
+  "0xed5af388653567af2f388e6224dc7c4b3241c544:2743": {
+    "id": "0xcdaa788bb8ae77976779086901bdd2e31d434c048d291981f02bb6f169b4823e",
+    "kind": "seaport",
+    "side": "sell",
+    "status": "active",
+    "tokenSetId": "token:0xed5af388653567af2f388e6224dc7c4b3241c544:2743",
+    "tokenSetSchemaHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "contract": "0xed5af388653567af2f388e6224dc7c4b3241c544",
+    "maker": "0x8599254f994d008f77a2144e049ee27940e9045f",
+    "taker": "0x0000000000000000000000000000000000000000",
+    "price": {
+      "currency": {
+        "contract": "0x0000000000000000000000000000000000000000",
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "amount": {
+        "raw": "11000000000000000000",
+        "decimal": 11,
+        "usd": 13779.77404,
+        "native": 11
+      },
+      "netAmount": {
+        "raw": "10175000000000000000",
+        "decimal": 10.175,
+        "usd": 12746.29099,
+        "native": 10.175
+      }
+    },
+    "validFrom": 1668479797,
+    "validUntil": 1668929348,
+    "quantityFilled": 0,
+    "quantityRemaining": 1,
+    "source": {
+      "id": "0x5b3256965e7c3cf26e11fcaf296dfc8807c01073",
+      "domain": "opensea.io",
+      "name": "OpenSea",
+      "icon": "https://raw.githubusercontent.com/reservoirprotocol/indexer/v5/src/models/sources/opensea-logo.svg",
+      "url": "https://opensea.io/assets/0xed5af388653567af2f388e6224dc7c4b3241c544/2743"
+    },
+    "feeBps": 750,
+    "feeBreakdown": [
+      {
+        "bps": 250,
+        "kind": "marketplace",
+        "recipient": "0x0000a26b00c1f0df003000390027140000faa719"
+      },
+      {
+        "bps": 500,
+        "kind": "royalty",
+        "recipient": "0xb4d24dacbdffa1bbf9a624044484b3feeb7fdf74"
+      }
+    ],
+    "expiration": 1668929348,
+    "isReservoir": null,
+    "isDynamic": false,
+    "createdAt": "2022-11-15T02:38:44.638Z",
+    "updatedAt": "2022-11-15T02:39:47.398Z"
+  },
+  "0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91:6781": null
+}
