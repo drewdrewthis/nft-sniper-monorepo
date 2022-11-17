@@ -2,7 +2,6 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { Token } from '../../types';
 import { paths } from '@reservoir0x/reservoir-kit-client';
-
 @Injectable()
 export class ResevoirService {
   logger = new Logger(ResevoirService.name);

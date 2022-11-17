@@ -1,6 +1,6 @@
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
-import { GoldenResponseService } from '../../../golden-response/golden-response.service';
+import { GoldenResponseService } from '../../../golden-response';
 import { ResevoirService } from '../resevoir.service';
 
 jest.setTimeout(15000);
@@ -33,6 +33,7 @@ describe('ResevoirService', () => {
       imports: [HttpModule],
       providers: [ResevoirService],
     }).compile();
+
     const axios = module.get(HttpService).axiosRef;
 
     goldenService = new GoldenResponseService(axios, __filename);

@@ -45,6 +45,7 @@
     "lodash": "^4.17.21",
     "object-hash": "^3.0.0",
     "prisma": "^4.6.1",
+    "qs": "^6.11.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
