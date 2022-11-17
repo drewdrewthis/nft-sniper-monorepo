@@ -1,5 +1,6 @@
-import { HttpModule } from '@nestjs/axios';
+import { HttpModule, HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
+import { GoldenResponseService } from '../../../golden-response/golden-response.service';
 import { ResevoirService } from '../resevoir.service';
 
 jest.setTimeout(15000);
@@ -25,14 +26,24 @@ const tokens = [
 
 describe('ResevoirService', () => {
   let service: ResevoirService;
+  let goldenService: GoldenResponseService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [HttpModule],
       providers: [ResevoirService],
     }).compile();
+    const axios = module.get(HttpService).axiosRef;
+
+    goldenService = new GoldenResponseService(axios, __filename);
+    goldenService.createInterceptor();
+    goldenService.createMock();
 
     service = module.get<ResevoirService>(ResevoirService);
+  });
+
+  afterAll(() => {
+    goldenService.tearDown();
   });
 
   it('should be defined', () => {

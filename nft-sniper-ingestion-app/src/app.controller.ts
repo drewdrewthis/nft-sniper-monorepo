@@ -3,10 +3,33 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly resevoirService,
+  ) {}
 
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Get('demo')
+  async getNftDemoData(
+    @Query()
+    payload: {
+      walletAddress: string;
+    },
+  ): Promise<
+    {
+      tokenId: number;
+      contractAddress: string;
+      offers: HistoricalNftOffer[];
+      historicalPrices: HistoricalNftPrice[];
+      metadata?: Alchemy.NftMetadata;
+    }[]
+  > {
+    const aggregateData = await this.resevoirService.fetchAggregateNftData();
+    console.log('tracled', payload);
+    return this.service.getTrackedNftDataForWallet(payload.walletAddress);
   }
 }
