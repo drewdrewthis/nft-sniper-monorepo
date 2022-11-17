@@ -1,11 +1,12 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { AppService } from './app.service';
+import { ResevoirService } from './apis/resevoir';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly resevoirService,
+    private readonly ResevoirService,
   ) {}
 
   @Get()

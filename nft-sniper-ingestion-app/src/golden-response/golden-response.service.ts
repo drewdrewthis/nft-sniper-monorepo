@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as fs from 'fs';
+import { isEmpty } from 'lodash';
 import * as path from 'path';
 import * as qs from 'qs';
 
@@ -65,20 +66,22 @@ export class GoldenResponseService {
   createMock() {
     // console.log('Reading from golden responses', this.filename);
 
-    jest.spyOn(this.axios, 'get').mockImplementation((...params) => {
-      const [url, config] = params;
+    if (!isEmpty(this.responses)) {
+      jest.spyOn(this.axios, 'get').mockImplementation((...params) => {
+        const [url, config] = params;
 
-      const key = createGetKey({ ...config, url });
+        const key = createGetKey({ ...config, url });
 
-      const response = this.responses[key];
+        const response = this.responses[key];
 
-      if (!response)
-        throw new Error(
-          "Response doesn't exist. Please delete golden file and run again",
-        );
+        if (!response)
+          throw new Error(
+            "Response doesn't exist. Please delete golden file and run again",
+          );
 
-      return Promise.resolve({ data: response });
-    });
+        return Promise.resolve({ data: response });
+      });
+    }
   }
 
   tearDown() {

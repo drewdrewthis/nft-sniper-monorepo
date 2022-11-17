@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HistoricalNftOffer, HistoricalNftPrice } from '@prisma/client';
 import { Alchemy, Token } from './types';
-import { ResevoirService } from './apis/resevoir/resevoir.service';
+import { ResevoirService } from './apis/resevoir';
 import { AlchemyService } from './apis/alchemy/alchemy.service';
 
 @Injectable()
@@ -36,6 +36,6 @@ export class AppService {
       };
     });
 
-    return allData;
+    return allData as any;
   }
 }
