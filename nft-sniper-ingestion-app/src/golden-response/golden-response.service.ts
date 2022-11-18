@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import * as fs from 'fs';
-import { isEmpty } from 'lodash';
 import * as path from 'path';
 import * as qs from 'qs';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { Injectable } from '@nestjs/common';
+import { isEmpty } from 'lodash';
 
 console.log(`
 You're using the GoldenResponseService. 

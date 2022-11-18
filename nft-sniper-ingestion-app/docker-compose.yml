@@ -18,9 +18,9 @@ services:
       - 5555:5555
     env_file:
       - .env
-    # environment:
-    #   - REDIS_HOST=redis
-    #   - POSTGRES_HOST=postgres
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=postgres
     networks:
       - snipernetwork
 
@@ -41,6 +41,16 @@ services:
       - .env
     volumes:
       - .postgres:/var/lib/postgresql/data
+    networks:
+      - snipernetwork
+
+  test-postgres:
+    image: postgres:13
+    restart: unless-stopped
+    ports:
+      - 5433:5432
+    env_file:
+      - .env.test
     networks:
       - snipernetwork
     

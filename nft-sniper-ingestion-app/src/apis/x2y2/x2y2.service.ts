@@ -11,6 +11,7 @@ import {
 } from '../../bullmq/types';
 import { compact, groupBy } from 'lodash/fp';
 import { normalizeData } from './helpers';
+import { sleep } from '../../utils';
 
 @Injectable()
 export class X2y2Service {
@@ -85,6 +86,7 @@ export class X2y2Service {
           });
         }
 
+        this.logger.debug('Sleep: 500');
         await sleep(500);
       }
 
@@ -155,9 +157,4 @@ export class X2y2Service {
 
     return result.data.data;
   };
-}
-
-function sleep(ms: number) {
-  console.log('sleep', ms);
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }

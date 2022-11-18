@@ -1,4 +1,4 @@
-import { Module, MiddlewareConsumer } from '@nestjs/common';
+import { Module, MiddlewareConsumer, Logger } from '@nestjs/common';
 import { BullmqService } from './bullmq.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { X2y2Service } from '../apis/x2y2/x2y2.service';
@@ -11,7 +11,9 @@ import { HttpModule } from '@nestjs/axios';
   providers: [BullmqService, PrismaService, X2y2Service, CrawlerServerService],
 })
 export class BullmqModule {
+  logger = new Logger(BullmqModule.name);
   serverAdapter: ExpressAdapter;
+
   constructor(private bullmq: BullmqService) {}
 
   async configure(consumer: MiddlewareConsumer) {
@@ -22,9 +24,13 @@ export class BullmqModule {
   }
 
   onModuleInit() {
-    console.log(`Initializing Bullmq`);
-    this.bullmq.start().then(() => {
-      this.bullmq.startBullboard(this.serverAdapter);
-    });
+    // TODO: Don't do this here. This should be mocked
+    // somehow
+    if (process.env.NODE_ENV !== 'test') {
+      this.logger.log(`Initializing Bullmq`);
+      this.bullmq.start().then(() => {
+        this.bullmq.startBullboard(this.serverAdapter);
+      });
+    }
   }
 }

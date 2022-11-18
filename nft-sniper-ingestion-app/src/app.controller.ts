@@ -1,13 +1,11 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ResevoirService } from './apis/resevoir';
+import { HistoricalNftOffer, HistoricalNftPrice } from '@prisma/client';
+import { Alchemy, Token } from './types';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private readonly ResevoirService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   getHello(): string {
@@ -18,19 +16,18 @@ export class AppController {
   async getNftDemoData(
     @Query()
     payload: {
-      walletAddress: string;
+      tokens: Token[];
     },
   ): Promise<
     {
       tokenId: number;
       contractAddress: string;
-      offers: HistoricalNftOffer[];
-      historicalPrices: HistoricalNftPrice[];
+      offers: (HistoricalNftOffer | void)[];
+      historicalPrices: (HistoricalNftPrice | void)[];
       metadata?: Alchemy.NftMetadata;
     }[]
   > {
-    const aggregateData = await this.resevoirService.fetchAggregateNftData();
-    console.log('tracled', payload);
-    return this.service.getTrackedNftDataForWallet(payload.walletAddress);
+    const { tokens } = payload;
+    return this.appService.getNftDemoData(tokens);
   }
 }

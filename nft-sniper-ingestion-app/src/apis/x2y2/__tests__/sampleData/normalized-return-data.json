@@ -13,7 +13,7 @@
     "offers": [
       {
         "from": "0x9907b9cc887d3f1c1af13f1b78e1d6dd8bdfda21",
-        "priceAmount": "7700000000000000",
+        "priceAmount": "0.0077",
         "priceCurrency": "ETH",
         "fiatPrice": "",
         "fiatCurrency": "",
@@ -629,7 +629,7 @@
     "offers": [
       {
         "from": "0x9907b9cc887d3f1c1af13f1b78e1d6dd8bdfda21",
-        "priceAmount": "7700000000000000",
+        "priceAmount": "0.0077",
         "priceCurrency": "ETH",
         "fiatPrice": "",
         "fiatCurrency": "",

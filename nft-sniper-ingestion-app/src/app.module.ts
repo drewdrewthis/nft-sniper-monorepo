@@ -21,7 +21,7 @@ import { NftService } from './nft/nft.service';
 import { NftModule } from './nft/nft.module';
 import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft-offer.service';
 import { ResevoirModule } from './apis/resevoir/resevoir.module';
-import { GoldenResponseService } from './golden-response/golden-response.service';
+import { ResevoirService } from './apis/resevoir';
 
 @Module({
   imports: [
@@ -55,7 +55,7 @@ import { GoldenResponseService } from './golden-response/golden-response.service
     BullmqService,
     X2y2Service,
     NftService,
-    GoldenResponseService,
+    ResevoirService,
   ],
 })
 export class AppModule {}

@@ -4,58 +4,54 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Must be syncronous so can't use map
+  console.log(await createMarketplaces(), await createTokens());
+}
 
-  console.log(
-    await prisma.marketplace.upsert({
-      where: {
-        name: 'OpenSea',
-      },
-      update: {},
-      create: {
-        name: 'OpenSea',
-      },
-    }),
-    await prisma.marketplace.upsert({
-      where: {
-        name: 'X2Y2',
-      },
-      update: {},
-      create: {
-        name: 'X2Y2',
-      },
-    }),
-    await prisma.nFT
-      .upsert({
+async function createMarketplaces() {
+  console.log('Creating marketplaces..');
+  return Promise.all(
+    ['OpenSea', 'X2Y2', 'LooksRare'].map(async (name) => {
+      return prisma.marketplace.upsert({
         where: {
-          contractAddress_tokenId: {
-            tokenId: 4860,
-            contractAddress: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
-          },
-        },
-        create: {
-          tokenId: 4860,
-          contractAddress: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
+          name,
         },
         update: {},
-      })
-      .catch(console.error),
-    await prisma.nFT
-      .upsert({
-        where: {
-          contractAddress_tokenId: {
-            tokenId: 6781,
-            contractAddress: '0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91',
-          },
-        },
         create: {
-          tokenId: 4860,
-          contractAddress: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
+          name,
         },
-        update: {},
-      })
-      .catch(console.error),
+      });
+    }),
   );
 }
+
+async function createTokens() {
+  console.log('Creating tokens..');
+  const tokens = [
+    {
+      tokenId: 4860,
+      contractAddress: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
+    },
+    {
+      tokenId: 6781,
+      contractAddress: '0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91',
+    },
+  ];
+
+  return Promise.all(
+    tokens.map(async (token) => {
+      return prisma.nFT
+        .upsert({
+          where: {
+            contractAddress_tokenId: token,
+          },
+          create: token,
+          update: {},
+        })
+        .catch(console.error);
+    }),
+  );
+}
+
 main()
   .then(async () => {
     await prisma.$disconnect();

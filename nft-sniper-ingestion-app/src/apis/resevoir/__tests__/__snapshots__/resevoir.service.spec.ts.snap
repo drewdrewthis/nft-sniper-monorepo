@@ -3,6 +3,7 @@
 exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
 [
   {
+    "contractAddress": "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
     "currentOwner": {
       "owners": [
         {
@@ -179,8 +180,10 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
       "validFrom": 1668625048,
       "validUntil": 1668884243,
     },
+    "tokenId": 9018,
   },
   {
+    "contractAddress": "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
     "currentOwner": {
       "owners": [
         {
@@ -357,8 +360,10 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
       "validFrom": 1668645176,
       "validUntil": 1671237167,
     },
+    "tokenId": 3927,
   },
   {
+    "contractAddress": "0xed5af388653567af2f388e6224dc7c4b3241c544",
     "currentOwner": {
       "owners": [
         {
@@ -535,8 +540,10 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
       "validFrom": 1668661060,
       "validUntil": 1668920260,
     },
+    "tokenId": 2743,
   },
   {
+    "contractAddress": "0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91",
     "currentOwner": {
       "owners": [
         {
@@ -595,6 +602,7 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
       "washTradingScore": 0,
     },
     "lowestListing": undefined,
+    "tokenId": 6781,
   },
 ]
 `;

@@ -1,17 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OpenseaController } from '../opensea.controller';
-import { PrismaService } from '../../prisma/prisma.service';
-import { PrismaModule } from '../../prisma';
+import { PrismaService } from '../../prisma';
 import { OpenseaService } from '../opensea.service';
+import { ConfigService } from '@nestjs/config';
 
 describe('OpenseaController', () => {
   let controller: OpenseaController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [PrismaModule],
       controllers: [OpenseaController],
-      providers: [OpenseaService, PrismaService],
+      providers: [OpenseaService, PrismaService, ConfigService],
     }).compile();
 
     controller = module.get<OpenseaController>(OpenseaController);
