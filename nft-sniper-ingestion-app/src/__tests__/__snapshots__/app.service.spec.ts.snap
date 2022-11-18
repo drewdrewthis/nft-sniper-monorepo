@@ -3,6 +3,7 @@
 exports[`ResevoirService should be able to get nft demo data 1`] = `
 [
   {
+    "contractAddress": "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
     "currentOwner": {
       "owners": [
         {
@@ -77,6 +78,22 @@ exports[`ResevoirService should be able to get nft demo data 1`] = `
       "validFrom": 1668625048,
       "validUntil": 1668884243,
     },
+    "historicalPrices": [
+      {
+        "actualDate": 2022-11-16T18:57:39.826Z,
+        "contractAddress": "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
+        "createdAt": 2022-11-16T18:57:39.826Z,
+        "fiatCurrency": "USD",
+        "fiatPrice": "14247.11444",
+        "id": -1,
+        "marketplaceId": 3,
+        "priceAmount": "11.7",
+        "priceCurrency": "ETH",
+        "rawScrapeDataId": -1,
+        "tokenId": 9018,
+        "updatedAt": 2022-11-16T18:57:39.826Z,
+      },
+    ],
     "lastSale": {
       "amount": "1",
       "batchIndex": 1,
@@ -245,8 +262,28 @@ exports[`ResevoirService should be able to get nft demo data 1`] = `
         "raw": "https://boredapeyachtclub.com/api/mutants/9018",
       },
     },
+    "offers": [
+      {
+        "actualDate": 2022-11-16T18:57:39.826Z,
+        "contractAddress": "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
+        "createdAt": 2022-11-16T18:57:39.826Z,
+        "expiresAt": 1970-01-20T07:34:44.243Z,
+        "fiatCurrency": "USD",
+        "fiatPrice": "14247.11444",
+        "from": "0x828cebb8cc44cb9047f0f057f9603c7348553d84",
+        "id": -1,
+        "marketplaceId": 3,
+        "priceAmount": "11.7",
+        "priceCurrency": "ETH",
+        "rawScrapeDataId": -1,
+        "tokenId": 9018,
+        "updatedAt": 2022-11-16T18:57:39.826Z,
+      },
+    ],
+    "tokenId": 9018,
   },
   {
+    "contractAddress": "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
     "currentOwner": {
       "owners": [
         {
@@ -321,6 +358,22 @@ exports[`ResevoirService should be able to get nft demo data 1`] = `
       "validFrom": 1668694687,
       "validUntil": 1671237167,
     },
+    "historicalPrices": [
+      {
+        "actualDate": 2022-11-17T00:33:16.259Z,
+        "contractAddress": "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
+        "createdAt": 2022-11-17T00:33:16.259Z,
+        "fiatCurrency": "USD",
+        "fiatPrice": "15099.5059",
+        "id": -1,
+        "marketplaceId": 3,
+        "priceAmount": "12.4",
+        "priceCurrency": "ETH",
+        "rawScrapeDataId": -1,
+        "tokenId": 3927,
+        "updatedAt": 2022-11-17T00:33:16.259Z,
+      },
+    ],
     "lastSale": {
       "amount": "1",
       "batchIndex": 1,
@@ -490,8 +543,28 @@ exports[`ResevoirService should be able to get nft demo data 1`] = `
         "raw": "https://boredapeyachtclub.com/api/mutants/3927",
       },
     },
+    "offers": [
+      {
+        "actualDate": 2022-11-17T14:18:41.517Z,
+        "contractAddress": "0x60E4d786628Fea6478F785A6d7e704777c86a7c6",
+        "createdAt": 2022-11-17T14:18:41.517Z,
+        "expiresAt": 1970-01-20T08:13:57.167Z,
+        "fiatCurrency": "USD",
+        "fiatPrice": "14600.24805",
+        "from": "0x165896732df25087eba4e736604559ceafdfc82f",
+        "id": -1,
+        "marketplaceId": 3,
+        "priceAmount": "11.99",
+        "priceCurrency": "ETH",
+        "rawScrapeDataId": -1,
+        "tokenId": 3927,
+        "updatedAt": 2022-11-17T14:18:41.517Z,
+      },
+    ],
+    "tokenId": 3927,
   },
   {
+    "contractAddress": "0xed5af388653567af2f388e6224dc7c4b3241c544",
     "currentOwner": {
       "owners": [
         {
@@ -566,6 +639,22 @@ exports[`ResevoirService should be able to get nft demo data 1`] = `
       "validFrom": 1668661060,
       "validUntil": 1668920260,
     },
+    "historicalPrices": [
+      {
+        "actualDate": 2022-11-17T05:00:26.383Z,
+        "contractAddress": "0xed5af388653567af2f388e6224dc7c4b3241c544",
+        "createdAt": 2022-11-17T05:00:26.383Z,
+        "fiatCurrency": "USD",
+        "fiatPrice": "14612.42507",
+        "id": -1,
+        "marketplaceId": 1,
+        "priceAmount": "12",
+        "priceCurrency": "ETH",
+        "rawScrapeDataId": -1,
+        "tokenId": 2743,
+        "updatedAt": 2022-11-17T05:00:26.383Z,
+      },
+    ],
     "lastSale": {
       "amount": "1",
       "batchIndex": 1,
@@ -751,8 +840,28 @@ We rise together. We build together. We grow together.",
         "raw": "https://ikzttp.mypinata.cloud/ipfs/QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYS2TBLgrvw8CW/2743",
       },
     },
+    "offers": [
+      {
+        "actualDate": 2022-11-17T05:00:26.383Z,
+        "contractAddress": "0xed5af388653567af2f388e6224dc7c4b3241c544",
+        "createdAt": 2022-11-17T05:00:26.383Z,
+        "expiresAt": 1970-01-20T07:35:20.260Z,
+        "fiatCurrency": "USD",
+        "fiatPrice": "14612.42507",
+        "from": "0x8599254f994d008f77a2144e049ee27940e9045f",
+        "id": -1,
+        "marketplaceId": 1,
+        "priceAmount": "12",
+        "priceCurrency": "ETH",
+        "rawScrapeDataId": -1,
+        "tokenId": 2743,
+        "updatedAt": 2022-11-17T05:00:26.383Z,
+      },
+    ],
+    "tokenId": 2743,
   },
   {
+    "contractAddress": "0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91",
     "currentOwner": {
       "owners": [
         {
@@ -768,6 +877,9 @@ We rise together. We build together. We grow together.",
       ],
     },
     "highestBid": undefined,
+    "historicalPrices": [
+      undefined,
+    ],
     "lastSale": {
       "amount": "1",
       "batchIndex": 1,
@@ -894,6 +1006,10 @@ We rise together. We build together. We grow together.",
         "raw": "https://nfts.renga.app/nfts/public/erc-721/6781",
       },
     },
+    "offers": [
+      undefined,
+    ],
+    "tokenId": 6781,
   },
 ]
 `;

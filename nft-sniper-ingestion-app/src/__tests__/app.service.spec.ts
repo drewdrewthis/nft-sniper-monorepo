@@ -10,6 +10,8 @@ import { HttpRecordingService } from '../http-recording/http-recording.service';
 
 jest.setTimeout(15000);
 
+process.env.ALCHEMY_API_KEY_ETH = 'bogus_key';
+
 /**
  * For the golden tests to work here, you'll need to import the API keys, or:
  * yarn dotenv -e .env yarn jest nft-sniper-ingestion-app/src/__tests__/app.service.spec.ts

@@ -26,6 +26,7 @@ export class ResevoirService {
     return tokens.map((token) => {
       const tokenKey = buildTokenKey(token);
       return {
+        ...token,
         lowestListing: lowestListings[tokenKey],
         highestBid: highestBids[tokenKey],
         lastSale: lastSales[tokenKey],
@@ -139,7 +140,13 @@ export class ResevoirService {
   }
 
   async fetchBidsForTokens(tokens: Token[]) {
-    const bidByToken: Record<string, unknown> = {};
+    const bidByToken: Record<
+      string,
+      | Required<
+          Awaited<ReturnType<typeof this.fetchListingsForToken>>
+        >['orders']
+      | undefined
+    > = {};
 
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
@@ -182,7 +189,13 @@ export class ResevoirService {
 
   // LISTINGS
   async fetchLowestListings(tokens: Token[]) {
-    const hightestListingsByToken: Record<string, unknown> = {};
+    const hightestListingsByToken: Record<
+      string,
+      | Required<
+          Awaited<ReturnType<typeof this.fetchListingsForToken>>
+        >['orders'][0]
+      | undefined
+    > = {};
 
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
@@ -196,7 +209,10 @@ export class ResevoirService {
   }
 
   async fetchListingsForTokens(tokens: Token[]) {
-    const listingsByTokenKey: Record<string, unknown> = {};
+    const listingsByTokenKey: Record<
+      string,
+      Awaited<ReturnType<typeof this.fetchListingsForToken>>['orders']
+    > = {};
 
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
