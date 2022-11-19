@@ -67,7 +67,7 @@ export class ResevoirService {
       })
       .then((response) => {
         const { data } = response;
-        this.logger.log('Received token owner', token, data);
+        this.logger.log('Received token owner', { token, data });
         return data;
       })
       .catch((error) => {
@@ -110,7 +110,7 @@ export class ResevoirService {
       })
       .then((response) => {
         const { data } = response;
-        this.logger.log('Received token sales', token, data);
+        this.logger.log('Received token sales', { token, data });
         return data;
       })
       .catch((error) => {
@@ -131,8 +131,7 @@ export class ResevoirService {
 
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
-      const listings = ((await this.fetchListingsForToken(token))?.orders ||
-        [])[0];
+      const listings = ((await this.fetchBidsForToken(token))?.orders || [])[0];
       highestBidsByToken[tokenKey] = listings;
     }
 
@@ -177,7 +176,7 @@ export class ResevoirService {
       })
       .then((response) => {
         const { data } = response;
-        this.logger.log('Received token bids', token, data);
+        this.logger.log('Received token bids', { token, data });
         return data;
       })
       .catch((error) => {
@@ -244,11 +243,10 @@ export class ResevoirService {
       })
       .then((response) => {
         const { data } = response;
-        this.logger.log('Received token listings', token, data);
+        this.logger.log('Received token listings', { token, data });
         return data;
       })
       .catch((error) => {
-        console.error(error);
         this.logger.error(error);
         return [];
       });

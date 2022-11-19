@@ -1,32 +1,28 @@
-import { HttpModule, HttpService } from '@nestjs/axios';
+import { HttpModule } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
-import { GoldenResponseService } from '../../../golden-response';
+import { HttpRecordingService } from '../../../http-recording';
 import { ResevoirService } from '../resevoir.service';
 
 jest.setTimeout(15000);
 
 const tokens = [
   {
-    contractAddress: '0x60E4d786628Fea6478F785A6d7e704777c86a7c6',
-    tokenId: 9018,
+    contractAddress: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
+    tokenId: 1860,
   },
   {
-    contractAddress: '0x60E4d786628Fea6478F785A6d7e704777c86a7c6',
-    tokenId: 3927,
-  },
-  {
-    contractAddress: '0xed5af388653567af2f388e6224dc7c4b3241c544',
-    tokenId: 2743,
-  },
-  {
-    contractAddress: '0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91',
-    tokenId: 6781,
+    contractAddress: '0x09233d553058c2F42ba751C87816a8E9FaE7Ef10',
+    tokenId: 4329,
   },
 ];
 
 describe('ResevoirService', () => {
   let service: ResevoirService;
-  let goldenService: GoldenResponseService;
+  let httpRecordingService: HttpRecordingService;
+
+  beforeAll(() => {
+    httpRecordingService = new HttpRecordingService(__filename);
+  });
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -34,17 +30,11 @@ describe('ResevoirService', () => {
       providers: [ResevoirService],
     }).compile();
 
-    const axios = module.get(HttpService).axiosRef;
-
-    goldenService = new GoldenResponseService(axios, __filename);
-    goldenService.createInterceptor();
-    goldenService.createMock();
-
     service = module.get<ResevoirService>(ResevoirService);
   });
 
   afterAll(() => {
-    goldenService.tearDown();
+    httpRecordingService.tearDown();
   });
 
   it('should be defined', () => {

@@ -1,493 +1,618 @@
-{
-  "https://api.reservoir.tools/orders/asks/v3?token=0x60E4d786628Fea6478F785A6d7e704777c86a7c6%3A9018&includePrivate=false&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=50": {
-    "orders": [
-      {
-        "id": "0xf98ba2714ead81d2ed413a3250abdac144819a7bade177f9c5c4dcb201914587",
-        "kind": "looks-rare",
-        "side": "sell",
-        "status": "active",
-        "tokenSetId": "token:0x60e4d786628fea6478f785a6d7e704777c86a7c6:9018",
-        "tokenSetSchemaHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "contract": "0x60e4d786628fea6478f785a6d7e704777c86a7c6",
-        "maker": "0x828cebb8cc44cb9047f0f057f9603c7348553d84",
-        "taker": "0x0000000000000000000000000000000000000000",
-        "price": {
-          "currency": {
-            "contract": "0x0000000000000000000000000000000000000000",
-            "name": "Ether",
-            "symbol": "ETH",
-            "decimals": 18
-          },
-          "amount": {
-            "raw": "11700000000000000000",
-            "decimal": 11.7,
-            "usd": 14247.11444,
-            "native": 11.7
-          },
-          "netAmount": {
-            "raw": "11466000000000000000",
-            "decimal": 11.466,
-            "usd": 13962.17215,
-            "native": 11.466
-          }
-        },
-        "validFrom": 1668625048,
-        "validUntil": 1668884243,
-        "quantityFilled": 0,
-        "quantityRemaining": 1,
-        "source": {
-          "id": "0x5924a28caaf1cc016617874a2f0c3710d881f3c1",
-          "domain": "looksrare.org",
-          "name": "LooksRare",
-          "icon": "https://raw.githubusercontent.com/reservoirprotocol/indexer/v5/src/models/sources/looksrare-logo.svg",
-          "url": "https://looksrare.org/collections/0x60e4d786628fea6478f785a6d7e704777c86a7c6/9018"
-        },
-        "feeBps": 200,
-        "feeBreakdown": [
-          {
-            "bps": 150,
-            "kind": "marketplace",
-            "recipient": "0x5924a28caaf1cc016617874a2f0c3710d881f3c1"
-          },
-          {
-            "bps": 50,
-            "kind": "royalty",
-            "recipient": "0xaae7ac476b117bccafe2f05f582906be44bc8ff1"
-          }
-        ],
-        "expiration": 1668884243,
-        "isReservoir": null,
-        "isDynamic": false,
-        "createdAt": "2022-11-16T18:57:39.826Z",
-        "updatedAt": "2022-11-16T18:57:39.826Z"
-      }
+[
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/orders/asks/v3?token=0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D:1860&includePrivate=false&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=50",
+    "body": "",
+    "status": 200,
+    "response": { "orders": [], "continuation": null },
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:42 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Content-Length",
+      "33",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "49",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:12:19 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=1, must-revalidate, public",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 db8e720c1e186c4a9d38db72ecaa0492.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "BOM78-P2",
+      "X-Amz-Cf-Id",
+      "-w4EG6v0ba8nG-fzSHGChheeqmFINu2w8QURdlmpvmBTYGFepljmaQ==",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:11:42 GMT",
+      "CF-Cache-Status",
+      "MISS",
+      "Accept-Ranges",
+      "bytes",
+      "Vary",
+      "Accept-Encoding",
+      "Set-Cookie",
+      "_cfuvid=vPPu3ug06P7tR_uEkDpVl2Q9bRQeNbuGgAVkM.Ig8sA-1668888702108-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98b13a48d3e4-CDG"
     ],
-    "continuation": null
+    "responseIsBinary": false
   },
-  "https://api.reservoir.tools/orders/asks/v3?token=0x60E4d786628Fea6478F785A6d7e704777c86a7c6%3A3927&includePrivate=false&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=50": {
-    "orders": [
-      {
-        "id": "0xc67f34389011da376ee520f37f503463761c2510b88d71b634eaa05b2012542e",
-        "kind": "looks-rare",
-        "side": "sell",
-        "status": "active",
-        "tokenSetId": "token:0x60e4d786628fea6478f785a6d7e704777c86a7c6:3927",
-        "tokenSetSchemaHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "contract": "0x60e4d786628fea6478f785a6d7e704777c86a7c6",
-        "maker": "0x165896732df25087eba4e736604559ceafdfc82f",
-        "taker": "0x0000000000000000000000000000000000000000",
-        "price": {
-          "currency": {
-            "contract": "0x0000000000000000000000000000000000000000",
-            "name": "Ether",
-            "symbol": "ETH",
-            "decimals": 18
-          },
-          "amount": {
-            "raw": "11990000000000000000",
-            "decimal": 11.99,
-            "usd": 14600.24805,
-            "native": 11.99
-          },
-          "netAmount": {
-            "raw": "11750200000000000000",
-            "decimal": 11.7502,
-            "usd": 14308.24309,
-            "native": 11.7502
-          }
-        },
-        "validFrom": 1668694687,
-        "validUntil": 1671237167,
-        "quantityFilled": 0,
-        "quantityRemaining": 1,
-        "source": {
-          "id": "0x5924a28caaf1cc016617874a2f0c3710d881f3c1",
-          "domain": "looksrare.org",
-          "name": "LooksRare",
-          "icon": "https://raw.githubusercontent.com/reservoirprotocol/indexer/v5/src/models/sources/looksrare-logo.svg",
-          "url": "https://looksrare.org/collections/0x60e4d786628fea6478f785a6d7e704777c86a7c6/3927"
-        },
-        "feeBps": 200,
-        "feeBreakdown": [
-          {
-            "bps": 150,
-            "kind": "marketplace",
-            "recipient": "0x5924a28caaf1cc016617874a2f0c3710d881f3c1"
-          },
-          {
-            "bps": 50,
-            "kind": "royalty",
-            "recipient": "0xaae7ac476b117bccafe2f05f582906be44bc8ff1"
-          }
-        ],
-        "expiration": 1671237167,
-        "isReservoir": null,
-        "isDynamic": false,
-        "createdAt": "2022-11-17T14:18:41.517Z",
-        "updatedAt": "2022-11-17T14:18:41.517Z"
-      },
-      {
-        "id": "0x93a05ddafd403917a08180eef9af66d7fabdf35b3da114d7ee1482fa4acf3fab",
-        "kind": "looks-rare",
-        "side": "sell",
-        "status": "active",
-        "tokenSetId": "token:0x60e4d786628fea6478f785a6d7e704777c86a7c6:3927",
-        "tokenSetSchemaHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "contract": "0x60e4d786628fea6478f785a6d7e704777c86a7c6",
-        "maker": "0x165896732df25087eba4e736604559ceafdfc82f",
-        "taker": "0x0000000000000000000000000000000000000000",
-        "price": {
-          "currency": {
-            "contract": "0x0000000000000000000000000000000000000000",
-            "name": "Ether",
-            "symbol": "ETH",
-            "decimals": 18
-          },
-          "amount": {
-            "raw": "12400000000000000000",
-            "decimal": 12.4,
-            "usd": 15099.5059,
-            "native": 12.4
-          },
-          "netAmount": {
-            "raw": "12152000000000000000",
-            "decimal": 12.152,
-            "usd": 14797.51578,
-            "native": 12.152
-          }
-        },
-        "validFrom": 1668645176,
-        "validUntil": 1671237167,
-        "quantityFilled": 0,
-        "quantityRemaining": 1,
-        "source": {
-          "id": "0x5924a28caaf1cc016617874a2f0c3710d881f3c1",
-          "domain": "looksrare.org",
-          "name": "LooksRare",
-          "icon": "https://raw.githubusercontent.com/reservoirprotocol/indexer/v5/src/models/sources/looksrare-logo.svg",
-          "url": "https://looksrare.org/collections/0x60e4d786628fea6478f785a6d7e704777c86a7c6/3927"
-        },
-        "feeBps": 200,
-        "feeBreakdown": [
-          {
-            "bps": 150,
-            "kind": "marketplace",
-            "recipient": "0x5924a28caaf1cc016617874a2f0c3710d881f3c1"
-          },
-          {
-            "bps": 50,
-            "kind": "royalty",
-            "recipient": "0xaae7ac476b117bccafe2f05f582906be44bc8ff1"
-          }
-        ],
-        "expiration": 1671237167,
-        "isReservoir": null,
-        "isDynamic": false,
-        "createdAt": "2022-11-17T00:33:16.259Z",
-        "updatedAt": "2022-11-17T00:33:16.259Z"
-      }
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/orders/asks/v3?token=0x09233d553058c2F42ba751C87816a8E9FaE7Ef10:4329&includePrivate=false&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=50",
+    "body": "",
+    "status": 200,
+    "response": "1f8b0800000000000003a5544d8fdc360cfd2f3eef8e25d9faf0dc12a441720a90a497143dd012b5238c6db9b23cd9c162ff7b29cf34bb69d06283d817e9517ca4f8483d5431394c4bb5ffe3a10aaeda57ecbe07fab573069895aa570ab1432e5587bd6c3bdfa3e0464b5a4b10ad765ca1b2c239e96d27b50055dd54c73015ae05618e2913b004871b300c659721af14b3029bc30909c9f188d327ccef8bdbb6d9b37bd689a67152364c1a2b7c2b7ad0925ba30d5760b0f3801a3d67fbb611dd33924ff68023bc83e5b0dd87fde247cc364e3951b217be17a6457e231c316d4ed2a2ec1bebb5310d777defb8570d406f7baea5562d43abbc69b75a7c73fa890ce7142c55f8a1b26b4a38d9f3b6fe2eed97934d3016b57ecb074a84e43a8f7d1c0af0f91d6d1dda30c240fa71f37853c118d729977009bed221ae8cfc91f2ea443e3bb2df54eb424a0b26f9ce08c34489b9b5c2c54eb413e657ff66965cc9ff632ef62b3537addaa9568aefa8cb8147223fc110dcdb14470295324651e7aa2bfcfb94c370c1bb7217c2ff5a81c07c7e1b8601899c3d411fa9d3c214a63bf2a04ac5355d64b8ce12692e687294446d497da190736fc18b4e396f8d61da32ce7453ee110b1379c519279a9c5d884f527c984b670301814425e090f3bceceb9a2ab3bb0bf9b0f6eb82a9088e53ded938d6090938c590e61473b471a86928f11e537d92f5926c3d4687c3525f725eea6bd8db21dec5dd72baa3586b1a9e857acaab8665c1bcd42f9f857a1b51aabc477c3d97d621f12ebb847074f1ebb43d417db109c9be3d2123a423e679005b462391d673c0e9a9a341a89e31cb3d739eb18690a6634c68de16ab07d0bcc4bd32eb67cc299e61c8e71f583bd0c09466a01428f4c881cbbed3be719679e3e9c5d33de7b6a91effbca9f07e0e89daab68f2bc63c2f2f19ff257fb691d8602bd39939ac1567b4fd383f4aad0d533ba5725ae6042dc727ecbbbcfbcdd4b4945d8f1aefb525498dd7f1f6be5ae53fccb964c513f4ceb359d12f5f16fd2fd5670e0050000",
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:43 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Transfer-Encoding",
+      "chunked",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "48",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:12:19 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=1, must-revalidate, public",
+      "Content-Encoding",
+      "gzip",
+      "Vary",
+      "accept-encoding",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 f6feb245804a4fdbb3bd412875abee12.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "BOM78-P2",
+      "X-Amz-Cf-Id",
+      "Kc6nPsVOwwkJhWtV6yozGxYCOJaI2mA0jS3gqKO93moPiSSZ46YG6Q==",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:09:12 GMT",
+      "CF-Cache-Status",
+      "EXPIRED",
+      "Set-Cookie",
+      "_cfuvid=FGF4I63leJOnLAXJflX61LPfp.OEEz4aIJpzygsYa0g-1668888703223-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98b6cc80d64e-CDG"
     ],
-    "continuation": null
+    "responseIsBinary": true
   },
-  "https://api.reservoir.tools/orders/asks/v3?token=0xed5af388653567af2f388e6224dc7c4b3241c544%3A2743&includePrivate=false&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=50": {
-    "orders": [
-      {
-        "id": "0x239af5f8e335b2652a106bbecb141abcee5e195de625261c143204b645381fcb",
-        "kind": "seaport",
-        "side": "sell",
-        "status": "active",
-        "tokenSetId": "token:0xed5af388653567af2f388e6224dc7c4b3241c544:2743",
-        "tokenSetSchemaHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "contract": "0xed5af388653567af2f388e6224dc7c4b3241c544",
-        "maker": "0x8599254f994d008f77a2144e049ee27940e9045f",
-        "taker": "0x0000000000000000000000000000000000000000",
-        "price": {
-          "currency": {
-            "contract": "0x0000000000000000000000000000000000000000",
-            "name": "Ether",
-            "symbol": "ETH",
-            "decimals": 18
-          },
-          "amount": {
-            "raw": "12000000000000000000",
-            "decimal": 12,
-            "usd": 14612.42507,
-            "native": 12
-          },
-          "netAmount": {
-            "raw": "11100000000000000000",
-            "decimal": 11.1,
-            "usd": 13516.49319,
-            "native": 11.1
-          }
-        },
-        "validFrom": 1668661060,
-        "validUntil": 1668920260,
-        "quantityFilled": 0,
-        "quantityRemaining": 1,
-        "source": {
-          "id": "0x5b3256965e7c3cf26e11fcaf296dfc8807c01073",
-          "domain": "opensea.io",
-          "name": "OpenSea",
-          "icon": "https://raw.githubusercontent.com/reservoirprotocol/indexer/v5/src/models/sources/opensea-logo.svg",
-          "url": "https://opensea.io/assets/0xed5af388653567af2f388e6224dc7c4b3241c544/2743"
-        },
-        "feeBps": 750,
-        "feeBreakdown": [
-          {
-            "bps": 250,
-            "kind": "marketplace",
-            "recipient": "0x0000a26b00c1f0df003000390027140000faa719"
-          },
-          {
-            "bps": 500,
-            "kind": "royalty",
-            "recipient": "0xb4d24dacbdffa1bbf9a624044484b3feeb7fdf74"
-          }
-        ],
-        "expiration": 1668920260,
-        "isReservoir": null,
-        "isDynamic": false,
-        "createdAt": "2022-11-17T05:00:26.383Z",
-        "updatedAt": "2022-11-17T05:00:53.391Z"
-      }
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/orders/bids/v4?token=0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D:1860&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=10",
+    "body": "",
+    "status": 200,
+    "response": "1f8b0800000000000003ed9b596fdb4812c7bfca42cf0ed555ddd587de3248b29901e460679c64e3c53ef4192bd6b59494d80ef2dda7285bd661c9c7060b6c323424c3248bd5cdaeea5fff59a4bf762675caf5acd3fbd7d7ce20757a1d71918a892e035952c22730cee71093b58a029482a118e94b4a6ca65309456769143841480a0a29db39ea9c0fc68daf0bbc44de9a0d52e6adb0b86c36e67ebee0f63a3ece079f33ef994fcef3f88f3cffb539254ec6f39a0ff5c445882a7a9193375a196f7d301185868819c07afe38a90bc8b4e1e28f789647feb59f9d2daf447ce70f7b5ef567e9ef093d1af9f35c2f4fca097d504ed9e0b577c2796308528eaa48fe0899838d06a56e2ee3f6a427f4705a0f220fefd74e5cd4751ec7cbe5df9bdd8e02bdf7d2054459b24d82af81b87d34d92727ac8c86748c4da8c67ed484ea7deda7d39cfef6727ec61de2a05d8ec264d81c7879f29ab7b9fb83911f7218c17e3beaf8d164319e37edd6fe0b5b9116b0a7a73767757aa42b01479dc58c23ae0d185959b04235cd2f73e2da801d8ff3fcf9ae6f32e81c1df64dd5d260e55e5b692a1efd66cfadfb1b9b6fdcc4673f1ca457f564c4d7c2c6d62867f5cdeeb7e3f96078bddf6990068f3aff5978de39bf7c35180e33fb17eb5dbf73ea0dc683f1473e83876cb2a8afe3b29a56116d293e7b280ebcb525e8c2a1b0251b910c8494b442abe23a0affc40f4d4c061c4cde3a9bcfa7b35eb7cbc3507d1ccccf166131cb7513e83c9e577132ead699777c9e0cea693d994fe264d8e569982f72ddfd4cdd591dbba349cac359f7ba6bb36e333d9f0d271f27d5943bcd03560f37da698e56834937cfcfba8f4ffd2e58bd8cc7a4198c1b06b09b0e0f75c9f99729e70c89ebbfebeccfd3e4cb78099fb03a72c38e91afcff37c3af4b16144cde19d0ef2f83aa1934519b5202b4c8c947548ba441ec4ac72f62492cc98b48ea9f3eddf479d7c311dd41cf8661037233998fdbe1aaf4e6fbc180e79b2738fe6393d6f5a4181f80ce019b813d03d943da1398dd469334ed3f4b0d9b7a3dbc8835451e42ca5ce5a846c3082ca083248a764d01e637189434f368614c1249e962a9349da5301e1d6409d653f9dd4f3bf3c5343861480c74a4b5e734c4e5a584332391e4319f957294a385b7e26a692dbd7d34deeb95ba40a05957552e016f3dc01a24a10749f6759b1c1cab7e4195419c754ddf0bdb4d84b538d6a0f4dad4347f03d34a52091b4d3944d94b1a0e67429d117742c4aa26dc8c06b9091ebf17f336dd2d9ff2f813ae126788a5e3375f6f92e536f0c1aacfad92ccf67df43d6b5b36db81ea42b3e12af4d0278d441880845a42284e43d92f30f0da8e668f1de805b32ee8ee77a72e987f3cb3b5ebd259b52144a51b22021f9a8120b2101c5b2122a3178c25c602fb45709f324682b754d637b3fb437cc36a0ed84f4c46ac0d8889a8ae164a2926489b168e52d2f410193d53cf10d5883ac85154731f0021f90c7c8b4d06e85702356f59e9e6e8955bd56aa2c841ddf67e96da5aa0f601b9dc1fb7c63e51a9d73836d92a242ebb654f6d2622fb69922b05f04bb16db2db61f8bed55c23c556b2356528b07b5f6ca6c03db825456606562b99419312209484eb2ba96cab1ec865c88bb65959386191439f948a3f69c773a7b955b6cb7d86eb0bd2b88ef607ba3c0a0a1728ed06e639b0e625b23dde39ba1cc066b6e8365294f84dbdc6693fdd50b161ffbc02d34ba16dc2db81f0deeeb847912b841f4f8be53c3037a7bc36c03dc52f0d068504a90f1c4525b64e02e2a90596947d90607885668be241e1c0c916fff952ae45d5439c416dcbbe04ea5500a41f00d4b5145612c2a9194a40dc6ec4a88a2299b99f053817b5b6e8342d801f75a6e6b8b957086e416b70faa6dbb25b641d22eb6ed5a6c4b65784940adb7a06df76a6d6b09e59e1289750abfabe0dc22fb2f85ec55c23c1ed9287ac2f694acb4d1f7207bdb6c03d92cae8b4cdacb64993009844ba06c712eb366648a6b6f390159745b13a3f4dac908268b8cce6683cab70f0a5b5edf298fec0aedff96d724f1deea0855126f81ada5b295b6466c3f24648b03c4967880d8df551d691f11fe7f3c225c45f2a928e5359e081e44e9ca6c53fde6a29beec526cd2515874c024e789b10f86ed4a5600464907c83e72315cb00e5d18e3c41791794d4a2b4ad59dc2959ec026f5db2208d156832b085bb43150b42bcb76241556370eb1cd1559294ddae8734267b606a2cb194de85a901690ceb8916a63f3a4cd7917c2c4ced0910abe59ea4a6ca7510a6bb661b30557cb383da4688c917c667ca982d09ce7ac1221a1d4b55a941fa9072cec217edf96e2845eb53b03cbeba2d25b43c65ea3df00e1b6dbcc346cea84a39febdc5bc83efb0310bddfd35e0c660e51db5a1ca186568ab9cd098ec232a0abe65d8530336ac9d555b50680b0a8fad01df24cc63c16d4e107ae87ad8d4bedc4170ef9a6d803b0bc39d4d51a22b32eb82ca32c89d95c9f062138a23e2191f20f0469021e742453ae38bd4c948dca801b72ab8612699c00b9f06c36c2e0a389e51618e5882055ec8352fea9632fc4cd40696b6777bba262b546cb0022b58e918a30237b1bdb438c06d90a279d5fd1eef4b835bffcd4b1782a4b35bfe9736fb0b0bcba7e57b0a0b68a9d5c23fba165e47f2698505dd9350192d1f282caccd3690ca52a079d301922919093cafe0224b609120b1e814489a9c257ae7a5f4985c51e40d32697376bc5ab4486d8530d0fd429881792b8479a9d195e535679b787448080312aa7bfe9903aaa5c1ad7ba56d2504a0de72bfb4d90354ad15d01d296ca0792a21650bd41f1da8eb483e5ea30aea29d703536938fc82d9ae59d374139cc17871d378e7f8e425f44f9e7fe9bfd8fdfe52faaf3fc2f1a748fd2bfebeff873c1dbdbd3c3e7975d6bffa15fa7f7f7bd53f8997fd17fdcbd34fa7e71f3ebdbd3ac677c3fed56f676fdebfbceae3cbcbd317c3d1f18b7767c757bf8dde9cbc1b9e9e0ccf3fbc3ffed4f9f627b70d9790b0370000",
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:44 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Transfer-Encoding",
+      "chunked",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "47",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:12:19 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=1, must-revalidate, public",
+      "Content-Encoding",
+      "gzip",
+      "Vary",
+      "accept-encoding",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 b78cc6d01d4e7856002e813febd954e2.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "CDG50-C1",
+      "X-Amz-Cf-Id",
+      "4FkjmsS1GxmY6S-jfYpJ6erT7HorRTXbaWMLc67UuYjOGxz-fr76nA==",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:11:20 GMT",
+      "CF-Cache-Status",
+      "EXPIRED",
+      "Set-Cookie",
+      "_cfuvid=2ydszu04icsQpBroFI5ofwGbRCAJ_0yRouKh58LfMBI-1668888704052-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98bdcee0d33f-CDG"
     ],
-    "continuation": null
+    "responseIsBinary": true
   },
-  "https://api.reservoir.tools/orders/asks/v3?token=0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91%3A6781&includePrivate=false&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=50": {
-    "orders": [],
-    "continuation": null
-  },
-  "https://api.reservoir.tools/sales/v4?token=0x60E4d786628Fea6478F785A6d7e704777c86a7c6%3A9018&includeMetadata=false&limit=1": {
-    "sales": [
-      {
-        "id": "be81dec8d58965084b7e3736a8b821b568c88979e55c6edb09785febcddefc55",
-        "saleId": "29f5f08f5f7bf839d8022687070dccc3155de7e3f3c6f083af60861851bce25d",
-        "token": {
-          "contract": "0x60e4d786628fea6478f785a6d7e704777c86a7c6",
-          "tokenId": "9018",
-          "name": null,
-          "image": null,
-          "collection": { "id": null, "name": null }
-        },
-        "orderId": "0xd9b58bc42f6a46fb773f308b2fb670996b4ca01a3073e798e46e2ce0f94b185b",
-        "orderSource": "looksrare.org",
-        "orderSide": "bid",
-        "orderKind": "looks-rare",
-        "from": "0xc05669e488f0942ff1c3e2f6921a7a1942dd6ca2",
-        "to": "0x828cebb8cc44cb9047f0f057f9603c7348553d84",
-        "amount": "1",
-        "fillSource": "looksrare.org",
-        "block": 15984331,
-        "txHash": "0x215ae227621e57f77659d9dacd6339f574034f4882c03a761cd3e07ada2e7802",
-        "logIndex": 191,
-        "batchIndex": 1,
-        "timestamp": 1668622847,
-        "price": {
-          "currency": {
-            "contract": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-            "name": "Wrapped Ether",
-            "symbol": "WETH",
-            "decimals": 18
-          },
-          "amount": {
-            "raw": "10200000000000000000",
-            "decimal": 10.2,
-            "usd": 12759.53251,
-            "native": 10.2
-          }
-        },
-        "washTradingScore": 0
-      }
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/orders/bids/v4?token=0x09233d553058c2F42ba751C87816a8E9FaE7Ef10:4329&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=10",
+    "body": "",
+    "status": 200,
+    "response": "1f8b0800000000000003ed9adb6e1b3912865f65a1eb44228ba72a017391c166763280156c26036fb2d80b1e6dc5925adb6a25b183bcfb56cb76dc922539c2de19ed13d424bbc866153fff5de4b74155a75caf06e37f7f1b4cd3603c105f7db11e94b0540c3841520597bdd612d168a93009ca823f1049410a40068ad9584a266753ac86c18bc1d574d1da5a65bfacea860b56d394b920acafdb8bc6376bee72e06333fd9cb9a4a9aef2e2cfdcbc69ef8ad5a2a9b96a2cbe0a02a592314a188c503404ef8c8ce8505a8f998acf2e17293a26fe8c9779ee7ff7abcbcdc388fff38b2ddf8fe7d6decf8f68eeaf72bdb92963d63c53058a10560b2775111e8a92da1b5b623bd102a5b2ed63fcb8e984112eeb69e4e9fd3688ebbace8b78bdf9dc1d7614e0bd57140054c9ec432fb289ba00bb369140159db131b6be5bf879ebaaf3da2f9739fded7573c90362a75dcf43356b2b5ebfff9daf538ed3b99fb11b257e7f31f0f36abd68da7e6bff855ba1002977c77977cf602c869bfa1783f58a3d4e560e090db47d6f02e2be9eed2e72f36ac7b4038944874d733ddd59466b860eadc5aee9b6fe3b9bfeec67d3f45b5dcdf911b8097f695477c57f2d9ae9ecbe9c08c58bc17fd79e0b9bebdfa6b35966db9da2771c71d3c57471c177f04c55ebfad61d770bca0405bc40acc92eaa58c066294bf405c8a61211858b420aa71e26ffedb28d65cf05537623175c36cd72351e8d78068617d3e6721dd6ab5cb72ece8b6618abf9a8ce5cf0b99ad6cbba6aaa58cd46bc06f3d75c8f3e9bd1aa8ea37995f26c35ba1ddd6a547117bc3e5fceaa8b6ab8fa7cc17dadeb59a7abbb06c36935f2ab556e56a39f8ffe11873bb55ea9da8961a30fc6063cf325e75f976de4b0ef6eafeaecaf52f565b1e15068ebc0881f1c99fbfa2a37cb998f2d2c6a76f5729a17cd8f65e2c10621a22c22f10a535ca2383e80d7595b5bbc7792b8df3bcbae63b9aeaefdacb97e6495bcf3c23ae1adf536972cbd34815c51298a8245bbe48294510dbeffe7c5207f5d4e6b0eafd653dd8899aededd3b65305eac673366093f6893d3abb61710002fa57c29e93d88b1c0b1d04310ee63eb89657aba59fb40f7c846305a984496d779c41cbc11a44947cd700eb9846c1c2f7a761747a1d3a6182bd12429ad518611d4237b17d92e15f63202474f5b1921fb6c340ac5132a382678fdc6ac457a66c87e34ce1d647789ed547bbd8dec23c43e627953df45b633edf516b2f100b34198fdcc26e899dd33fb1466b711731ab3d518ec9067e409663f34eb325b04875a19f292e32aa5c83ec02c844c326166363b96db501c23c8121862259eb3d33a68198492b667762fb35b66f3f751660be8401b9d03bb036d0187a92df138b5a1436d8b64f42eb5613fb5a5c1bdd416c6f6d4eea97d02b53711731ab561ac68281c3e41ed87661d6a67859e72088692579ea38ba10db21408c88a51b91838c058bd640c2a62493e8031acb3ad4b5e60323db577a9edd19458a216457a95484923a4e457160c905491852810b1c96746ed279223a22bb599aee076a97d446b8be3d911945d6a3b748fa82d0f51dbeda1362f41453db57b6aff34b5ef22e6646abba125fd34b5ef9a75a84dce1687148c8f9409b32b59b19666a5e80a8a503c44c92f9dec1b8e459982c4a89dce5147c50007d753bbcf8f30b5253d1ae716b57fe49d5b683ba594de86b6a483cc76c7fe1f6cea3bcc365608b9c36cb79fd9ce3ad8abb475cbf29ed93db37f5a696f22e6e7992d696cf458c110151d61f676b30eb3550e2caa831744d61af68753ce68864cb28436916434c7ec14075c66c56853d24192d6ec441f74eeb7211f311b0d66cbb366f8b5c459a9917ce4351c0a5a5f1028a6a29330fa79311b8f2bed0735dc42db82d13b49ed560d1fa2b685e34adbaa0eb5b505743bd4b6ea00b58ddc4b6d45baa7764fed13a8bd899853a92df99dd3c093d4be6fd6a1b6c3e44532524a30d1166c7725419712796559a64d498ee5377ac731c7a28512e9c201994374ca48c49edabdd26ea9ed1e8d739bdaae036d4d4ae30eb4dd41661b75c4f2a6bec36ca5b5543bcc360798ad9cddcb6c6965cfec9ed927307b133127315bd36ddae309a5dd69d661b6954890b34e2964b494022ff5a0b2952da2c9b9843220a5e2b5b760c1b38c49ce6a8a2cb65105d5337b97d94626e33d517bc246530226382fd10cecfb14b58a81ac701c60cf8ad97bc6d965f63db00d0db5d1763b357288d6c76dba87ed47353482e4ce39bf3d9cb64a38bd2f8b8d44d067b17b4e9f7462044ec862db363dad600c6ee8cce1bdc7dd661d4e97c2834b86d9c10375c46f89402cb419e7422aa5138b6be01fe905a0488c667ebd07a132a1881e639fc57ec4695dd8bfca7a7e5b81004a82400ac2bbe0812716dbb0282e187a469c7656490470aa3bce2e53dbfa7b564b330442bd9db5681bece735e315ad16dab8fdb637f5f7c806c5a6d06e9dfade34d8bff7c836f7ee3d2ad39ff3eba97dcadee326624edb7b64d92c58b5d827f61e1f9a753322e02d3338b41b8a1e89034e8710595b4704cb31e7222b426754b1b2249bc060c9a538620dae65cafd39bf47d42e49279105152d4a4e9aa43205d12be522ff65e76b9449c7f89ca86d2c3c1a6797dac6fe38e627ec90409b2d6673f52164f3cc1f31bca9bf47b6b443509b03d75d647383fd0911d47aafd0b6aadf7aec917d8ad0de44cc69496cc78f3c94ce3c91c47e68d676dd46c074b1beeb7c30b9f90bce3ebdfa72f6f7eddf7fddfcaa27377f5c4e3e4d666fcfdf88c9cdbbd987f7176672fee666f28f3fa61f6e5e5fbf3d3fd3679f3e7e3a8333f501cec4d94d9467c09fce3f5e4de6ffbc9ebcbf9c7f3cff389fdc5c990ff337e2ecfcdd6c72f1cb2f83efff038da8aaf494390000",
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:45 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Transfer-Encoding",
+      "chunked",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "46",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:12:19 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=1, must-revalidate, public",
+      "Content-Encoding",
+      "gzip",
+      "Vary",
+      "accept-encoding",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 41f3d404851a0da65a9661800761ab08.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "BOM78-P2",
+      "X-Amz-Cf-Id",
+      "EWC1Wg42cVU6CLcq5W-0skxHkGfZkF7ywF8O2Z0NY5qkgCHdRNUhzQ==",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:11:26 GMT",
+      "CF-Cache-Status",
+      "EXPIRED",
+      "Set-Cookie",
+      "_cfuvid=tkLn1r0Etnaha9HJfafB7RUeZzGykrWDqf7rjmDy4fs-1668888705042-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98c2fb25d231-CDG"
     ],
-    "continuation": "MTY2ODYyMjg0N18xOTFfMQ=="
+    "responseIsBinary": true
   },
-  "https://api.reservoir.tools/sales/v4?token=0x60E4d786628Fea6478F785A6d7e704777c86a7c6%3A3927&includeMetadata=false&limit=1": {
-    "sales": [
-      {
-        "id": "decb97716f04efec2e8381f3826d453a34c5962e05e198f8df78837d898014cb",
-        "saleId": "d49259c22437d2a29085a30625d19f430e300faee764ef1c9fef3e4a9cba666d",
-        "token": {
-          "contract": "0x60e4d786628fea6478f785a6d7e704777c86a7c6",
-          "tokenId": "3927",
-          "name": null,
-          "image": null,
-          "collection": { "id": null, "name": null }
-        },
-        "orderId": "0x84f65adaa01ecdb8183ad525505056622bbdab625336dd31274762d8232e56f3",
-        "orderSource": "looksrare.org",
-        "orderSide": "ask",
-        "orderKind": "looks-rare",
-        "from": "0x4a39e17ad4b045216d3702b2748e2c26f597fd84",
-        "to": "0x165896732df25087eba4e736604559ceafdfc82f",
-        "amount": "1",
-        "fillSource": "looksrare.org",
-        "block": 15096851,
-        "txHash": "0x3337067167986befd021710b1cfe705141dceeb8e1edfc6a09c91591c1f73d48",
-        "logIndex": 56,
-        "batchIndex": 1,
-        "timestamp": 1657215937,
-        "price": {
-          "currency": {
-            "contract": "0x0000000000000000000000000000000000000000",
-            "name": "Ether",
-            "symbol": "ETH",
-            "decimals": 18
-          },
-          "amount": {
-            "raw": "18000000000000000000",
-            "decimal": 18,
-            "usd": 21397.06157,
-            "native": 18
-          }
-        },
-        "washTradingScore": 0
-      }
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/orders/asks/v3?token=0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D:1860&includePrivate=false&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=50",
+    "body": "",
+    "status": 200,
+    "response": { "orders": [], "continuation": null },
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:46 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Content-Length",
+      "33",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "45",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:12:19 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=1, must-revalidate, public",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 db8e720c1e186c4a9d38db72ecaa0492.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "BOM78-P2",
+      "X-Amz-Cf-Id",
+      "W_qEjrOWWQXPfRnDtBAT4b2JQlzYe7wUaKyc1VDGewvqdq_2vG5RBA==",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:11:42 GMT",
+      "CF-Cache-Status",
+      "EXPIRED",
+      "Accept-Ranges",
+      "bytes",
+      "Vary",
+      "Accept-Encoding",
+      "Set-Cookie",
+      "_cfuvid=1xC.k5xSOL7h8GYmbwmHj2Z1EnG2IWKiAA9c8o3KRiI-1668888706752-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98c92f35d387-CDG"
     ],
-    "continuation": "MTY1NzIxNTkzN181Nl8x"
+    "responseIsBinary": false
   },
-  "https://api.reservoir.tools/sales/v4?token=0xed5af388653567af2f388e6224dc7c4b3241c544%3A2743&includeMetadata=false&limit=1": {
-    "sales": [
-      {
-        "id": "4cf50858a0b196fbcda64205fdac10d8931087325bff25acd45830798f4cd597",
-        "saleId": "f999c07ef48a9b877e3eee60d09f003a2bcf360137ac99eb81f84f166bcdbc69",
-        "token": {
-          "contract": "0xed5af388653567af2f388e6224dc7c4b3241c544",
-          "tokenId": "2743",
-          "name": null,
-          "image": null,
-          "collection": { "id": null, "name": null }
-        },
-        "orderId": "0x80c12a2f563fb3a847e9347eba692f07111b2bb9015939a6e8e2574fd43fcdde",
-        "orderSource": "opensea.io",
-        "orderSide": "ask",
-        "orderKind": "wyvern-v2.3",
-        "from": "0xb20c8e35497977e55469d3d20a8358a26d7857f8",
-        "to": "0x8599254f994d008f77a2144e049ee27940e9045f",
-        "amount": "1",
-        "fillSource": "opensea.io",
-        "block": 14735326,
-        "txHash": "0x6c150063091ad10b5e3dcf07333ba56f98e95fe0379ef063feea43e9d655ed3f",
-        "logIndex": 469,
-        "batchIndex": 1,
-        "timestamp": 1652003079,
-        "price": {
-          "currency": {
-            "contract": "0x0000000000000000000000000000000000000000",
-            "name": "Ether",
-            "symbol": "ETH",
-            "decimals": 18
-          },
-          "amount": {
-            "raw": "22000000000000000000",
-            "decimal": 22,
-            "usd": 58107.04035,
-            "native": 22
-          }
-        },
-        "washTradingScore": 0
-      }
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/orders/asks/v3?token=0x09233d553058c2F42ba751C87816a8E9FaE7Ef10:4329&includePrivate=false&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=50",
+    "body": "",
+    "status": 200,
+    "response": "1f8b0800000000000003a5544d8fdc360cfd2f3eef8e25d9faf0dc12a441720a90a497143dd012b5238c6db9b23cd9c162ff7b29cf34bb69d06283d817e9517ca4f8483d5431394c4bb5ffe3a10aaeda57ecbe07fab573069895aa570ab1432e5587bd6c3bdfa3e0464b5a4b10ad765ca1b2c239e96d27b50055dd54c73015ae05618e2913b004871b300c659721af14b3029bc30909c9f188d327ccef8bdbb6d9b37bd689a67152364c1a2b7c2b7ad0925ba30d5760b0f3801a3d67fbb611dd33924ff68023bc83e5b0dd87fde247cc364e3951b217be17a6457e231c316d4ed2a2ec1bebb5310d777defb8570d406f7baea5562d43abbc69b75a7c73fa890ce7142c55f8a1b26b4a38d9f3b6fe2eed97934d3016b57ecb074a84e43a8f7d1c0af0f91d6d1dda30c240fa71f37853c118d729977009bed221ae8cfc91f2ea443e3bb2df54eb424a0b26f9ce08c34489b9b5c2c54eb413e657ff66965cc9ff632ef62b3537addaa9568aefa8cb8147223fc110dcdb14470295324651e7aa2bfcfb94c370c1bb7217c2ff5a81c07c7e1b8601899c3d411fa9d3c214a63bf2a04ac5355d64b8ce12692e687294446d497da190736fc18b4e396f8d61da32ce7453ee110b1379c519279a9c5d884f527c984b670301814425e090f3bceceb9a2ab3bb0bf9b0f6eb82a9088e53ded938d6090938c590e61473b471a86928f11e537d92f5926c3d4687c3525f725eea6bd8db21dec5dd72baa3586b1a9e857acaab8665c1bcd42f9f857a1b51aabc477c3d97d621f12ebb847074f1ebb43d417db109c9be3d2123a423e679005b462391d673c0e9a9a341a89e31cb3d739eb18690a6634c68de16ab07d0bcc4bd32eb67cc299e61c8e71f583bd0c09466a01428f4c881cbbed3be719679e3e9c5d33de7b6a91effbca9f07e0e89daab68f2bc63c2f2f19ff257fb691d8602bd39939ac1567b4fd383f4aad0d533ba5725ae6042dc727ecbbbcfbcdd4b4945d8f1aefb525498dd7f1f6be5ae53fccb964c513f4ceb359d12f5f16fd2fd5670e0050000",
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:47 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Transfer-Encoding",
+      "chunked",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "44",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:12:19 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=1, must-revalidate, public",
+      "Content-Encoding",
+      "gzip",
+      "Vary",
+      "accept-encoding",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 d1ac9c701cd8b36557cb10a31c9b36d0.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "CDG52-P1",
+      "X-Amz-Cf-Id",
+      "ZoFq8Hh64Sy82V4DCVMFA4EWHHBzgi_BII4VJnO2D-UnLlGINDnC7w==",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:11:19 GMT",
+      "CF-Cache-Status",
+      "EXPIRED",
+      "Set-Cookie",
+      "_cfuvid=7HeqZMzJ9GaiPAIbZH1Loi6C7ThkLblG6G4r38Vim2A-1668888707918-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98d3bc54d3bb-CDG"
     ],
-    "continuation": "MTY1MjAwMzA3OV80NjlfMQ=="
+    "responseIsBinary": true
   },
-  "https://api.reservoir.tools/sales/v4?token=0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91%3A6781&includeMetadata=false&limit=1": {
-    "sales": [
-      {
-        "id": "a99ef93fbe2da5ed84f255d96b94a28b054dfbb36e6b155fbd3290e4231121a5",
-        "saleId": "19034aaa3cb554b941b79af25a40fdf16051fe33caed08d61b428fc1a294e118",
-        "token": {
-          "contract": "0x394e3d3044fc89fcdd966d3cb35ac0b32b0cda91",
-          "tokenId": "6781",
-          "name": null,
-          "image": null,
-          "collection": { "id": null, "name": null }
-        },
-        "orderId": "0x9f05f13ba7be414d52fd0652c18aceb08a86af18f3d5e62545afc51246f5b928",
-        "orderSource": "opensea.io",
-        "orderSide": "bid",
-        "orderKind": "seaport",
-        "from": "0xa1c0c0ff6eaa63e7b0c7bf441fc146afdb08fc7b",
-        "to": "0xe31bb1a9a271b754cbadcd5e993c883d8e4cf9af",
-        "amount": "1",
-        "fillSource": "opensea.io",
-        "block": 15675893,
-        "txHash": "0xa4823ab85eb06c6d6fa27e809a184249563719a63299fccbccda7dd61b116533",
-        "logIndex": 273,
-        "batchIndex": 1,
-        "timestamp": 1664900099,
-        "price": {
-          "currency": {
-            "contract": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-            "name": "Wrapped Ether",
-            "symbol": "WETH",
-            "decimals": 18
-          },
-          "amount": {
-            "raw": "5300000000000000000",
-            "decimal": 5.3,
-            "usd": 7014.2535,
-            "native": 5.3
-          }
-        },
-        "washTradingScore": 0
-      }
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/orders/bids/v4?token=0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D:1860&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=10",
+    "body": "",
+    "status": 200,
+    "response": "1f8b0800000000000003ed9b596fdb4812c7bfca42cf0ed555ddd587de3248b29901e460679c64e3c53ef4192bd6b59494d80ef2dda7285bd661c9c7060b6c323424c3248bd5cdaeea5fff59a4bf762675caf5acd3fbd7d7ce20757a1d71918a892e035952c22730cee71093b58a029482a118e94b4a6ca65309456769143841480a0a29db39ea9c0fc68daf0bbc44de9a0d52e6adb0b86c36e67ebee0f63a3ece079f33ef994fcef3f88f3cffb539254ec6f39a0ff5c445882a7a9193375a196f7d301185868819c07afe38a90bc8b4e1e28f789647feb59f9d2daf447ce70f7b5ef567e9ef093d1af9f35c2f4fca097d504ed9e0b577c2796308528eaa48fe0899838d06a56e2ee3f6a427f4705a0f220fefd74e5cd4751ec7cbe5df9bdd8e02bdf7d2054459b24d82af81b87d34d92727ac8c86748c4da8c67ed484ea7deda7d39cfef6727ec61de2a05d8ec264d81c7879f29ab7b9fb83911f7218c17e3beaf8d164319e37edd6fe0b5b9116b0a7a73767757aa42b01479dc58c23ae0d185959b04235cd2f73e2da801d8ff3fcf9ae6f32e81c1df64dd5d260e55e5b692a1efd66cfadfb1b9b6fdcc4673f1ca457f564c4d7c2c6d62867f5cdeeb7e3f96078bddf6990068f3aff5978de39bf7c35180e33fb17eb5dbf73ea0dc683f1473e83876cb2a8afe3b29a56116d293e7b280ebcb525e8c2a1b0251b910c8494b442abe23a0affc40f4d4c061c4cde3a9bcfa7b35eb7cbc3507d1ccccf166131cb7513e83c9e577132ead699777c9e0cea693d994fe264d8e569982f72ddfd4cdd591dbba349cac359f7ba6bb36e333d9f0d271f27d5943bcd03560f37da698e56834937cfcfba8f4ffd2e58bd8cc7a4198c1b06b09b0e0f75c9f99729e70c89ebbfebeccfd3e4cb78099fb03a72c38e91afcff37c3af4b16144cde19d0ef2f83aa1934519b5202b4c8c947548ba441ec4ac72f62492cc98b48ea9f3eddf479d7c311dd41cf8661037233998fdbe1aaf4e6fbc180e79b2738fe6393d6f5a4181f80ce019b813d03d943da1398dd469334ed3f4b0d9b7a3dbc8835451e42ca5ce5a846c3082ca083248a764d01e637189434f368614c1249e962a9349da5301e1d6409d653f9dd4f3bf3c5343861480c74a4b5e734c4e5a584332391e4319f957294a385b7e26a692dbd7d34deeb95ba40a05957552e016f3dc01a24a10749f6759b1c1cab7e4195419c754ddf0bdb4d84b538d6a0f4dad4347f03d34a52091b4d3944d94b1a0e67429d117742c4aa26dc8c06b9091ebf17f336dd2d9ff2f813ae126788a5e3375f6f92e536f0c1aacfad92ccf67df43d6b5b36db81ea42b3e12af4d0278d441880845a42284e43d92f30f0da8e668f1de805b32ee8ee77a72e987f3cb3b5ebd259b52144a51b22021f9a8120b2101c5b2122a3178c25c602fb45709f324682b754d637b3fb437cc36a0ed84f4c46ac0d8889a8ae164a2926489b168e52d2f410193d53cf10d5883ac85154731f0021f90c7c8b4d06e85702356f59e9e6e8955bd56aa2c841ddf67e96da5aa0f601b9dc1fb7c63e51a9d73836d92a242ebb654f6d2622fb69922b05f04bb16db2db61f8bed55c23c556b2356528b07b5f6ca6c03db825456606562b99419312209484eb2ba96cab1ec865c88bb65959386191439f948a3f69c773a7b955b6cb7d86eb0bd2b88ef607ba3c0a0a1728ed06e639b0e625b23dde39ba1cc066b6e8365294f84dbdc6693fdd50b161ffbc02d34ba16dc2db81f0deeeb847912b841f4f8be53c3037a7bc36c03dc52f0d068504a90f1c4525b64e02e2a90596947d90607885668be241e1c0c916fff952ae45d5439c416dcbbe04ea5500a41f00d4b5145612c2a9194a40dc6ec4a88a2299b99f053817b5b6e8342d801f75a6e6b8b957086e416b70faa6dbb25b641d22eb6ed5a6c4b65784940adb7a06df76a6d6b09e59e1289750abfabe0dc22fb2f85ec55c23c1ed9287ac2f694acb4d1f7207bdb6c03d92cae8b4cdacb64993009844ba06c712eb366648a6b6f390159745b13a3f4dac908268b8cce6683cab70f0a5b5edf298fec0aedff96d724f1deea0855126f81ada5b295b6466c3f24648b03c4967880d8df551d691f11fe7f3c225c45f2a928e5359e081e44e9ca6c53fde6a29beec526cd2515874c024e789b10f86ed4a5600464907c83e72315cb00e5d18e3c41791794d4a2b4ad59dc2959ec026f5db2208d156832b085bb43150b42bcb76241556370eb1cd1559294ddae8734267b606a2cb194de85a901690ceb8916a63f3a4cd7917c2c4ced0910abe59ea4a6ca7510a6bb661b30557cb383da4688c917c667ca982d09ce7ac1221a1d4b55a941fa9072cec217edf96e2845eb53b03cbeba2d25b43c65ea3df00e1b6dbcc346cea84a39febdc5bc83efb0310bddfd35e0c660e51db5a1ca186568ab9cd098ec232a0abe65d8530336ac9d555b50680b0a8fad01df24cc63c16d4e107ae87ad8d4bedc4170ef9a6d803b0bc39d4d51a22b32eb82ca32c89d95c9f062138a23e2191f20f0469021e742453ae38bd4c948dca801b72ab8612699c00b9f06c36c2e0a389e51618e5882055ec8352fea9632fc4cd40696b6777bba262b546cb0022b58e918a30237b1bdb438c06d90a279d5fd1eef4b835bffcd4b1782a4b35bfe9736fb0b0bcba7e57b0a0b68a9d5c23fba165e47f2698505dd9350192d1f282caccd3690ca52a079d301922919093cafe0224b609120b1e814489a9c257ae7a5f4985c51e40d32697376bc5ab4486d8530d0fd429881792b8479a9d195e535679b787448080312aa7bfe9903aaa5c1ad7ba56d2504a0de72bfb4d90354ad15d01d296ca0792a21650bd41f1da8eb483e5ea30aea29d703536938fc82d9ae59d374139cc17871d378e7f8e425f44f9e7fe9bfd8fdfe52faaf3fc2f1a748fd2bfebeff873c1dbdbd3c3e7975d6bffa15fa7f7f7bd53f8997fd17fdcbd34fa7e71f3ebdbd3ac677c3fed56f676fdebfbceae3cbcbd317c3d1f18b7767c757bf8dde9cbc1b9e9e0ccf3fbc3ffed4f9f627b70d9790b0370000",
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:48 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Transfer-Encoding",
+      "chunked",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "43",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:12:19 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=1, must-revalidate, public",
+      "Content-Encoding",
+      "gzip",
+      "Vary",
+      "accept-encoding",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 fc84046622647dac1121a5679e691e9c.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "BOM78-P2",
+      "X-Amz-Cf-Id",
+      "1Al18wa3yR2spk6YHUjjTmZj60GYiKO0iZoZ_fHApwbUtro6gXPjXg==",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:11:48 GMT",
+      "CF-Cache-Status",
+      "MISS",
+      "Set-Cookie",
+      "_cfuvid=vab3QD2tbGWDTFpbEmbdgz2fqKHgEwJcq.PStgfEtT4-1668888708843-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98db0c06d672-CDG"
     ],
-    "continuation": "MTY2NDkwMDA5OV8yNzNfMQ=="
+    "responseIsBinary": true
   },
-  "https://api.reservoir.tools/owners/v1?token=0x60E4d786628Fea6478F785A6d7e704777c86a7c6%3A9018&limit=1": {
-    "owners": [
-      {
-        "address": "0x828cebb8cc44cb9047f0f057f9603c7348553d84",
-        "ownership": {
-          "tokenCount": "1",
-          "onSaleCount": "1",
-          "floorAskPrice": 11.7,
-          "topBidValue": 0.191,
-          "totalBidValue": 0.191
-        }
-      }
-    ]
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/orders/bids/v4?token=0x09233d553058c2F42ba751C87816a8E9FaE7Ef10:4329&includeMetadata=false&includeRawData=false&normalizeRoyalties=false&sortBy=price&limit=10",
+    "body": "",
+    "status": 200,
+    "response": "1f8b0800000000000003ed9adb6e1b3912865f65a1eb44228ba72a017391c166763280156c26036fb2d80b1e6dc5925adb6a25b183bcfb56cb76dc922539c2de19ed13d424bbc866153fff5de4b74155a75caf06e37f7f1b4cd3603c105f7db11e94b0540c3841520597bdd612d168a93009ca823f1049410a40068ad9584a266753ac86c18bc1d574d1da5a65bfacea860b56d394b920acafdb8bc6376bee72e06333fd9cb9a4a9aef2e2cfdcbc69ef8ad5a2a9b96a2cbe0a02a592314a188c503404ef8c8ce8505a8f998acf2e17293a26fe8c9779ee7ff7abcbcdc388fff38b2ddf8fe7d6decf8f68eeaf72bdb92963d63c53058a10560b2775111e8a92da1b5b623bd102a5b2ed63fcb8e984112eeb69e4e9fd3688ebbace8b78bdf9dc1d7614e0bd57140054c9ec432fb289ba00bb369140159db131b6be5bf879ebaaf3da2f9739fded7573c90362a75dcf43356b2b5ebfff9daf538ed3b99fb11b257e7f31f0f36abd68da7e6bff855ba1002977c77977cf602c869bfa1783f58a3d4e560e090db47d6f02e2be9eed2e72f36ac7b4038944874d733ddd59466b860eadc5aee9b6fe3b9bfeec67d3f45b5dcdf911b8097f695477c57f2d9ae9ecbe9c08c58bc17fd79e0b9bebdfa6b35966db9da2771c71d3c57471c177f04c55ebfad61d770bca0405bc40acc92eaa58c066294bf405c8a61211858b420aa71e26ffedb28d65cf05537623175c36cd72351e8d78068617d3e6721dd6ab5cb72ece8b6618abf9a8ce5cf0b99ad6cbba6aaa58cd46bc06f3d75c8f3e9bd1aa8ea37995f26c35ba1ddd6a547117bc3e5fceaa8b6ab8fa7cc17dadeb59a7abbb06c36935f2ab556e56a39f8ffe11873bb55ea9da8961a30fc6063cf325e75f976de4b0ef6eafeaecaf52f565b1e15068ebc0881f1c99fbfa2a37cb998f2d2c6a76f5729a17cd8f65e2c10621a22c22f10a535ca2383e80d7595b5bbc7792b8df3bcbae63b9aeaefdacb97e6495bcf3c23ae1adf536972cbd34815c51298a8245bbe48294510dbeffe7c5207f5d4e6b0eafd653dd8899aededd3b65305eac673366093f6893d3abb61710002fa57c29e93d88b1c0b1d04310ee63eb89657aba59fb40f7c846305a984496d779c41cbc11a44947cd700eb9846c1c2f7a761747a1d3a6182bd12429ad518611d4237b17d92e15f63202474f5b1921fb6c340ac5132a382678fdc6ac457a66c87e34ce1d647789ed547bbd8dec23c43e627953df45b633edf516b2f100b34198fdcc26e899dd33fb1466b711731ab3d518ec9067e409663f34eb325b04875a19f292e32aa5c83ec02c844c326166363b96db501c23c8121862259eb3d33a68198492b667762fb35b66f3f751660be8401b9d03bb036d0187a92df138b5a1436d8b64f42eb5613fb5a5c1bdd416c6f6d4eea97d02b53711731ab561ac68281c3e41ed87661d6a67859e72088692579ea38ba10db21408c88a51b91838c058bd640c2a62493e8031acb3ad4b5e60323db577a9edd19458a216457a95484923a4e457160c905491852810b1c96746ed279223a22bb599aee076a97d446b8be3d911945d6a3b748fa82d0f51dbeda1362f41453db57b6aff34b5ef22e6646abba125fd34b5ef9a75a84dce1687148c8f9409b32b59b19666a5e80a8a503c44c92f9dec1b8e459982c4a89dce5147c50007d753bbcf8f30b5253d1ae716b57fe49d5b683ba594de86b6a483cc76c7fe1f6cea3bcc365608b9c36cb79fd9ce3ad8abb475cbf29ed93db37f5a696f22e6e7992d696cf458c110151d61f676b30eb3550e2caa831744d61af68753ce68864cb28436916434c7ec14075c66c56853d24192d6ec441f74eeb7211f311b0d66cbb366f8b5c459a9917ce4351c0a5a5f1028a6a29330fa79311b8f2bed0735dc42db82d13b49ed560d1fa2b685e34adbaa0eb5b505743bd4b6ea00b58ddc4b6d45baa7764fed13a8bd899853a92df99dd3c093d4be6fd6a1b6c3e44532524a30d1166c7725419712796559a64d498ee5377ac731c7a28512e9c201994374ca48c49edabdd26ea9ed1e8d739bdaae036d4d4ae30eb4dd41661b75c4f2a6bec36ca5b5543bcc360798ad9cddcb6c6965cfec9ed927307b133127315bd36ddae309a5dd69d661b6954890b34e2964b494022ff5a0b2952da2c9b9843220a5e2b5b760c1b38c49ce6a8a2cb65105d5337b97d94626e33d517bc246530226382fd10cecfb14b58a81ac701c60cf8ad97bc6d965f63db00d0db5d1763b357288d6c76dba87ed47353482e4ce39bf3d9cb64a38bd2f8b8d44d067b17b4e9f7462044ec862db363dad600c6ee8cce1bdc7dd661d4e97c2834b86d9c10375c46f89402cb419e7422aa5138b6be01fe905a0488c667ebd07a132a1881e639fc57ec4695dd8bfca7a7e5b81004a82400ac2bbe0812716dbb0282e187a469c7656490470aa3bce2e53dbfa7b564b330442bd9db5681bece735e315ad16dab8fdb637f5f7c806c5a6d06e9dfade34d8bff7c836f7ee3d2ad39ff3eba97dcadee326624edb7b64d92c58b5d827f61e1f9a753322e02d3338b41b8a1e89034e8710595b4704cb31e7222b426754b1b2249bc060c9a538620dae65cafd39bf47d42e49279105152d4a4e9aa43205d12be522ff65e76b9449c7f89ca86d2c3c1a6797dac6fe38e627ec90409b2d6673f52164f3cc1f31bca9bf47b6b443509b03d75d647383fd0911d47aafd0b6aadf7aec917d8ad0de44cc69496cc78f3c94ce3c91c47e68d676dd46c074b1beeb7c30b9f90bce3ebdfa72f6f7eddf7fddfcaa27377f5c4e3e4d666fcfdf88c9cdbbd987f7176672fee666f28f3fa61f6e5e5fbf3d3fd3679f3e7e3a8333f501cec4d94d9467c09fce3f5e4de6ffbc9ebcbf9c7f3cff389fdc5c990ff337e2ecfcdd6c72f1cb2f83efff038da8aaf494390000",
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:49 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Transfer-Encoding",
+      "chunked",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "42",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:12:19 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=1, must-revalidate, public",
+      "Content-Encoding",
+      "gzip",
+      "Vary",
+      "accept-encoding",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 a5b64a1ac22cdce92ad57684d05480be.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "CDG52-P1",
+      "X-Amz-Cf-Id",
+      "5qZrh115OINVzTo3d9_lIcIUz7LGIL32PR_CwdgJ4NlWhdDDVEUi7Q==",
+      "CF-Cache-Status",
+      "EXPIRED",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:11:22 GMT",
+      "Set-Cookie",
+      "_cfuvid=OyWw5o2NQ1W6DLotZ1eInDaWT48zocDm2bRZfgUazqM-1668888709544-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98e0ead899eb-CDG"
+    ],
+    "responseIsBinary": true
   },
-  "https://api.reservoir.tools/owners/v1?token=0x60E4d786628Fea6478F785A6d7e704777c86a7c6%3A3927&limit=1": {
-    "owners": [
-      {
-        "address": "0x165896732df25087eba4e736604559ceafdfc82f",
-        "ownership": {
-          "tokenCount": "1",
-          "onSaleCount": "1",
-          "floorAskPrice": 11.99,
-          "topBidValue": 0.191,
-          "totalBidValue": 0.191
-        }
-      }
-    ]
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/sales/v4?token=0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D:1860&includeMetadata=false&limit=1",
+    "body": "",
+    "status": 200,
+    "response": "1f8b08000000000000038c53cb6edb3010fc179edd80cf256920b706485a2440115f8aa287e57299a891a540b6131b86ffbda4f23a34870a84801d62677647a3a3d860cf1bb1fc75145d164b11217b5b6cc8947588c011ac8a26513421c46cb868c759a71820a0b4404a2b93304a534276268058cc8c578d4bd74e4295a27564019dce9e14a062ce90eacb824eac8d43273339c304a40dcaec15c8289daf5cdbf18107b13c0a1a87ed84b4adb4729fc8124acee8c17a0c983c69098a342b15b09e68a02893df08e6695400598101d72c96c3aeef17a25be3dd7b4163df336dbb71d66b66bce01f0da7d3428c53e669e6937bb4d59d624bc1e023a788ce24a98b7536a8240b168a5292acdb9768a471205973b26493cf6d58f14a773bee26aa1a627ce461c378d68def575d6e17b8797843be7743537f3e3cf1347c79d2152fd3b89e07323648c780c64728495a0e5a0503e0d107d2c5a75274545ecebecc1d01b3f61a2940353fd48f6a72c43a670a9c9d6720236d4a926a07aec7ddd0fc574db2ebfbcfc74efd480f62a934808bce56a5fd256eee67354f2925c8184c2a0eaa46c952e712b5d5549db32943d04e13399d1447f2194bf032bb1a1526652b7d3fde5d0d99f762a9415735dcd2fd2ba0aa56b7e6cd16d78fb5026d6b3815f885789cba36684dd16e9a78a0c33f8992fff9bc07485c6cef796a693facd3d837607559cbcc5453d5d73f4a85d387694731e173f34e7fcaf9dad56c5b88dd26b7edbc0f67e0940f4d72db3d71bb6d117cae76ae26ccdd70774be3d4f0d3efc5bc4f37ecf025c1e27af5f370f3f5e270bdbad0372a1c6efe7c2bd73fcecfc5e92f000000ffff030037ecaad4f4030000",
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:50 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Transfer-Encoding",
+      "chunked",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "41",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:12:19 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=1, must-revalidate, public",
+      "Content-Encoding",
+      "gzip",
+      "Vary",
+      "Accept-Encoding",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 d75767e25d58a643b0b793855f4459c8.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "BRU50-C1",
+      "X-Amz-Cf-Id",
+      "GgSQr_BOp5zLw7IFRH2aCl28ebXjGHilglcx77qapfxZvTyko3s98w==",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:11:26 GMT",
+      "CF-Cache-Status",
+      "EXPIRED",
+      "Set-Cookie",
+      "_cfuvid=9UwI3jDabuWGVNgbViIcpbqPIfntpmCs7xlz6zqBLoY-1668888710287-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98e53df3f154-CDG"
+    ],
+    "responseIsBinary": true
   },
-  "https://api.reservoir.tools/owners/v1?token=0xed5af388653567af2f388e6224dc7c4b3241c544%3A2743&limit=1": {
-    "owners": [
-      {
-        "address": "0x8599254f994d008f77a2144e049ee27940e9045f",
-        "ownership": {
-          "tokenCount": "1",
-          "onSaleCount": "1",
-          "floorAskPrice": 12,
-          "topBidValue": 0.186,
-          "totalBidValue": 0.186
-        }
-      }
-    ]
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/sales/v4?token=0x09233d553058c2F42ba751C87816a8E9FaE7Ef10:4329&includeMetadata=false&limit=1",
+    "body": "",
+    "status": 200,
+    "response": "1f8b08000000000000038c534d6fd43010fd2f3e57953f627bbc12379040884a880a09210ee399711b9a4daa6c165aaafdef4cd2d21ee0404e9eaff79ec72f0fe680831ccceeeb83e9d9ec8c240729b8ce53174b2c5df221344f812d73a0685b13e73c6bd545cb920273859aad70f0de7934671be2bb152bf85238861c8303f4b5552a44106df4d133844e0fdc2840e5524bf16281ac38814cad25eb58b196e94646b37b30348dcb8cb428acbdb34555718cc14620df3a5f31474790c12504290d254b73f60fc0a6a653399a18712f66371e87e1ccf47bbc7a0e681a06a1a59f36be75198ff99781d3e9cc4c33cbbce1d93b426e5d054e3141c9245d2aa5ab0e0b55975ba809a3780076b582a35ac86589da0f980b834fe609eed3749c4939cc742be341f0bc9f9e4b3daf053cdcfcc9bcefc7955ddb6ea779d16c9ba7fd26076b45468e2a80b10346cf98a14276213b116288520870dbca361149f5046a192038ae955d4b01b1aefa634e9d154a0d3ad109dc4fc771ddbe5b29fb61f8b7e83a4c7463762e2aa087a84c776ff170bdb1b5e805082d2741f582bac13ac8a54164a7c231678c552bde2969ea6200c0a69e12ced6e6ed3587e9eaddc8726776be53f08a0b5d3f259c72f57b392cb8bfd528a594f50e41bb6ee77e15aa1e3aceb38c74ffb79ffef37bb68f79b35ccbbc7afd7e5fa7614d5cbed59085d45383fe4f0e4e2f4b7b3033fe5c7717e23f209f8674e67c957b3ce8fbba92c3794ec9e69572e97fc86379b5e04f5de8e58cdc8f579f689ab5624fdfceb61bf5e3111f1d6c3e5c7ef117df295c5cd2af8bcf707ff1fa73fbf0f1d52b73fa0d0000ffff030046303f08f4030000",
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:50 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Transfer-Encoding",
+      "chunked",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "40",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:12:19 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=1, must-revalidate, public",
+      "Content-Encoding",
+      "gzip",
+      "Vary",
+      "Accept-Encoding",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 ec15f7f1de81d98c6198bce0467ac3ce.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "CDG52-P1",
+      "X-Amz-Cf-Id",
+      "vR498nh5fRutjx_OhquB5DRApZGfynoG-4RN0yqLe6qiyP-XMByRXg==",
+      "CF-Cache-Status",
+      "EXPIRED",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:11:27 GMT",
+      "Set-Cookie",
+      "_cfuvid=P7.o7twoQdcPq0jSX5CphUBSWNS5f2WKHB0o3i20VEg-1668888710948-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98e9efb599d9-CDG"
+    ],
+    "responseIsBinary": true
   },
-  "https://api.reservoir.tools/owners/v1?token=0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91%3A6781&limit=1": {
-    "owners": [
-      {
-        "address": "0xe31bb1a9a271b754cbadcd5e993c883d8e4cf9af",
-        "ownership": {
-          "tokenCount": "1",
-          "onSaleCount": "0",
-          "floorAskPrice": null,
-          "topBidValue": null,
-          "totalBidValue": null
-        }
-      }
-    ]
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/owners/v1?token=0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D:1860&limit=1",
+    "body": "",
+    "status": 200,
+    "response": "1f8b08000000000000035dcc4b0ac2301446e1bdfce322e9c3346666dd8020381107b7c9154b4352921485d2bd4b41274ebf03674178798e09fab680ac8d9c1234c45b91adda8a8c92461aa5a4aaed81a4e05eb1ddb72c4d2d9abe1706c5f7f01c26e805398cec4f61f6191ae556fd851cff44a0c0c385108f693cc7c130b49f9d2b90c3d40df64a6e66e872573672b34cee4fd7f5be7e00f12edf45b5000000",
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:51 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Transfer-Encoding",
+      "chunked",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "52",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 20:03:36 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=3600, must-revalidate, public",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 54793fa0dc27c6553af948b2bd8a4bee.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "BOM78-P2",
+      "X-Amz-Cf-Id",
+      "HadRvJltE90-rihBIeBS_l0GrCKCf28AM1HCp0UrPyBw0ONRo1aYzw==",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 20:02:41 GMT",
+      "CF-Cache-Status",
+      "HIT",
+      "Age",
+      "550",
+      "Vary",
+      "Accept-Encoding",
+      "Set-Cookie",
+      "_cfuvid=eVnMGkscQZYeyBacDN6gB8GGx3oHwgKT3pIZsrV7Vtk-1668888711356-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98eddeacd611-CDG",
+      "Content-Encoding",
+      "gzip"
+    ],
+    "responseIsBinary": true
+  },
+  {
+    "scope": "https://api.reservoir.tools:443",
+    "method": "GET",
+    "path": "/owners/v1?token=0x09233d553058c2F42ba751C87816a8E9FaE7Ef10:4329&limit=1",
+    "body": "",
+    "status": 200,
+    "response": "1f8b080000000000000355ccbd0ac2301846e17b79e7220d6dd2904dbd0141701187fc7cc1d290942445a1f4dea5e0a0eb73e0ac48af48b940dd5768e732950285f6cd2d71d3593f48d931678c635e745a1b6bd8c007d1b76485973da1f91e9ee30cb5a2a689e2392db14281ed355e75a05ff121a57c2cd3258f96a0d84148dea0a6f934ba9b0e0b41c525849daa0effb86d8fed031c7e625eb4000000",
+    "rawHeaders": [
+      "Date",
+      "Sat, 19 Nov 2022 20:11:51 GMT",
+      "Content-Type",
+      "application/json; charset=utf-8",
+      "Transfer-Encoding",
+      "chunked",
+      "Connection",
+      "close",
+      "x-ratelimit-limit",
+      "60",
+      "x-ratelimit-remaining",
+      "30",
+      "x-ratelimit-reset",
+      "Sat Nov 19 2022 19:52:09 GMT+0000 (Coordinated Universal Time)",
+      "access-control-expose-headers",
+      "WWW-Authenticate,Server-Authorization",
+      "Cache-Control",
+      "max-age=3600, must-revalidate, public",
+      "X-Cache",
+      "Miss from cloudfront",
+      "Via",
+      "1.1 0bad7b24b2c9dfacca95c8ce0c8c3706.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Pop",
+      "CDG52-P1",
+      "X-Amz-Cf-Id",
+      "RD1eJhPV9veSnvF5cymuF3nL4Fc1ZnW0oJnoSoavlNQ7-ximoeNCPA==",
+      "CF-Cache-Status",
+      "HIT",
+      "Age",
+      "1214",
+      "Last-Modified",
+      "Sat, 19 Nov 2022 19:51:37 GMT",
+      "Vary",
+      "Accept-Encoding",
+      "Set-Cookie",
+      "_cfuvid=Twe.6qHv4Z7svGKLIh2xb2tBNon2GbRL1qj2sqhm90M-1668888711792-0-604800000; path=/; domain=.reservoir.tools; HttpOnly; Secure; SameSite=None",
+      "Server",
+      "cloudflare",
+      "CF-RAY",
+      "76cb98f0792c99fa-CDG",
+      "Content-Encoding",
+      "gzip"
+    ],
+    "responseIsBinary": true
   }
-}
+]
