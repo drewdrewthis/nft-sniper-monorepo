@@ -26,7 +26,7 @@ export class BullmqModule {
   onModuleInit() {
     // TODO: Don't do this here. This should be mocked
     // somehow
-    if (process.env.NODE_ENV !== 'test') {
+    if (process.env.OFFLINE !== 'true') {
       this.logger.log(`Initializing Bullmq`);
       this.bullmq.start().then(() => {
         this.bullmq.startBullboard(this.serverAdapter);

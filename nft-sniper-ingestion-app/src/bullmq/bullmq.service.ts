@@ -52,10 +52,12 @@ export class BullmqService {
     const x2y2 = new X2Y2Scheduler(this.prisma, this.x2yx, this.redis);
     const opensea = new OpenSeaScheduler(this.redis, this.crawlerServerService);
 
-    ('Starting BullMQ');
+    this.logger.log('Starting BullMQ');
+
     this.logger.log('Cleaning up');
     const schedulers = [x2y2, opensea];
-    await Promise.all(schedulers.map(cleanUpQueue));
+    await this.resetSchedulers(schedulers);
+
     schedulers.map(addWorkerListeners);
     schedulers.map((scheduler) =>
       addQueueEventListeners(scheduler, this.redis),
@@ -68,18 +70,28 @@ export class BullmqService {
     this.queues = [x2y2.queue, opensea.queue];
   }
 
+  async resetSchedulers(schedulers: Scheduler[]) {
+    return Promise.all(schedulers.map(cleanUpQueue));
+  }
+
   async addX2Y2Job({ queue }: Scheduler) {
+    const frequency = Number(
+      this.configService.get('X2Y2_SCHEDULER_FREQUENCY_MS', {
+        infer: true,
+      }),
+    );
+
+    if (frequency < 1) {
+      return;
+    }
+
     await queue
       .add(
         'Fetch Tokens',
         { msg: 'Running job' },
         {
           repeat: {
-            every: Number(
-              this.configService.get('X2Y2_SCHEDULER_FREQUENCY_MS', {
-                infer: true,
-              }),
-            ),
+            every: Number(frequency),
             immediately: true,
             jobId: 'x2y2-token-fetcher',
           },
@@ -94,13 +106,22 @@ export class BullmqService {
   }
 
   async addOpenSeaJob({ queue }: Scheduler) {
+    const frequency = Number(
+      this.configService.get('OPENSEA_SCHEDULER_FREQUENCY_MS', {
+        infer: true,
+      }),
+    );
+
+    if (frequency < 1) {
+      return;
+    }
     await queue
       .add(
         'Crawl',
         { msg: 'Running job' },
         {
           repeat: {
-            every: Number(process.env.OPENSEA_SCHEDULER_FREQUENCY_MS),
+            every: frequency,
             immediately: true,
             jobId: 'scrape-opensea',
           },

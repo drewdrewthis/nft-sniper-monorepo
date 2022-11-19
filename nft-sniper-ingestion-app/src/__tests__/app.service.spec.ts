@@ -63,6 +63,7 @@ describe('ResevoirService', () => {
 
   it('should be able to get nft demo data', async () => {
     const result = await service.getNftDemoData(tokens);
+    console.log(JSON.stringify(result));
     expect(result).toMatchSnapshot();
   });
 });

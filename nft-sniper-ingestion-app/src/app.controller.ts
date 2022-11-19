@@ -1,10 +1,13 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Logger } from '@nestjs/common';
 import { AppService } from './app.service';
 import { HistoricalNftOffer, HistoricalNftPrice } from '@prisma/client';
-import { Alchemy, Token } from './types';
+import { Alchemy } from './types';
+import { DEMO_NFTS } from '../constants';
+import offlineData from './offline/demo/nft-data';
 
-@Controller()
+@Controller('api')
 export class AppController {
+  logger = new Logger(AppController.name);
   constructor(private readonly appService: AppService) {}
 
   @Get()
@@ -12,13 +15,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('demo')
-  async getNftDemoData(
-    @Query()
-    payload: {
-      tokens: Token[];
-    },
-  ): Promise<
+  @Get('demo-nft-data')
+  async getNftDemoData(): Promise<
     {
       tokenId: number;
       contractAddress: string;
@@ -27,7 +25,11 @@ export class AppController {
       metadata?: Alchemy.NftMetadata;
     }[]
   > {
-    const { tokens } = payload;
-    return this.appService.getNftDemoData(tokens);
+    if (process.env.OFFLINE === 'true') {
+      this.logger.log('Returning offline data');
+      return offlineData as any;
+    }
+
+    return this.appService.getNftDemoData(DEMO_NFTS);
   }
 }

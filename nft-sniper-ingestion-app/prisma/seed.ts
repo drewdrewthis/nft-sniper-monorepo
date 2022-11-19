@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { DEMO_NFTS } from '../constants';
 
 const prisma = new PrismaClient();
 
@@ -26,19 +27,8 @@ async function createMarketplaces() {
 
 async function createTokens() {
   console.log('Creating tokens..');
-  const tokens = [
-    {
-      tokenId: 4860,
-      contractAddress: '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
-    },
-    {
-      tokenId: 6781,
-      contractAddress: '0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91',
-    },
-  ];
-
   return Promise.all(
-    tokens.map(async (token) => {
+    DEMO_NFTS.map(async (token) => {
       return prisma.nFT
         .upsert({
           where: {

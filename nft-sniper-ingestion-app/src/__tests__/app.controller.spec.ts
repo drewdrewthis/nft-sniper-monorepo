@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AlchemyModule } from './apis/alchemy/alchemy.module';
-import { AlchemyService } from './apis/alchemy';
-import { AppController } from './app.controller';
-import { AppModule } from './app.module';
-import { AppService } from './app.service';
+import { AlchemyModule } from '../apis/alchemy/alchemy.module';
+import { AlchemyService } from '../apis/alchemy';
+import { AppController } from '../app.controller';
+import { AppModule } from '../app.module';
+import { AppService } from '../app.service';
 import { HttpModule } from '@nestjs/axios';
-import { ResevoirModule, ResevoirService } from './apis/resevoir';
+import { ResevoirModule, ResevoirService } from '../apis/resevoir';
 
 describe('AppController', () => {
   let appController: AppController;
