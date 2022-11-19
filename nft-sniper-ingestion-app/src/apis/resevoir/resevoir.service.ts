@@ -1,7 +1,9 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable, Logger } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable, Logger } from '@nestjs/common';
 import { Token } from '../../types';
 import { paths } from '@reservoir0x/reservoir-kit-client';
+import { Cache } from 'cache-manager';
+
 @Injectable()
 export class ResevoirService {
   logger = new Logger(ResevoirService.name);
@@ -10,7 +12,10 @@ export class ResevoirService {
 
   http = this.httpService.axiosRef;
 
-  constructor(private readonly httpService: HttpService) {
+  constructor(
+    private readonly httpService: HttpService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {
     this.httpService.axiosRef.interceptors.request.use((request) => {
       this.logger.log('Starting Request', JSON.stringify(request, null, 2));
       return request;
@@ -57,24 +62,32 @@ export class ResevoirService {
     const resevoirToken = buildTokenKey(token);
     const url = this.baseUrl + '/owners/v1';
 
-    return this.http
-      .get(url, {
-        headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
-        params: {
-          token: resevoirToken,
-          limit: '1',
-        },
-      })
-      .then((response) => {
-        const { data } = response;
-        this.logger.log('Received token owner', { token, data });
-        return data;
-      })
-      .catch((error) => {
-        console.error(error);
-        this.logger.error(error);
-        return [];
-      });
+    const makeCall = () =>
+      this.http
+        .get(url, {
+          headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
+          params: {
+            token: resevoirToken,
+            limit: '1',
+          },
+        })
+        .then((response) => {
+          const { data } = response;
+          this.logger.log('Received token owner', { token, data });
+          return data;
+        })
+        .catch((error) => {
+          console.error(error);
+          this.logger.error(error);
+          return [];
+        });
+
+    const key = JSON.stringify({
+      ...token,
+      url,
+    });
+
+    return this.callAndCache(key, makeCall);
   }
 
   // Sales
@@ -99,25 +112,32 @@ export class ResevoirService {
     const resevoirToken = buildTokenKey(token);
     const url = this.baseUrl + '/sales/v4';
 
-    return this.http
-      .get(url, {
-        headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
-        params: {
-          token: resevoirToken,
-          includeMetadata: 'false',
-          limit: '1',
-        },
-      })
-      .then((response) => {
+    const makeCall = async () => {
+      try {
+        const response = await this.http.get(url, {
+          headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
+          params: {
+            token: resevoirToken,
+            includeMetadata: 'false',
+            limit: '1',
+          },
+        });
         const { data } = response;
         this.logger.log('Received token sales', { token, data });
         return data;
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
         this.logger.error(error);
         return [];
-      });
+      }
+    };
+
+    const key = JSON.stringify({
+      ...token,
+      url,
+    });
+
+    return this.callAndCache(key, makeCall);
   }
 
   // BIDS / OFFERS
@@ -162,28 +182,36 @@ export class ResevoirService {
     const resevoirToken = buildTokenKey(token);
     const url = this.baseUrl + '/orders/bids/v4';
 
-    return this.http
-      .get(url, {
-        headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
-        params: {
-          token: resevoirToken,
-          includeMetadata: 'false',
-          includeRawData: 'false',
-          normalizeRoyalties: 'false',
-          sortBy: 'price',
-          limit: '10',
-        },
-      })
-      .then((response) => {
-        const { data } = response;
-        this.logger.log('Received token bids', { token, data });
-        return data;
-      })
-      .catch((error) => {
-        console.error(error);
-        this.logger.error(error);
-        return [];
-      });
+    const makeCall = () =>
+      this.http
+        .get(url, {
+          headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
+          params: {
+            token: resevoirToken,
+            includeMetadata: 'false',
+            includeRawData: 'false',
+            normalizeRoyalties: 'false',
+            sortBy: 'price',
+            limit: '10',
+          },
+        })
+        .then((response) => {
+          const { data } = response;
+          this.logger.log('Received token bids', { token, data });
+          return data;
+        })
+        .catch((error) => {
+          console.error(error);
+          this.logger.error(error);
+          return [];
+        });
+
+    const key = JSON.stringify({
+      ...token,
+      url,
+    });
+
+    return this.callAndCache(key, makeCall);
   }
 
   // LISTINGS
@@ -227,29 +255,59 @@ export class ResevoirService {
   ): Promise<paths['/orders/asks/v3']['get']['responses']['200']['schema']> {
     const resevoirToken = buildTokenKey(token);
     const url = this.baseUrl + '/orders/asks/v3';
+    const params = {
+      token: resevoirToken,
+      includePrivate: 'false',
+      includeMetadata: 'false',
+      includeRawData: 'false',
+      normalizeRoyalties: 'false',
+      sortBy: 'price',
+      limit: '50',
+    };
 
-    return this.http
-      .get(url, {
-        headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
-        params: {
-          token: resevoirToken,
-          includePrivate: 'false',
-          includeMetadata: 'false',
-          includeRawData: 'false',
-          normalizeRoyalties: 'false',
-          sortBy: 'price',
-          limit: '50',
-        },
-      })
-      .then((response) => {
-        const { data } = response;
-        this.logger.log('Received token listings', { token, data });
-        return data;
-      })
-      .catch((error) => {
-        this.logger.error(error);
-        return [];
-      });
+    const makeCall = () =>
+      this.http
+        .get(url, {
+          headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
+          params,
+        })
+        .then((response) => {
+          const { data } = response;
+          this.logger.log('Received token listings', { token, data });
+          return data;
+        })
+        .catch((error) => {
+          this.logger.error(error);
+          return [];
+        });
+
+    const key = JSON.stringify({
+      ...token,
+      url,
+    });
+
+    return this.callAndCache(key, makeCall);
+  }
+
+  /**
+   * Cache results of fetchFn and immediately return the cached
+   * results if they exist.
+   */
+  private async callAndCache<T>(key: string, fetchFn: () => Promise<T>) {
+    const value = await this.cacheManager.get(key);
+
+    if (value) {
+      fetchFn();
+      return value;
+    } else {
+      const data = await fetchFn();
+      this.cacheManager.set(
+        key,
+        data,
+        Number(process.env.RESEVOIR_CACHE_EXPIRATION || 1000 * 60 * 2),
+      );
+      return data;
+    }
   }
 }
 
