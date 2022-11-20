@@ -22,8 +22,10 @@ export class DemoService {
     return aggregateData.map((data, idx) => {
       return {
         ...data,
-        offers: [normalizeOffer(data, data.highestBid)],
-        historicalPrices: [normalizePrice(data, data.lowestListing)],
+        offers: data.highestBid ? [normalizeOffer(data, data.highestBid)] : [],
+        historicalPrices: data.lowestListing
+          ? [normalizePrice(data, data.lowestListing)]
+          : [],
         metadata: (metadata || [])[idx],
       };
     });

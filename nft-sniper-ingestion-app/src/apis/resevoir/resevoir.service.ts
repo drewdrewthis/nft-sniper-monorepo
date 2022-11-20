@@ -82,11 +82,6 @@ export class ResevoirService {
           const { data } = response;
           this.logger.log('Received token owner', { token, data });
           return data;
-        })
-        .catch((error) => {
-          console.error(error);
-          this.logger.error(error);
-          return [];
         });
 
     const key = JSON.stringify({
@@ -133,7 +128,6 @@ export class ResevoirService {
         this.logger.log('Received token sales', { token, data });
         return data;
       } catch (error) {
-        console.error(error);
         this.logger.error(error);
         return [];
       }
@@ -206,11 +200,6 @@ export class ResevoirService {
           const { data } = response;
           this.logger.log('Received token bids', { token, data });
           return data;
-        })
-        .catch((error) => {
-          console.error(error);
-          this.logger.error(error);
-          return [];
         });
 
     const key = JSON.stringify({
@@ -282,10 +271,6 @@ export class ResevoirService {
           const { data } = response;
           this.logger.log('Received token listings', { token, data });
           return data;
-        })
-        .catch((error) => {
-          this.logger.error(error);
-          return [];
         });
 
     const key = JSON.stringify({
@@ -308,15 +293,20 @@ export class ResevoirService {
 
     if (value) {
       // Don't wait, return cached value and store async
-      fetchFn().then((data) => {
-        this.cacheManager.set(key, data, 0);
-      });
+      fetchFn()
+        .then((data) => {
+          this.cacheManager.set(key, data, 0);
+        })
+        .catch((e) => this.logger.error(e));
 
       return value;
     } else {
-      const data = await fetchFn();
-      this.cacheManager.set(key, data, 0);
-      return data;
+      return fetchFn()
+        .then((data) => {
+          this.cacheManager.set(key, data, 0);
+          return data;
+        })
+        .catch((e) => this.logger.error(e));
     }
   }
 }
