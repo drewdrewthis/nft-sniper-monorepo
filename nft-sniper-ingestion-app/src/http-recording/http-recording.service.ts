@@ -29,9 +29,13 @@ export class HttpRecordingService {
     try {
       if (fs.existsSync(this.filename)) {
         console.log('Using recordings..');
-        nock.load(this.filename);
+        const nocks = nock.load(this.filename);
+
+        // Handle REDACTED API KEY
+        nocks.forEach(addAlchemyFilteringPath);
       } else {
         console.log('Recording..');
+
         nock.recorder.rec({ output_objects: true, dont_print: true });
       }
     } catch (e) {
@@ -44,6 +48,10 @@ export class HttpRecordingService {
       nock.restore();
 
       this.data = nock.recorder.play();
+
+      // REDACT API KEY
+      this.data = redactAlchemyApiKey(this.data);
+
       console.log('Printing to file', this.filename);
 
       fs.writeFileSync(this.filename, JSON.stringify(this.data), {
@@ -62,4 +70,29 @@ export class HttpRecordingService {
 
     return dir;
   }
+}
+
+function addAlchemyFilteringPath(scope: nock.Scope) {
+  const regex = new RegExp('/nft/v2/.*/');
+  scope.filteringPath(regex, '/nft/v2/REDACTED_API_KEY/');
+  return scope;
+}
+
+function redactAlchemyApiKey(data: string[] | nock.Definition[]) {
+  return data.map((obj) => {
+    if (typeof obj === 'string') return obj;
+
+    if (obj.scope === 'https://eth-mainnet.g.alchemy.com:443') {
+      if (typeof obj.path === 'string') {
+        if (obj.path.includes('/nft/v2/')) {
+          const regex = new RegExp('/nft/v2/.*/');
+          console.log(obj.path.match(regex));
+          obj.path = obj.path.replace(regex, '/nft/v2/REDACTED_API_KEY/');
+          return obj;
+        }
+      }
+    }
+
+    return obj;
+  }) as string[] | nock.Definition[];
 }

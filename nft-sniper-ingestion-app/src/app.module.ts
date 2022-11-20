@@ -22,6 +22,7 @@ import { NftModule } from './nft/nft.module';
 import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft-offer.service';
 import { ResevoirModule } from './apis/resevoir/resevoir.module';
 import { ResevoirService } from './apis/resevoir';
+import { DemoModule } from './demo/demo.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { ResevoirService } from './apis/resevoir';
     }),
     NftModule,
     ResevoirModule,
+    DemoModule,
   ],
   controllers: [AppController, NftController],
   providers: [

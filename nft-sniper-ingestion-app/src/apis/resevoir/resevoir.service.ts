@@ -3,6 +3,7 @@ import { CACHE_MANAGER, Inject, Injectable, Logger } from '@nestjs/common';
 import { Token } from '../../types';
 import { paths } from '@reservoir0x/reservoir-kit-client';
 import { Cache } from 'cache-manager';
+import { sleep } from '../../utils';
 
 @Injectable()
 export class ResevoirService {
@@ -50,6 +51,7 @@ export class ResevoirService {
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
       const owners = await this.fetchCurrentOwner(token);
+      sleep(1000);
       ownersByToken[tokenKey] = owners;
     }
 
@@ -100,6 +102,7 @@ export class ResevoirService {
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
       const listings = ((await this.fetchLastSale(token))?.sales || [])[0];
+      sleep(1000);
       highestBidsByToken[tokenKey] = listings;
     }
 
@@ -152,6 +155,7 @@ export class ResevoirService {
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
       const listings = ((await this.fetchBidsForToken(token))?.orders || [])[0];
+      sleep(1000);
       highestBidsByToken[tokenKey] = listings;
     }
 
@@ -170,6 +174,7 @@ export class ResevoirService {
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
       const bids = (await this.fetchBidsForToken(token))?.orders;
+      sleep(1000);
       bidByToken[tokenKey] = bids;
     }
 
@@ -229,6 +234,7 @@ export class ResevoirService {
       const listings = (
         await this.fetchListingsForToken(token)
       )?.orders?.reverse()[0];
+      sleep(1000);
       hightestListingsByToken[tokenKey] = listings;
     }
 
@@ -297,14 +303,13 @@ export class ResevoirService {
     const value = await this.cacheManager.get(key);
 
     if (value) {
-      fetchFn();
       return value;
     } else {
       const data = await fetchFn();
       this.cacheManager.set(
         key,
         data,
-        Number(process.env.RESEVOIR_CACHE_EXPIRATION || 1000 * 60 * 2),
+        Number(process.env.RESEVOIR_CACHE_EXPIRATION || 1000 * 60 * 1),
       );
       return data;
     }
