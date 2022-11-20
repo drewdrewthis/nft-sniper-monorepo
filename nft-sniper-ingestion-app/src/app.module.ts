@@ -1,4 +1,4 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { CacheModule, CacheStore, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule, PrismaService } from './prisma';
@@ -23,6 +23,10 @@ import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft
 import { ResevoirModule } from './apis/resevoir/resevoir.module';
 import { ResevoirService } from './apis/resevoir';
 import { DemoModule } from './demo/demo.module';
+import { redisStore } from 'cache-manager-ioredis-yet';
+import type { RedisOptions } from 'ioredis';
+
+const { REDIS_HOST, REDIS_PORT } = process.env;
 
 @Module({
   imports: [
@@ -40,8 +44,13 @@ import { DemoModule } from './demo/demo.module';
     HistoricalNftPriceModule,
     HistoricalNftOfferModule,
     AlchemyModule,
-    CacheModule.register({
+    CacheModule.register<RedisOptions>({
       isGlobal: true,
+      store: redisStore as unknown as CacheStore,
+
+      // Store-specific configuration:
+      host: REDIS_HOST,
+      port: Number(REDIS_PORT),
     }),
     NftModule,
     ResevoirModule,

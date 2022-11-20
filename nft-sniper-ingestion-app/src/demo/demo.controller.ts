@@ -1,8 +1,7 @@
 import { Controller, Get, Logger } from '@nestjs/common';
-import { HistoricalNftOffer, HistoricalNftPrice } from '@prisma/client';
 import { DEMO_NFTS } from '../../constants';
-import { Alchemy } from '../types';
 import { DemoService } from './demo.service';
+import { DemoNftPayload } from './types';
 
 @Controller('demo')
 export class DemoController {
@@ -11,15 +10,7 @@ export class DemoController {
   constructor(private readonly service: DemoService) {}
 
   @Get('nft-data')
-  async getNftDemoData(): Promise<
-    {
-      tokenId: number;
-      contractAddress: string;
-      offers: (HistoricalNftOffer | void)[];
-      historicalPrices: (HistoricalNftPrice | void)[];
-      metadata?: Alchemy.NftMetadata;
-    }[]
-  > {
+  async getNftDemoData(): Promise<DemoNftPayload> {
     return this.service.getNftDemoData(DEMO_NFTS);
   }
 }

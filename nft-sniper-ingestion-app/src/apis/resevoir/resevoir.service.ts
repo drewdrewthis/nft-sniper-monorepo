@@ -3,7 +3,7 @@ import { CACHE_MANAGER, Inject, Injectable, Logger } from '@nestjs/common';
 import { Token } from '../../types';
 import { paths } from '@reservoir0x/reservoir-kit-client';
 import { Cache } from 'cache-manager';
-import { sleep } from '../../utils';
+import * as axiosRateLimit from 'axios-rate-limit';
 
 @Injectable()
 export class ResevoirService {
@@ -11,7 +11,10 @@ export class ResevoirService {
 
   baseUrl = 'https://api.reservoir.tools';
 
-  http = this.httpService.axiosRef;
+  // @ts-expect-error Broken typings
+  http = axiosRateLimit(this.httpService.axiosRef, {
+    maxRPS: 60,
+  }) as typeof this.httpService.axiosRef;
 
   constructor(
     private readonly httpService: HttpService,
@@ -21,6 +24,8 @@ export class ResevoirService {
       this.logger.log('Starting Request', JSON.stringify(request, null, 2));
       return request;
     });
+
+    // this.http = axiosRateLimit.default(this.http, { maxRPS: 60 });
   }
 
   async fetchAggregateNftData(tokens: Token[]) {
@@ -51,7 +56,7 @@ export class ResevoirService {
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
       const owners = await this.fetchCurrentOwner(token);
-      sleep(1000);
+
       ownersByToken[tokenKey] = owners;
     }
 
@@ -89,7 +94,7 @@ export class ResevoirService {
       url,
     });
 
-    return this.callAndCache(key, makeCall);
+    return this.callAndCacheAndSleep(key, makeCall);
   }
 
   // Sales
@@ -102,7 +107,6 @@ export class ResevoirService {
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
       const listings = ((await this.fetchLastSale(token))?.sales || [])[0];
-      sleep(1000);
       highestBidsByToken[tokenKey] = listings;
     }
 
@@ -140,7 +144,7 @@ export class ResevoirService {
       url,
     });
 
-    return this.callAndCache(key, makeCall);
+    return this.callAndCacheAndSleep(key, makeCall);
   }
 
   // BIDS / OFFERS
@@ -155,7 +159,6 @@ export class ResevoirService {
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
       const listings = ((await this.fetchBidsForToken(token))?.orders || [])[0];
-      sleep(1000);
       highestBidsByToken[tokenKey] = listings;
     }
 
@@ -174,7 +177,6 @@ export class ResevoirService {
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
       const bids = (await this.fetchBidsForToken(token))?.orders;
-      sleep(1000);
       bidByToken[tokenKey] = bids;
     }
 
@@ -216,7 +218,7 @@ export class ResevoirService {
       url,
     });
 
-    return this.callAndCache(key, makeCall);
+    return this.callAndCacheAndSleep(key, makeCall);
   }
 
   // LISTINGS
@@ -234,7 +236,6 @@ export class ResevoirService {
       const listings = (
         await this.fetchListingsForToken(token)
       )?.orders?.reverse()[0];
-      sleep(1000);
       hightestListingsByToken[tokenKey] = listings;
     }
 
@@ -292,25 +293,29 @@ export class ResevoirService {
       url,
     });
 
-    return this.callAndCache(key, makeCall);
+    return this.callAndCacheAndSleep(key, makeCall);
   }
 
   /**
    * Cache results of fetchFn and immediately return the cached
    * results if they exist.
    */
-  private async callAndCache<T>(key: string, fetchFn: () => Promise<T>) {
+  private async callAndCacheAndSleep<T>(
+    key: string,
+    fetchFn: () => Promise<T>,
+  ) {
     const value = await this.cacheManager.get(key);
 
     if (value) {
+      // Don't wait, return cached value and store async
+      fetchFn().then((data) => {
+        this.cacheManager.set(key, data, 0);
+      });
+
       return value;
     } else {
       const data = await fetchFn();
-      this.cacheManager.set(
-        key,
-        data,
-        Number(process.env.RESEVOIR_CACHE_EXPIRATION || 1000 * 60 * 1),
-      );
+      this.cacheManager.set(key, data, 0);
       return data;
     }
   }

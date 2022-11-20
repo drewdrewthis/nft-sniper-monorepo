@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { HistoricalNftOffer, HistoricalNftPrice } from '@prisma/client';
-import { Alchemy, Token } from '../types';
+import { Token } from '../types';
 import { ResevoirService } from '../apis/resevoir';
 import { AlchemyService } from '../apis/alchemy/alchemy.service';
 import { Marketplace } from '../enums';
+import { DemoNftPayload, Listing, Offer } from './types';
 
 @Injectable()
 export class DemoService {
@@ -12,15 +12,7 @@ export class DemoService {
     private readonly alchemyService: AlchemyService,
   ) {}
 
-  async getNftDemoData(tokens: Token[]): Promise<
-    {
-      tokenId: number;
-      contractAddress: string;
-      offers: (HistoricalNftOffer | void)[];
-      historicalPrices: (HistoricalNftPrice | void)[];
-      metadata?: Alchemy.NftMetadata;
-    }[]
-  > {
+  async getNftDemoData(tokens: Token[]): Promise<DemoNftPayload> {
     const aggregateData = await this.resevoirService.fetchAggregateNftData(
       tokens,
     );
@@ -43,7 +35,7 @@ function normalizePrice(
   price: Awaited<
     ReturnType<ResevoirService['fetchAggregateNftData']>
   >[0]['lowestListing'],
-): HistoricalNftPrice | void {
+): Listing | void {
   if (!price) {
     return;
   }
@@ -59,7 +51,10 @@ function normalizePrice(
     priceCurrency: String(price?.price?.currency?.symbol || ''),
     fiatPrice: String(price?.price?.amount?.usd || ''),
     fiatCurrency: 'USD',
-    marketplaceId: priceSourceToMarketPlaceId(price.source || {}),
+    marketplace: {
+      name: price?.source?.name as string,
+      url: price?.source?.url as string,
+    },
     rawScrapeDataId: -1,
   };
 }
@@ -70,7 +65,7 @@ function normalizeOffer(
     | Awaited<
         ReturnType<ResevoirService['fetchAggregateNftData']>
       >[0]['highestBid'],
-): HistoricalNftOffer | void {
+): Offer | void {
   if (!bid) {
     return;
   }
@@ -86,7 +81,10 @@ function normalizeOffer(
     priceCurrency: String(bid?.price?.currency?.symbol || ''),
     fiatPrice: String(bid?.price?.amount?.usd || ''),
     fiatCurrency: 'USD',
-    marketplaceId: priceSourceToMarketPlaceId(bid.source || {}),
+    marketplace: {
+      name: bid?.source?.name as string,
+      url: bid?.source?.url as string,
+    },
     rawScrapeDataId: -1,
     expiresAt: new Date(bid.expiration),
     from: bid.maker,
