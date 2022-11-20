@@ -11,9 +11,6 @@ export class DemoService {
     private readonly resevoirService: ResevoirService,
     private readonly alchemyService: AlchemyService,
   ) {}
-  getHello(): string {
-    return 'Hello World!';
-  }
 
   async getNftDemoData(tokens: Token[]): Promise<
     {
