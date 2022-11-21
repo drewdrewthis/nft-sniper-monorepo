@@ -6,6 +6,7 @@ import { HistoricalNftOfferService } from '../historical-nft-offer/historical-nf
 import { PrismaService } from '../prisma';
 import { Token } from '../types';
 import { DemoService } from '../demo/demo.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class NftService {
@@ -16,6 +17,7 @@ export class NftService {
     private readonly alchemy: AlchemyService,
     private readonly historialOffersService: HistoricalNftOfferService,
     private readonly demoService: DemoService,
+    private readonly configService: ConfigService,
   ) {}
 
   async getAllNFTMetadata() {
@@ -143,6 +145,8 @@ export class NftService {
       );
     }
 
+    await this.validateCanAddMoreTokens(walletAddress);
+
     await this.prisma.nFT.upsert({
       where: {
         contractAddress_tokenId: { contractAddress, tokenId },
@@ -199,6 +203,23 @@ export class NftService {
 
     if (signerAddress.toLowerCase() !== walletAddress.toLowerCase()) {
       throw new Error('Verification failed');
+    }
+  }
+
+  /** Will throw if user has maximum tokens */
+  async validateCanAddMoreTokens(walletAddress: string) {
+    const count = await this.prisma.trackedNft.count({
+      where: {
+        walletAddress,
+      },
+    });
+
+    if (
+      count < Number(this.configService.getOrThrow('MAX_TRACKABLE_TOKEN_COUNT'))
+    ) {
+      return true;
+    } else {
+      throw new Error('You can only track a maximum of 3 tokens');
     }
   }
 }
