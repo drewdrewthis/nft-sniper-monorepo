@@ -25,6 +25,7 @@ import { ResevoirService } from './apis/resevoir';
 import { DemoModule } from './demo/demo.module';
 import { redisStore } from 'cache-manager-ioredis-yet';
 import type { RedisOptions } from 'ioredis';
+import { DemoService } from './demo/demo.service';
 
 const { REDIS_HOST, REDIS_PORT } = process.env;
 
@@ -67,6 +68,7 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
     X2y2Service,
     NftService,
     ResevoirService,
+    DemoService,
   ],
 })
 export class AppModule {}
