@@ -6,6 +6,7 @@ import { HttpModule } from '@nestjs/axios';
 @Module({
   imports: [HttpModule],
   providers: [AlchemyService, PrismaService],
+  exports: [AlchemyService],
   controllers: [],
 })
 export class AlchemyModule {}

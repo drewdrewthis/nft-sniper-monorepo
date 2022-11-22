@@ -6,5 +6,6 @@ import { HistoricalNftOfferService } from './historical-nft-offer.service';
 @Module({
   controllers: [HistoricalNftOfferController],
   providers: [HistoricalNftOfferService, PrismaService],
+  exports: [HistoricalNftOfferService, PrismaService],
 })
 export class HistoricalNftOfferModule {}

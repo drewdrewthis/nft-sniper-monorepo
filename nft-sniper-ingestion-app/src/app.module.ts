@@ -21,7 +21,6 @@ import { NftService } from './nft/nft.service';
 import { NftModule } from './nft/nft.module';
 import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft-offer.service';
 import { ResevoirModule } from './apis/resevoir/resevoir.module';
-import { ResevoirService } from './apis/resevoir';
 import { DemoModule } from './demo/demo.module';
 import { redisStore } from 'cache-manager-ioredis-yet';
 import type { RedisOptions } from 'ioredis';
@@ -57,18 +56,14 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
     ResevoirModule,
     DemoModule,
   ],
-  controllers: [AppController, NftController],
+  controllers: [AppController],
   providers: [
-    AlchemyService,
     AppService,
     PrismaService,
     CrawlerServerService,
     HistoricalNftOfferService,
     BullmqService,
     X2y2Service,
-    NftService,
-    ResevoirService,
-    DemoService,
   ],
 })
 export class AppModule {}

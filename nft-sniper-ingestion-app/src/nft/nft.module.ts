@@ -1,23 +1,24 @@
 import { Module } from '@nestjs/common';
-import { HistoricalNftOfferService } from '../historical-nft-offer/historical-nft-offer.service';
-import { PrismaService } from '../prisma';
 import { NftController } from './nft.controller';
-import { AlchemyService } from '../apis/alchemy/alchemy.service';
 import { HttpModule } from '@nestjs/axios';
 import { NftService } from './nft.service';
-import { DemoService } from '../demo/demo.service';
-import { ResevoirService } from '../apis/resevoir/resevoir.service';
+import { ResevoirModule } from '../apis/resevoir/resevoir.module';
+import { DemoModule } from '../demo/demo.module';
+import { AlchemyModule } from '../apis/alchemy/alchemy.module';
+import { PrismaModule } from '../prisma/prisma.module';
+import { HistoricalNftOfferModule } from '../historical-nft-offer/historical-nft-offer.module';
 
 @Module({
-  imports: [HttpModule],
-  controllers: [NftController],
-  providers: [
-    HistoricalNftOfferService,
-    PrismaService,
-    AlchemyService,
-    NftService,
-    ResevoirService,
-    DemoService,
+  imports: [
+    HttpModule,
+    ResevoirModule,
+    DemoModule,
+    AlchemyModule,
+    PrismaModule,
+    HistoricalNftOfferModule,
   ],
+  exports: [NftService],
+  controllers: [NftController],
+  providers: [NftService],
 })
 export class NftModule {}

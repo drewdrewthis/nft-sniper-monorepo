@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
 import { DemoService } from './demo.service';
 import { DemoController } from './demo.controller';
-import { AlchemyService } from '../apis/alchemy/alchemy.service';
-import { ResevoirService } from '../apis/resevoir';
 import { HttpModule } from '@nestjs/axios';
+import { ResevoirModule } from '../apis/resevoir/resevoir.module';
+import { AlchemyModule } from '../apis/alchemy/alchemy.module';
 
 @Module({
-  imports: [HttpModule],
-  providers: [DemoService, AlchemyService, ResevoirService],
+  imports: [HttpModule, ResevoirModule, AlchemyModule],
+  providers: [DemoService],
+  exports: [DemoService],
   controllers: [DemoController],
 })
 export class DemoModule {}
