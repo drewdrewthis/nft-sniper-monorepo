@@ -6,7 +6,9 @@ import { HistoricalNftOfferService } from '../historical-nft-offer/historical-nf
 import { PrismaService } from '../prisma';
 import { Token } from '../types';
 import { DemoService } from '../demo/demo.service';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService } from '../config/config.service';
+
+class MaxTrackedTokensReached extends Error {}
 
 @Injectable()
 export class NftService {
@@ -208,18 +210,19 @@ export class NftService {
 
   /** Will throw if user has maximum tokens */
   async validateCanAddMoreTokens(walletAddress: string) {
+    const MAX = this.configService.envVars.MAX_TRACKABLE_TOKEN_COUNT;
     const count = await this.prisma.trackedNft.count({
       where: {
         walletAddress,
       },
     });
 
-    if (
-      count < Number(this.configService.getOrThrow('MAX_TRACKABLE_TOKEN_COUNT'))
-    ) {
+    if (count < MAX) {
       return true;
     } else {
-      throw new Error('You can only track a maximum of 3 tokens');
+      throw new MaxTrackedTokensReached(
+        `You can only track a maximum of ${MAX} tokens`,
+      );
     }
   }
 }

@@ -7,6 +7,7 @@ import { DemoModule } from '../demo/demo.module';
 import { AlchemyModule } from '../apis/alchemy/alchemy.module';
 import { PrismaModule } from '../prisma/prisma.module';
 import { HistoricalNftOfferModule } from '../historical-nft-offer/historical-nft-offer.module';
+import { ConfigService } from '../config/config.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { HistoricalNftOfferModule } from '../historical-nft-offer/historical-nft
   ],
   exports: [NftService],
   controllers: [NftController],
-  providers: [NftService],
+  providers: [NftService, ConfigService],
 })
 export class NftModule {}
