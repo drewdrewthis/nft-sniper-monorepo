@@ -24,6 +24,8 @@ export class AlchemyService {
   async getNFTMetadataBatch(
     tokens: Pick<NFT, 'contractAddress' | 'tokenId'>[],
   ): Promise<Alchemy.NftMetadata[] | void> {
+    if (!tokens?.length) return [];
+
     const path = '/getNFTMetadataBatch';
     const options = {
       method: 'POST',
