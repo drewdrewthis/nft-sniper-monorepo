@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@bull-board/express": "^4.6.3",
+    "@hapi/joi": "^17.1.1",
     "@nestjs/axios": "^1.0.0",
     "@nestjs/bull": "^0.6.2",
     "@nestjs/common": "^9.0.0",
@@ -56,7 +57,8 @@
     "redis": "^4.5.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typesafe-joi": "^2.1.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",

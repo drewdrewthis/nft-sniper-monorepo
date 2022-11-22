@@ -15,16 +15,12 @@ import { HistoricalNftPriceModule } from './historical-nft-price/historical-nft-
 import { HistoricalNftOfferModule } from './historical-nft-offer/historical-nft-offer.module';
 import { AlchemyModule } from './apis/alchemy/alchemy.module';
 import endpoints from './config/endpoints';
-import { AlchemyService } from './apis/alchemy/alchemy.service';
-import { NftController } from './nft/nft.controller';
-import { NftService } from './nft/nft.service';
 import { NftModule } from './nft/nft.module';
 import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft-offer.service';
 import { ResevoirModule } from './apis/resevoir/resevoir.module';
 import { DemoModule } from './demo/demo.module';
 import { redisStore } from 'cache-manager-ioredis-yet';
 import type { RedisOptions } from 'ioredis';
-import { DemoService } from './demo/demo.service';
 
 const { REDIS_HOST, REDIS_PORT } = process.env;
 
@@ -55,6 +51,7 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
     NftModule,
     ResevoirModule,
     DemoModule,
+    ConfigModule,
   ],
   controllers: [AppController],
   providers: [

@@ -4,6 +4,8 @@ import { Token } from '../../types';
 import { paths } from '@reservoir0x/reservoir-kit-client';
 import { Cache } from 'cache-manager';
 import * as axiosRateLimit from 'axios-rate-limit';
+import { AxiosInstance } from 'axios';
+import { ConfigService } from '../../config/config.service';
 
 @Injectable()
 export class ResevoirService {
@@ -11,21 +13,38 @@ export class ResevoirService {
 
   baseUrl = 'https://api.reservoir.tools';
 
-  // @ts-expect-error Broken typings
-  http = axiosRateLimit(this.httpService.axiosRef, {
-    maxRPS: 60,
-  }) as typeof this.httpService.axiosRef;
+  // Make static to force rate limiting
+  static http: HttpService['axiosRef'];
 
   constructor(
     private readonly httpService: HttpService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly config: ConfigService,
   ) {
-    this.httpService.axiosRef.interceptors.request.use((request) => {
+    this.setAxiosInstanceWithRateLimit();
+
+    ResevoirService.http.interceptors.request.use((request) => {
       this.logger.log('Starting Request', JSON.stringify(request, null, 2));
       return request;
     });
+  }
 
-    // this.http = axiosRateLimit.default(this.http, { maxRPS: 60 });
+  setAxiosInstanceWithRateLimit() {
+    if (!ResevoirService.http) {
+      const axiosInstance = this.httpService.axiosRef;
+      this.setAxiosHeaders(axiosInstance);
+
+      // @ts-expect-error Broken typings
+      ResevoirService.http = axiosRateLimit(axiosInstance, {
+        maxRPS: this.config.envVars.RESEVOIR_RATE_LIMIT_MAX_RPS,
+      }) as HttpService['axiosRef'];
+    }
+  }
+
+  setAxiosHeaders(axiosInstance: AxiosInstance) {
+    axiosInstance.defaults.headers.common['accept'] = '*/*';
+    axiosInstance.defaults.headers.common['x-api-key'] =
+      this.config.envVars.RESEVOIR_API_KEY;
   }
 
   async fetchAggregateNftData(tokens: Token[]) {
@@ -70,9 +89,8 @@ export class ResevoirService {
     const url = this.baseUrl + '/owners/v1';
 
     const makeCall = () =>
-      this.http
+      ResevoirService.http
         .get(url, {
-          headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
           params: {
             token: resevoirToken,
             limit: '1',
@@ -115,9 +133,8 @@ export class ResevoirService {
     const url = this.baseUrl + '/sales/v4';
 
     const makeCall = async () =>
-      this.http
+      ResevoirService.http
         .get(url, {
-          headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
           params: {
             token: resevoirToken,
             includeMetadata: 'false',
@@ -181,9 +198,8 @@ export class ResevoirService {
     const url = this.baseUrl + '/orders/bids/v4';
 
     const makeCall = () =>
-      this.http
+      ResevoirService.http
         .get(url, {
-          headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
           params: {
             token: resevoirToken,
             includeMetadata: 'false',
@@ -258,17 +274,14 @@ export class ResevoirService {
       limit: '50',
     };
 
+    console.log('headers', ResevoirService.http.defaults.headers);
+
     const makeCall = () =>
-      this.http
-        .get(url, {
-          headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
-          params,
-        })
-        .then((response) => {
-          const { data } = response;
-          this.logger.log('Received token listings', { token, data });
-          return data;
-        });
+      ResevoirService.http.get(url, { params }).then((response) => {
+        const { data } = response;
+        this.logger.log('Received token listings', { token, data });
+        return data;
+      });
 
     const key = JSON.stringify({
       ...token,
