@@ -1,5 +1,5 @@
 import { Controller, Get, Logger } from '@nestjs/common';
-import { DEMO_NFTS } from '../../constants';
+import { DEMO_NFTS } from '../constants';
 import { DemoService } from './demo.service';
 import { DemoNftPayload } from './types';
 

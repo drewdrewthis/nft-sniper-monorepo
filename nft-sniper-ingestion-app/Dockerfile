@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY package* yarn.lock ./
 RUN yarn install --network-timeout 600000
-RUN yarn autoclean --force
 COPY tsconfig* nest-cli.json ./
 COPY prisma ./prisma
 COPY src ./src

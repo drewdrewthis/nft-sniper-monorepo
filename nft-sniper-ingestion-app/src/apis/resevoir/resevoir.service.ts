@@ -114,24 +114,21 @@ export class ResevoirService {
     const resevoirToken = buildTokenKey(token);
     const url = this.baseUrl + '/sales/v4';
 
-    const makeCall = async () => {
-      try {
-        const response = await this.http.get(url, {
+    const makeCall = async () =>
+      this.http
+        .get(url, {
           headers: { accept: '*/*', 'x-api-key': 'demo-api-key' },
           params: {
             token: resevoirToken,
             includeMetadata: 'false',
             limit: '1',
           },
+        })
+        .then((response) => {
+          const { data } = response;
+          this.logger.log('Received token sales', { token, data });
+          return data;
         });
-        const { data } = response;
-        this.logger.log('Received token sales', { token, data });
-        return data;
-      } catch (error) {
-        this.logger.error(error);
-        return [];
-      }
-    };
 
     const key = JSON.stringify({
       ...token,
