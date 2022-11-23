@@ -8,27 +8,29 @@ import { DemoNftPayload, Listing, Offer } from './types';
 @Injectable()
 export class DemoService {
   constructor(
-    private readonly resevoirService: ResevoirService,
     private readonly alchemyService: AlchemyService,
+    private readonly resevoirService: ResevoirService,
   ) {}
 
   async getNftDemoData(tokens: Token[]): Promise<DemoNftPayload> {
-    const aggregateData = await this.resevoirService.fetchAggregateNftData(
-      tokens,
-    );
-
-    const metadata = await this.alchemyService.getNFTMetadataBatch(tokens);
-
-    return aggregateData.map((data, idx) => {
-      return {
-        ...data,
-        offers: data.highestBid ? [normalizeOffer(data, data.highestBid)] : [],
-        historicalPrices: data.lowestListing
-          ? [normalizePrice(data, data.lowestListing)]
-          : [],
-        metadata: (metadata || [])[idx],
-      };
-    });
+    //   // Sanity check
+    //   if (!tokens?.length) return [];
+    //   const aggregateData = await this.resevoirService.fetchAggregateNftData(
+    //     tokens,
+    //   );
+    //   const metadata = await this.alchemyService.getNFTMetadataBatch(tokens);
+    //   return aggregateData.map((data, idx) => {
+    //     return {
+    //       ...data,
+    //       offers: data.highestBid ? [normalizeOffer(data, data.highestBid)] : [],
+    //       historicalPrices: data.lowestListing
+    //         ? [normalizePrice(data, data.lowestListing)]
+    //         : [],
+    //       metadata: (metadata || [])[idx],
+    //     };
+    //   });
+    // }
+    return [];
   }
 }
 

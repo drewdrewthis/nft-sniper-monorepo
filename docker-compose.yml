@@ -20,8 +20,9 @@ services:
       - REDIS_HOST=redis-server
       - REDIS_PORT=6379
       - CRAWLER_SERVER_CRAWL_ENDPOINT=http://nft-s-LoadB-1KDIVO32FBA42-623d747c98bbc393.elb.us-east-1.amazonaws.com:3001/crawl
-      # - OPENSEA_SCHEDULER_FREQUENCY_MS=0
-      # - X2Y2_SCHEDULER_FREQUENCY_MS=0
+      - OPENSEA_SCHEDULER_FREQUENCY_MS=0
+      - X2Y2_SCHEDULER_FREQUENCY_MS=0
+      - MAX_TRACKABLE_TOKEN_COUNT=10
     depends_on:
       - redis-server
       - crawler-postgres

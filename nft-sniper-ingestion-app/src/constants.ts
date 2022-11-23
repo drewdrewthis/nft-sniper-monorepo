@@ -32,3 +32,11 @@ export const DEMO_NFTS = [
     tokenId: 4546,
   },
 ];
+
+export const WALLET_ALLOW_LIST = [
+  // Hunter
+  '0xf5a6802d7f22c963e46dd5CbAE25A6E1A79b0b89',
+  // Drew
+  '0x2c66D3642a52F3dF6d46A3F4DCAFB7dF3aDe102d',
+  '0xC35e2a3595f129Add818E14205A467725c269264',
+];

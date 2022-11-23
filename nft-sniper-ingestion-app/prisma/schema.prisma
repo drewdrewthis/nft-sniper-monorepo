@@ -116,3 +116,12 @@ model RawScrapeData {
   HistoricalNftPrice HistoricalNftPrice[]
   HistoricalNftOffer HistoricalNftOffer[]
 }
+
+model WalletAllowList {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  walletAddress String  @unique
+  isDeleted     Boolean @default(false)
+}

@@ -37,6 +37,14 @@ services:
     networks:
       - snipernetwork
 
+  test-redis:
+    image: redis:6.2-alpine
+    restart: unless-stopped
+    ports:
+      - '6380:6379'
+    networks:
+      - snipernetwork
+
   postgres:
     image: postgres:13
     restart: unless-stopped

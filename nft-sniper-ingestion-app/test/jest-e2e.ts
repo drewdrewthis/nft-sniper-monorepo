@@ -1,12 +1,15 @@
 import type { Config } from 'jest';
 import * as dotenv from 'dotenv';
+import * as dotenvExpand from 'dotenv-expand';
 
-const { error } = dotenv.config({
+const env = dotenv.config({
   path: '.env.test',
 });
 
-if (error) {
-  throw error;
+dotenvExpand.expand(env);
+
+if (env.error) {
+  throw env.error;
 }
 
 const config: Config = {

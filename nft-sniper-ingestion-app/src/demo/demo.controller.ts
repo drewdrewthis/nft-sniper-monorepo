@@ -10,7 +10,8 @@ export class DemoController {
   constructor(private readonly service: DemoService) {}
 
   @Get('nft-data')
-  async getNftDemoData(): Promise<DemoNftPayload> {
+  async getNftDemoData(): Promise<DemoNftPayload | void | string> {
+    this.logger.log('Demo data requested');
     return this.service.getNftDemoData(DEMO_NFTS);
   }
 }

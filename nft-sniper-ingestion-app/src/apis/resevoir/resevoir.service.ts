@@ -274,8 +274,6 @@ export class ResevoirService {
       limit: '50',
     };
 
-    console.log('headers', ResevoirService.http.defaults.headers);
-
     const makeCall = () =>
       ResevoirService.http.get(url, { params }).then((response) => {
         const { data } = response;

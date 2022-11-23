@@ -1,11 +1,15 @@
 import { PrismaClient } from '@prisma/client';
-import { DEMO_NFTS } from '../constants';
+import { DEMO_NFTS, WALLET_ALLOW_LIST } from '../constants';
 
 const prisma = new PrismaClient();
 
 async function main() {
   // Must be syncronous so can't use map
-  console.log(await createMarketplaces(), await createTokens());
+  console.log(
+    await createMarketplaces(),
+    await createTokens(),
+    await updateAllowList(),
+  );
 }
 
 async function createMarketplaces() {
@@ -36,6 +40,38 @@ async function createTokens() {
           },
           create: token,
           update: {},
+        })
+        .catch(console.error);
+    }),
+  );
+}
+
+async function updateAllowList() {
+  console.log('Updating allowlist..');
+  await prisma.walletAllowList.updateMany({
+    where: {
+      walletAddress: {
+        notIn: WALLET_ALLOW_LIST,
+      },
+    },
+    data: {
+      isDeleted: true,
+    },
+  });
+
+  return Promise.all(
+    WALLET_ALLOW_LIST.map(async (walletAddress) => {
+      await prisma.walletAllowList
+        .upsert({
+          where: {
+            walletAddress,
+          },
+          create: {
+            walletAddress,
+          },
+          update: {
+            isDeleted: false,
+          },
         })
         .catch(console.error);
     }),

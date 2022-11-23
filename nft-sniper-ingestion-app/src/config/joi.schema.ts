@@ -9,6 +9,7 @@ const obj = {
   X2Y2_SCHEDULER_FREQUENCY_MS: Joi.number().default(0),
   RESEVOIR_API_KEY: Joi.string().required(),
   RESEVOIR_RATE_LIMIT_MAX_RPS: Joi.number().required(),
+  JWT_SECRET_KEY: Joi.string().required(),
 };
 
 export const schema = Joi.object(obj).unknown(true);

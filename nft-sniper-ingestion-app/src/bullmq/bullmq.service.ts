@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import IORedis from 'ioredis';
-import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma';
 import { X2Y2Scheduler } from './schedulers/x2y2';
 import { CrawlerServerService } from '../apis/crawler-server/crawler-server.service';
@@ -16,6 +15,7 @@ import { Queue } from 'bullmq';
 import { ExpressAdapter } from '@bull-board/express';
 import { createBullBoard } from '@bull-board/api';
 import { BullAdapter } from '@bull-board/api/bullAdapter';
+import { ConfigService } from '../config/config.service';
 
 @Injectable()
 export class BullmqService {
@@ -70,16 +70,17 @@ export class BullmqService {
     this.queues = [x2y2.queue, opensea.queue];
   }
 
+  async close() {
+    this.logger.log('Quitting Redis');
+    return this.redis.shutdown();
+  }
+
   async resetSchedulers(schedulers: Scheduler[]) {
     return Promise.all(schedulers.map(cleanUpQueue));
   }
 
   async addX2Y2Job({ queue }: Scheduler) {
-    const frequency = Number(
-      this.configService.get('X2Y2_SCHEDULER_FREQUENCY_MS', {
-        infer: true,
-      }),
-    );
+    const frequency = this.configService.envVars.X2Y2_SCHEDULER_FREQUENCY_MS;
 
     if (frequency < 1) {
       return;
@@ -106,15 +107,12 @@ export class BullmqService {
   }
 
   async addOpenSeaJob({ queue }: Scheduler) {
-    const frequency = Number(
-      this.configService.get('OPENSEA_SCHEDULER_FREQUENCY_MS', {
-        infer: true,
-      }),
-    );
+    const frequency = this.configService.envVars.OPENSEA_SCHEDULER_FREQUENCY_MS;
 
     if (frequency < 1) {
       return;
     }
+
     await queue
       .add(
         'Crawl',
