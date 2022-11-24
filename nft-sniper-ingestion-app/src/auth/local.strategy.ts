@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { ethers } from 'ethers';
 import { Strategy } from 'passport-custom';
 import { Request } from 'express';
-import { User } from '../users/users.service';
+import { SiweUser } from '@prisma/client';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy, 'siwe-strategy') {
@@ -20,8 +20,8 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'siwe-strategy') {
    * @param req
    * @returns User
    */
-  async validate(req: Request): Promise<User> {
-    const { walletAddress } = req.body;
+  async validate(req: Request): Promise<SiweUser> {
+    const { walletAddress, signature } = req.body;
 
     const contentType = req.headers['content-type'];
 
@@ -33,7 +33,11 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'siwe-strategy') {
       throw new UnauthorizedException(`Wallet address is not valid`);
     }
 
-    const user = await this.authService.validateUser(walletAddress);
+    if (!signature) {
+      throw new UnauthorizedException(`Signature is required for login`);
+    }
+
+    const user = await this.authService.validateUser(walletAddress, signature);
 
     if (!user) {
       throw new UnauthorizedException(`Wallet address is not allowed`);

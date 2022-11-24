@@ -33,7 +33,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { Cache } from 'cache-manager';
+import { UsersService } from './users/users.service';
 
 const { REDIS_HOST, REDIS_PORT } = process.env;
 
@@ -81,6 +81,7 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+    UsersService,
   ],
 })
 export class AppModule {
