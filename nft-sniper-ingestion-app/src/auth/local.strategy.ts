@@ -21,7 +21,7 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'siwe-strategy') {
    * @returns User
    */
   async validate(req: Request): Promise<SiweUser> {
-    const { walletAddress, signature } = req.body;
+    const { walletAddress, signature, message } = req.body;
 
     const contentType = req.headers['content-type'];
 
@@ -37,7 +37,11 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'siwe-strategy') {
       throw new UnauthorizedException(`Signature is required for login`);
     }
 
-    const user = await this.authService.validateUser(walletAddress, signature);
+    const user = await this.authService.validateUser(
+      walletAddress,
+      signature,
+      message,
+    );
 
     if (!user) {
       throw new UnauthorizedException(`Wallet address is not allowed`);

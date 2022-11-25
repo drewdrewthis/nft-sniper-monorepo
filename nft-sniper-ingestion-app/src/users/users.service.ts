@@ -7,15 +7,20 @@ import { generateNonce } from 'siwe';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(walletAddress: string) {
-    await this.validateAddress(walletAddress);
+  async findOrCreate(walletAddress: string) {
+    // await this.validateAddress(walletAddress);
+
     const nonce = generateNonce();
 
-    return this.prisma.siweUser.create({
-      data: {
+    return this.prisma.siweUser.upsert({
+      where: {
+        walletAddress,
+      },
+      create: {
         walletAddress,
         nonce,
       },
+      update: {},
     });
   }
 

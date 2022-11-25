@@ -73,6 +73,9 @@ export class PrismaService extends PrismaClient {
   }
 
   async cleanDb() {
-    return this.$transaction([this.walletAllowList.deleteMany()]);
+    return this.$transaction([
+      this.walletAllowList.deleteMany(),
+      this.siweUser.deleteMany(),
+    ]);
   }
 }

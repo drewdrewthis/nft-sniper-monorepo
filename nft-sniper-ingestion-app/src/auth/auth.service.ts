@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { SiweMessage } from 'siwe';
@@ -6,6 +6,8 @@ import { SiweUser } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
+  logger = new Logger(AuthService.name);
+
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
@@ -15,29 +17,40 @@ export class AuthService {
   async validateUser(
     walletAddress: string,
     signature: string,
+    message: string,
   ): Promise<SiweUser | null> {
     const user = await this.usersService.findOne(walletAddress);
-    this.validateSignature(walletAddress, signature);
+    this.validateSignature(walletAddress, signature, message);
 
     return user;
   }
 
   async login(user: any) {
-    const payload = { walletAddress: user.walletAddress, sub: user.userId };
+    const payload = { walletAddress: user.walletAddress, sub: user.nonce };
     const token = this.jwtService.sign(payload);
 
     return Promise.resolve({
       access_token: token,
-    }).then(() => {
+    }).finally(() => {
       this.afterLogin(user);
     });
+  }
+
+  async getNonceForWallet(walletAddress: string) {
+    const user = await this.usersService.findOrCreate(walletAddress);
+    const { nonce } = user;
+    return nonce;
   }
 
   async afterLogin(user: any) {
     this.usersService.updateNonceForWalletAddress(user.walletAddress);
   }
 
-  async validateSignature(walletAddress: string, signature: string) {
+  async validateSignature(
+    walletAddress: string,
+    signature: string,
+    message: string,
+  ) {
     const user = await this.usersService.findOne(walletAddress);
 
     if (!user) {
@@ -46,8 +59,12 @@ export class AuthService {
       );
     }
 
-    const siweMessage = this.generateSiweMessage(walletAddress, user?.nonce);
-    return siweMessage.validate(signature);
+    try {
+      const siweMessage = new SiweMessage(message);
+      return siweMessage.validate(signature);
+    } catch (e) {
+      this.logger.error(e);
+    }
   }
 
   generateSiweMessage(walletAddress: string, nonce: string) {

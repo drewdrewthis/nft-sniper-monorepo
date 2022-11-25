@@ -4,6 +4,8 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/prisma';
 import { WALLET_ALLOW_LIST } from '../src/constants';
+import { SiweMessage } from 'siwe';
+import { ethers } from 'ethers';
 // import 'leaked-handles';
 
 jest.setTimeout(10000);
@@ -44,9 +46,8 @@ describe('AppController (e2e)', () => {
 
   afterAll(async () => {
     try {
-      console.log('Finished tests. Cleaning DB');
+      console.log('Finished tests. Cleaning DB and shutting down');
       await prisma.cleanDb();
-      console.log('Shutting down');
       await app.getHttpServer().close();
       app.close();
       console.log('Finished shutting down');
@@ -60,6 +61,21 @@ describe('AppController (e2e)', () => {
       .get('/')
       .expect(200)
       .expect('Hello World!');
+  });
+
+  describe('/auth/challenge (POST)', () => {
+    it('should be OK and return valid nonce', async () => {
+      const result = await request(app.getHttpServer())
+        .post('/auth/challenge')
+        .send({
+          walletAddress: WALLET_ALLOW_LIST[0],
+        })
+        .expect(201);
+
+      expect(result.body).toEqual({
+        nonce: expect.any(String),
+      });
+    });
   });
 
   describe('/auth/login (POST)', () => {
@@ -82,14 +98,14 @@ describe('AppController (e2e)', () => {
     });
 
     it('should be OK and return token with valid login', async () => {
-      const result = await request(app.getHttpServer())
-        .post('/auth/login')
-        .send({
-          walletAddress: WALLET_ALLOW_LIST[0],
-        })
-        .expect(201);
+      const wallet = ethers.Wallet.createRandom();
+      const jwtToken = await fetchAccessToken(
+        app.getHttpServer(),
+        wallet,
+        prisma,
+      );
 
-      expect(result.body).toEqual({
+      expect(jwtToken).toEqual({
         access_token: expect.stringContaining('ey'),
       });
     });
@@ -107,14 +123,12 @@ describe('AppController (e2e)', () => {
 
     describe('with valid token', () => {
       it('should be OK and return token with valid login', async () => {
-        const result = await request(app.getHttpServer())
-          .post('/auth/login')
-          .set('Content-Type', 'application/json')
-          .send({
-            walletAddress: WALLET_ALLOW_LIST[0],
-          });
-
-        const { access_token } = result.body;
+        const wallet = ethers.Wallet.createRandom();
+        const { access_token } = await fetchAccessToken(
+          app.getHttpServer(),
+          wallet,
+          prisma,
+        );
 
         return (
           request(app.getHttpServer())
@@ -128,3 +142,50 @@ describe('AppController (e2e)', () => {
     });
   });
 });
+
+async function fetchAccessToken(
+  server: any,
+  wallet: ethers.Wallet,
+  prisma: PrismaService,
+) {
+  await prisma.walletAllowList.create({
+    data: {
+      walletAddress: wallet.address,
+    },
+  });
+
+  const nonceResult = await request(server)
+    .post('/auth/challenge')
+    .send({
+      walletAddress: wallet.address,
+    })
+    .expect(201);
+
+  // Client side
+  const message = new SiweMessage({
+    domain: 'alphasniper.xyz',
+    address: wallet.address,
+    statement: 'Please log-in by signing this message',
+    uri: 'https://alphasniper.xyz/login',
+    version: '1',
+    chainId: 1,
+    nonce: nonceResult.body.nonce,
+  });
+
+  const signature = await wallet.signMessage(message.prepareMessage());
+
+  const result = await request(server)
+    .post('/auth/login')
+    .send({
+      walletAddress: wallet.address,
+      signature,
+      message: message.toMessage(),
+    })
+    .expect(201);
+
+  expect(result.body).toEqual({
+    access_token: expect.stringContaining('ey'),
+  });
+
+  return result.body;
+}

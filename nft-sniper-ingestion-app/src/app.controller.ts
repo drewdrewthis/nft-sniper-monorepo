@@ -32,4 +32,16 @@ export class AppController {
   async login(@Request() req: any) {
     return this.authService.login(req.user);
   }
+
+  @Public()
+  @Post('auth/challenge')
+  async createChallenge(@Request() req: any) {
+    const nonce = await this.authService.getNonceForWallet(
+      req.body.walletAddress,
+    );
+
+    return {
+      nonce,
+    };
+  }
 }

@@ -125,27 +125,14 @@ export class NftService {
     tokenId: number;
     contractAddress: string;
     walletAddress: string;
-    signedMessage: {
-      message: string;
-      signature: string;
-    };
   }) {
     this.logger.log('Received request to add nft', payload);
 
-    const { signedMessage, walletAddress, tokenId, contractAddress } = payload;
+    const { walletAddress, tokenId, contractAddress } = payload;
 
     // Validate addresses
     ethers.utils.getAddress(contractAddress);
     ethers.utils.getAddress(walletAddress);
-
-    try {
-      this.verifySignature(walletAddress, signedMessage);
-    } catch (e) {
-      throw new HttpException(
-        'You are unauthorized to add NFTs for this account',
-        401,
-      );
-    }
 
     await this.validateCanAddMoreTokens(walletAddress);
 

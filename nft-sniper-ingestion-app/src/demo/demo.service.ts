@@ -13,24 +13,23 @@ export class DemoService {
   ) {}
 
   async getNftDemoData(tokens: Token[]): Promise<DemoNftPayload> {
-    //   // Sanity check
-    //   if (!tokens?.length) return [];
-    //   const aggregateData = await this.resevoirService.fetchAggregateNftData(
-    //     tokens,
-    //   );
-    //   const metadata = await this.alchemyService.getNFTMetadataBatch(tokens);
-    //   return aggregateData.map((data, idx) => {
-    //     return {
-    //       ...data,
-    //       offers: data.highestBid ? [normalizeOffer(data, data.highestBid)] : [],
-    //       historicalPrices: data.lowestListing
-    //         ? [normalizePrice(data, data.lowestListing)]
-    //         : [],
-    //       metadata: (metadata || [])[idx],
-    //     };
-    //   });
-    // }
-    return [];
+    // Sanity check
+    if (!tokens?.length) return [];
+
+    const aggregateData = await this.resevoirService.fetchAggregateNftData(
+      tokens,
+    );
+    const metadata = await this.alchemyService.getNFTMetadataBatch(tokens);
+    return aggregateData.map((data, idx) => {
+      return {
+        ...data,
+        offers: data.highestBid ? [normalizeOffer(data, data.highestBid)] : [],
+        historicalPrices: data.lowestListing
+          ? [normalizePrice(data, data.lowestListing)]
+          : [],
+        metadata: (metadata || [])[idx],
+      };
+    });
   }
 }
 
@@ -93,23 +92,4 @@ function normalizeOffer(
     expiresAt: new Date(bid.expiration),
     from: bid.maker,
   };
-}
-
-function priceSourceToMarketPlaceId(source: { [key: string]: unknown }) {
-  switch (source.name) {
-    case 'LooksRare':
-      return Marketplace.LooksRare;
-    case 'OpenSea':
-      return Marketplace.OpenSea;
-    case 'X2Y2':
-      return Marketplace.X2Y2;
-    case 'Blur':
-      return Marketplace.Blur;
-    case 'sudoswap':
-      return Marketplace.SudoSwap;
-    case 'nft.mm':
-      return Marketplace.MadMeerkat;
-    default:
-      throw new Error('Unknown marketplace: ' + source);
-  }
 }
