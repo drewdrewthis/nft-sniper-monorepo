@@ -36,3 +36,9 @@ lerna-debug.log*
 
 # Volumes
 .postgres
+
+# Secrets
+.env
+.env.test
+.env.development
+.env.secrets
