@@ -3,12 +3,17 @@ FROM node:19-buster AS build
 WORKDIR /app
 
 COPY package* yarn.lock ./
-RUN yarn install --network-timeout 600000
+RUN \
+  --mount=type=cache,mode=0777,target=./node_modules \
+  yarn install --network-timeout 600000
 COPY tsconfig* nest-cli.json ./
+RUN ls -a node_modules
 COPY prisma ./prisma
 COPY src ./src
 RUN yarn prisma generate
-RUN yarn build
+RUN \
+  --mount=type=cache,mode=0777,target=./dist \
+  yarn build
 
 FROM node:19-buster
 COPY package* ./
