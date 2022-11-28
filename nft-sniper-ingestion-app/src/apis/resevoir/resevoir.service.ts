@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { CACHE_MANAGER, Inject, Injectable, Logger } from '@nestjs/common';
 import { Token } from '../../types';
 import { paths } from '@reservoir0x/reservoir-kit-client';
-import { Cache } from 'cache-manager';
+import { RedisCache } from '@tirke/node-cache-manager-ioredis';
 import * as axiosRateLimit from 'axios-rate-limit';
 import { AxiosInstance } from 'axios';
 import { ConfigService } from '../../config/config.service';
@@ -18,7 +18,7 @@ export class ResevoirService {
 
   constructor(
     private readonly httpService: HttpService,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    @Inject(CACHE_MANAGER) private cacheManager: RedisCache,
     private readonly config: ConfigService,
   ) {
     this.setAxiosInstanceWithRateLimit();
@@ -297,25 +297,59 @@ export class ResevoirService {
     key: string,
     fetchFn: () => Promise<T>,
   ) {
-    const value = await this.cacheManager.get(key);
+    const value = await this.cacheManager.get<T>(key);
 
-    if (value) {
-      // Don't wait, return cached value and store async
-      fetchFn()
-        .then((data) => {
-          this.cacheManager.set(key, data, 0);
-        })
-        .catch((e) => this.logger.error(e));
-
-      return value;
-    } else {
+    // If no value, must wait for data
+    if (!value) {
       return fetchFn()
         .then((data) => {
-          this.cacheManager.set(key, data, 0);
+          this.cacheData(key, data);
           return data;
         })
         .catch((e) => this.logger.error(e));
     }
+
+    // If value, but should refetch -- fetch async but return value sync
+    if (await this.shouldRefetchKey(key)) {
+      fetchFn()
+        .then((data) => {
+          this.cacheData(key, data);
+          return data;
+        })
+        .catch((e) => this.logger.error(e));
+    }
+
+    // Return value sync
+    return value;
+  }
+
+  async cacheData(key: string, data: unknown) {
+    this.cacheManager.set(key, data, 0);
+    this.cacheManager.set(this.getCreatedAtKey(key), Date.now());
+  }
+
+  static KEY_RETENTION_MS = 60000;
+  private async shouldRefetchKey(key: string) {
+    const lastUpdated = await this.getLastUpdatedAtForKey(key);
+
+    if (!lastUpdated) return true;
+
+    const timeInMillisecondsSinceLastSave = Date.now() - lastUpdated;
+
+    return timeInMillisecondsSinceLastSave > ResevoirService.KEY_RETENTION_MS;
+  }
+
+  private async getLastUpdatedAtForKey(key: string) {
+    const createdAtKey = this.getCreatedAtKey(key);
+    const timeInSecondsSinceLastSave = await this.cacheManager.get(
+      createdAtKey,
+    );
+    return timeInSecondsSinceLastSave as number | void;
+  }
+
+  static CREATED_AT_KEY = 'CREATED_AT';
+  private getCreatedAtKey(key: string) {
+    return `${key}:${ResevoirService.CREATED_AT_KEY}`;
   }
 }
 
