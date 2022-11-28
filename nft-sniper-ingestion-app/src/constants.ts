@@ -8,28 +8,28 @@ export const DEMO_NFTS = [
     tokenId: 4860,
   },
   {
-    contractAddress: '0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91',
-    tokenId: 6781,
-  },
-  {
-    contractAddress: '0x394E3d3044fC89fCDd966D3cb35Ac0B32B0Cda91',
-    tokenId: 5341,
-  },
-  {
     contractAddress: '0x60E4d786628Fea6478F785A6d7e704777c86a7c6',
     tokenId: 8841,
   },
   {
-    contractAddress: '0x09233d553058c2F42ba751C87816a8E9FaE7Ef10',
-    tokenId: 4329,
+    contractAddress: '0x60E4d786628Fea6478F785A6d7e704777c86a7c6',
+    tokenId: 6170,
   },
   {
     contractAddress: '0xed5af388653567af2f388e6224dc7c4b3241c544',
-    tokenId: 4545,
+    tokenId: 8980,
   },
   {
     contractAddress: '0xed5af388653567af2f388e6224dc7c4b3241c544',
-    tokenId: 4546,
+    tokenId: 7719,
+  },
+  {
+    contractAddress: '0xed5af388653567af2f388e6224dc7c4b3241c544',
+    tokenId: 7284,
+  },
+  {
+    contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
+    tokenId: 13961,
   },
 ];
 
