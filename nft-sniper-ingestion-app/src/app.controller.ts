@@ -5,11 +5,13 @@ import {
   Request,
   Post,
   UseGuards,
+  Res,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { Public } from './auth/constants';
+import { Response } from 'express';
 
 @Controller()
 export class AppController {
@@ -29,8 +31,18 @@ export class AppController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
-  async login(@Request() req: any) {
-    return this.authService.login(req.user);
+  async login(
+    @Request() req: any,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const result = await this.authService.login(req.user);
+    response.cookie('alpha_sniper_access_token', result.access_token, {
+      httpOnly: true,
+      maxAge: 60 * 1000 * 60 * 24,
+      secure: true,
+      signed: true,
+    });
+    return result;
   }
 
   @Public()

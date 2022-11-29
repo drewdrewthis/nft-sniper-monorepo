@@ -7,6 +7,9 @@ import { WALLET_ALLOW_LIST } from '../src/constants';
 import { SiweMessage } from 'siwe';
 import { ethers } from 'ethers';
 // import 'leaked-handles';
+import * as cookieParser from 'cookie-parser';
+import { env } from '../src/config/joi.schema';
+import * as cookie from 'cookie';
 
 jest.setTimeout(10000);
 
@@ -41,6 +44,7 @@ describe('AppController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     prisma = app.get(PrismaService);
+    app.use(cookieParser(env.JWT_SECRET_KEY));
     await app.init();
   });
 
@@ -109,6 +113,18 @@ describe('AppController (e2e)', () => {
         access_token: expect.stringContaining('ey'),
       });
     });
+
+    it('should be OK and return token in cookies', async () => {
+      const wallet = ethers.Wallet.createRandom();
+      const result = await login(app.getHttpServer(), wallet, prisma);
+
+      const cookies = result.get('Set-Cookie');
+      const parsed = cookie.parse(cookies[0]);
+
+      expect(parsed['alpha_sniper_access_token']).toEqual(
+        expect.stringContaining('ey'),
+      );
+    });
   });
 
   describe('/demo/nft-data (GET)', () => {
@@ -118,6 +134,23 @@ describe('AppController (e2e)', () => {
           .get('/demo/nft-data')
           .set('Authorization', `Bearer bad-token`)
           .expect(401);
+      });
+    });
+
+    describe('with valid cookie', () => {
+      it('should be OK and return token with valid login', async () => {
+        const wallet = ethers.Wallet.createRandom();
+        const result = await login(app.getHttpServer(), wallet, prisma);
+        const cookies = result.get('Set-Cookie');
+
+        return (
+          request(app.getHttpServer())
+            .get('/demo/nft-data')
+            .set('Cookie', cookies)
+            .expect(200)
+            // This returns an empty array because there aren't any tokens to fetch
+            .expect([])
+        );
       });
     });
 
@@ -148,6 +181,20 @@ async function fetchAccessToken(
   wallet: ethers.Wallet,
   prisma: PrismaService,
 ) {
+  const result = await login(server, wallet, prisma);
+
+  expect(result.body).toEqual({
+    access_token: expect.stringContaining('ey'),
+  });
+
+  return result.body;
+}
+
+async function login(
+  server: any,
+  wallet: ethers.Wallet,
+  prisma: PrismaService,
+) {
   await prisma.walletAllowList.create({
     data: {
       walletAddress: wallet.address,
@@ -174,7 +221,7 @@ async function fetchAccessToken(
 
   const signature = await wallet.signMessage(message.prepareMessage());
 
-  const result = await request(server)
+  return request(server)
     .post('/auth/login')
     .send({
       walletAddress: wallet.address,
@@ -182,10 +229,4 @@ async function fetchAccessToken(
       message: message.toMessage(),
     })
     .expect(201);
-
-  expect(result.body).toEqual({
-    access_token: expect.stringContaining('ey'),
-  });
-
-  return result.body;
 }
