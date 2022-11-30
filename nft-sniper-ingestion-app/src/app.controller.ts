@@ -42,6 +42,7 @@ export class AppController {
       secure: true,
       signed: true,
     });
+    response.cookie('alpha_sniper_logged_in_address', req.user.walletAddress);
     return result;
   }
 
