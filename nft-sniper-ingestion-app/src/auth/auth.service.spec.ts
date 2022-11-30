@@ -17,8 +17,4 @@ describe('AuthService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
-
-  it('should be able to generate a nonce', async () => {
-    await service.generateNonce();
-  });
 });

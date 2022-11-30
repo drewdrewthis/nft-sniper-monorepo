@@ -39,6 +39,8 @@
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.6.1",
     "@reservoir0x/reservoir-kit-client": "^0.1.15",
+    "@sentry/node": "^7.22.0",
+    "@sentry/tracing": "^7.22.0",
     "@tirke/node-cache-manager-ioredis": "^3.0.1",
     "alchemy-sdk": "^2.2.1",
     "api": "^5.0.1",
