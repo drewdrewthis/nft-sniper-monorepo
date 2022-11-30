@@ -23,6 +23,7 @@ services:
       - OPENSEA_SCHEDULER_FREQUENCY_MS=0
       - X2Y2_SCHEDULER_FREQUENCY_MS=0
       - MAX_TRACKABLE_TOKEN_COUNT=10
+      - GIT_SHA=${GIT_SHA}
     depends_on:
       - redis-server
       # - crawler-postgres
