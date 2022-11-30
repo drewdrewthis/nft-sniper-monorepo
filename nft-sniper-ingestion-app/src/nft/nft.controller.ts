@@ -26,7 +26,6 @@ export class NftController {
       walletAddress: string;
     },
   ): Promise<DemoNftPayload> {
-    console.log('tracled', payload);
     return this.service.getNftDataForWallet(payload.walletAddress);
   }
 
