@@ -14,7 +14,9 @@ import { Public } from './auth/constants';
 import { Response } from 'express';
 
 const ACCESS_TOKEN_COOKIE_KEY = 'alpha_sniper_access_token';
-const LOGGED_IN_COOKIE_KEY = 'alpha_sniper_logged_in_address';
+const ACCESS_TOKEN_EXPIRATION_COOKIE_KEY =
+  'alpha_sniper_access_token_expiration';
+const ACCESS_TOKEN_WALLET_ADDRESS_COOKIE_KEY = 'alpha_sniper_logged_in_address';
 
 @Controller()
 export class AppController {
@@ -39,20 +41,35 @@ export class AppController {
     @Res({ passthrough: true }) response: Response,
   ) {
     const result = await this.authService.login(req.user);
+    const expires = extractExpirationDateFromJWT(result.access_token);
+
     response.cookie(ACCESS_TOKEN_COOKIE_KEY, result.access_token, {
       httpOnly: true,
-      maxAge: 60 * 1000 * 60 * 24,
       secure: true,
+      expires,
       signed: true,
     });
-    response.cookie(LOGGED_IN_COOKIE_KEY, req.user.walletAddress);
+
+    response.cookie(ACCESS_TOKEN_EXPIRATION_COOKIE_KEY, expires.getTime(), {
+      expires,
+    });
+
+    response.cookie(
+      ACCESS_TOKEN_WALLET_ADDRESS_COOKIE_KEY,
+      req.user.walletAddress,
+      {
+        expires,
+      },
+    );
+
     return result;
   }
 
   @Post('auth/logout')
   async logout(@Res({ passthrough: true }) response: Response) {
     response.clearCookie(ACCESS_TOKEN_COOKIE_KEY);
-    response.clearCookie(LOGGED_IN_COOKIE_KEY);
+    response.clearCookie(ACCESS_TOKEN_EXPIRATION_COOKIE_KEY);
+    response.clearCookie(ACCESS_TOKEN_WALLET_ADDRESS_COOKIE_KEY);
     return true;
   }
 
@@ -67,4 +84,11 @@ export class AppController {
       nonce,
     };
   }
+}
+
+function extractExpirationDateFromJWT(token: string) {
+  const base64Url = token.split('.')[1];
+  const { exp } = JSON.parse(Buffer.from(base64Url, 'base64').toString());
+  const seconds = Number(exp);
+  return new Date(seconds * 1000);
 }
