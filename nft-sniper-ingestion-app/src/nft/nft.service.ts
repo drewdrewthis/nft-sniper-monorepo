@@ -1,12 +1,12 @@
-import { HttpException, Injectable, Logger } from '@nestjs/common';
-import { NFT } from '@prisma/client';
 import * as ethers from 'ethers';
 import { AlchemyService } from '../apis/alchemy/alchemy.service';
+import { ConfigService } from '../config/config.service';
+import { DemoService } from '../demo/demo.service';
 import { HistoricalNftOfferService } from '../historical-nft-offer/historical-nft-offer.service';
+import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
+import { NFT } from '@prisma/client';
 import { PrismaService } from '../prisma';
 import { Token } from '../types';
-import { DemoService } from '../demo/demo.service';
-import { ConfigService } from '../config/config.service';
 
 class MaxTrackedTokensReached extends Error {}
 
@@ -128,11 +128,8 @@ export class NftService {
   }) {
     this.logger.log('Received request to add nft', payload);
 
-    const { walletAddress, tokenId, contractAddress } = payload;
-
-    // Validate addresses
-    ethers.utils.getAddress(contractAddress);
-    ethers.utils.getAddress(walletAddress);
+    const { walletAddress, tokenId, contractAddress } =
+      checksumPayloadAddresses(payload);
 
     await this.validateCanAddMoreTokens(walletAddress);
 
@@ -147,9 +144,13 @@ export class NftService {
       update: {},
     });
 
-    await this.prisma.trackedNft.upsert({
+    return this.prisma.trackedNft.upsert({
       where: {
-        contractAddress_tokenId: { contractAddress, tokenId },
+        contractAddress_tokenId_walletAddress: {
+          contractAddress,
+          tokenId,
+          walletAddress,
+        },
       },
       create: {
         tokenId: Number(tokenId),
@@ -169,13 +170,13 @@ export class NftService {
 
     const { walletAddress, tokenId, contractAddress } = payload;
 
-    // Validate addresses
-    ethers.utils.getAddress(contractAddress);
-    ethers.utils.getAddress(walletAddress);
-
     return this.prisma.trackedNft.delete({
       where: {
-        contractAddress_tokenId: { contractAddress, tokenId },
+        contractAddress_tokenId_walletAddress: {
+          contractAddress,
+          tokenId,
+          walletAddress,
+        },
       },
     });
   }
@@ -212,4 +213,26 @@ export class NftService {
       );
     }
   }
+}
+
+function checksumPayloadAddresses(payload: {
+  tokenId: number;
+  walletAddress: string;
+  contractAddress: string;
+}) {
+  // Validate addresses
+  try {
+    payload.contractAddress = ethers.utils.getAddress(payload.contractAddress);
+  } catch (e) {
+    throw new HttpException('Invalid contract address', HttpStatus.BAD_REQUEST);
+  }
+
+  // Validate addresses
+  try {
+    payload.walletAddress = ethers.utils.getAddress(payload.walletAddress);
+  } catch (e) {
+    throw new HttpException('Invalid wallet address', HttpStatus.BAD_REQUEST);
+  }
+
+  return payload;
 }

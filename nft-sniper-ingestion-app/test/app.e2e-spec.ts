@@ -46,12 +46,16 @@ describe('AppController (e2e)', () => {
     prisma = app.get(PrismaService);
     app.use(cookieParser(env.JWT_SECRET_KEY));
     await app.init();
+    await prisma.cleanDb();
+  });
+
+  afterEach(async () => {
+    await prisma.cleanDb();
   });
 
   afterAll(async () => {
     try {
-      console.log('Finished tests. Cleaning DB and shutting down');
-      await prisma.cleanDb();
+      console.log('Finished tests.');
       await app.getHttpServer().close();
       app.close();
       console.log('Finished shutting down');
@@ -129,7 +133,7 @@ describe('AppController (e2e)', () => {
 
   describe('/demo/nft-data (GET)', () => {
     describe('without valid token', () => {
-      it('should be OK and return token with valid login', async () => {
+      it('should be UNAUTHORIZED', async () => {
         return request(app.getHttpServer())
           .get('/demo/nft-data')
           .set('Authorization', `Bearer bad-token`)
@@ -174,6 +178,198 @@ describe('AppController (e2e)', () => {
       });
     });
   });
+
+  // -------------------------------------------------------------------------- //
+  {
+    const PATH = '/nft/add';
+
+    describe(`${PATH} (POST)`, () => {
+      describe('without valid token', () => {
+        it('should be UNAUTHORIZED', async () => {
+          return request(app.getHttpServer())
+            .post(PATH)
+            .send({})
+            .set('Authorization', `Bearer bad-token`)
+            .expect(401);
+        });
+      });
+
+      describe('with valid cookie', () => {
+        describe('with a bad contract address', () => {
+          it('should fail', async () => {
+            const wallet = ethers.Wallet.createRandom();
+            const result = await login(app.getHttpServer(), wallet, prisma);
+            const cookies = result.get('Set-Cookie');
+
+            return (
+              request(app.getHttpServer())
+                .post(PATH)
+                .send({
+                  walletAddress: wallet.address,
+                  contractAddress: 'some-nft-contract-address',
+                  tokenId: 1234,
+                })
+                .set('Cookie', cookies)
+                .expect(400)
+                // This returns an empty array because there aren't any tokens to fetch
+                .expect({
+                  statusCode: 400,
+                  message: 'Invalid contract address',
+                })
+            );
+          });
+        });
+
+        describe('with a bad wallet address', () => {
+          it('should fail', async () => {
+            const wallet = ethers.Wallet.createRandom();
+            const result = await login(app.getHttpServer(), wallet, prisma);
+            const cookies = result.get('Set-Cookie');
+
+            return (
+              request(app.getHttpServer())
+                .post(PATH)
+                .send({
+                  walletAddress: 'some-bogus-wallet',
+                  contractAddress: '0xc7e4d1dfb2ffda31f27c6047479dfa7998a07d47',
+                  tokenId: 1234,
+                })
+                .set('Cookie', cookies)
+                .expect(400)
+                // This returns an empty array because there aren't any tokens to fetch
+                .expect({ statusCode: 400, message: 'Invalid wallet address' })
+            );
+          });
+        });
+
+        describe('with a good data', () => {
+          it('should add the nft', async () => {
+            const wallet = ethers.Wallet.createRandom();
+            const contractAddress = ethers.utils.getAddress(
+              '0xc7e4d1dfb2ffda31f27c6047479dfa7998a07d47',
+            );
+            const loginResult = await login(
+              app.getHttpServer(),
+              wallet,
+              prisma,
+            );
+
+            const cookies = loginResult.get('Set-Cookie');
+
+            expect(
+              await prisma.trackedNft.findFirst({
+                where: {
+                  walletAddress: wallet.address,
+                  contractAddress,
+                  tokenId: 1234,
+                },
+              }),
+            ).toBeNull();
+
+            const result = await request(app.getHttpServer())
+              .post(PATH)
+              .send({
+                walletAddress: wallet.address,
+                contractAddress,
+                tokenId: 1234,
+              })
+              .set('Cookie', cookies)
+              .expect(201);
+
+            expect(result.body).toEqual(
+              expect.objectContaining({
+                walletAddress: wallet.address,
+                contractAddress,
+                tokenId: 1234,
+              }),
+            );
+
+            const nft = prisma.trackedNft.findFirst({
+              where: {
+                walletAddress: wallet.address,
+                contractAddress,
+                tokenId: 1234,
+              },
+            });
+
+            expect(nft).not.toBeNull();
+          });
+
+          describe('when the nft is already tracked by a different wallet', () => {
+            const contractAddress = ethers.utils.getAddress(
+              '0xc7e4d1dfb2ffda31f27c6047479dfa7998a07d47',
+            );
+            beforeEach(async () => {
+              const wallet = ethers.Wallet.createRandom();
+              await prisma.$transaction([
+                prisma.nFT.create({
+                  data: {
+                    contractAddress,
+                    tokenId: 1234,
+                  },
+                }),
+                prisma.trackedNft.upsert({
+                  where: {
+                    contractAddress_tokenId_walletAddress: {
+                      walletAddress: wallet.address,
+                      contractAddress,
+                      tokenId: 1234,
+                    },
+                  },
+                  create: {
+                    walletAddress: wallet.address,
+                    contractAddress,
+                    tokenId: 1234,
+                  },
+                  update: {},
+                }),
+              ]);
+            });
+
+            it('should add the nft', async () => {
+              const wallet = ethers.Wallet.createRandom();
+
+              const loginResult = await login(
+                app.getHttpServer(),
+                wallet,
+                prisma,
+              );
+
+              const cookies = loginResult.get('Set-Cookie');
+
+              const result = await request(app.getHttpServer())
+                .post(PATH)
+                .send({
+                  walletAddress: wallet.address,
+                  contractAddress,
+                  tokenId: 1234,
+                })
+                .set('Cookie', cookies)
+                .expect(201);
+
+              expect(result.body).toEqual(
+                expect.objectContaining({
+                  walletAddress: wallet.address,
+                  contractAddress,
+                  tokenId: 1234,
+                }),
+              );
+
+              const nft = prisma.trackedNft.findFirst({
+                where: {
+                  walletAddress: wallet.address,
+                  contractAddress,
+                  tokenId: 1234,
+                },
+              });
+
+              expect(nft).not.toBeNull();
+            });
+          });
+        });
+      });
+    });
+  }
 });
 
 async function fetchAccessToken(

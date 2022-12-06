@@ -24,7 +24,7 @@ model NFT {
 
   historicalPrices HistoricalNftPrice[]
   historicalOffers HistoricalNftOffer[]
-  TrackedNft       TrackedNft?
+  TrackedNft       TrackedNft[]
 
   @@unique([contractAddress, tokenId])
 }
@@ -37,10 +37,9 @@ model TrackedNft {
   tokenId         Int
   contractAddress String
   walletAddress   String
+  NFT             NFT    @relation(fields: [contractAddress, tokenId], references: [contractAddress, tokenId])
 
-  NFT NFT @relation(fields: [contractAddress, tokenId], references: [contractAddress, tokenId])
-
-  @@unique([contractAddress, tokenId])
+  @@unique([contractAddress, tokenId, walletAddress])
 }
 
 model Marketplace {
