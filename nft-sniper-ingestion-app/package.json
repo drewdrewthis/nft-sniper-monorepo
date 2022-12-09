@@ -12,7 +12,7 @@
     "postgres:seed": "yarn prisma db seed",
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "build:image": "docker buildx build --platform=linux/amd64 . -t drewdrewthis/alpha-sniper:ingestion-server --progress=plain && docker push drewdrewthis/alpha-sniper:ingestion-server",
+    "build:image": "docker buildx build --platform=linux/amd64 . -t drewdrewthis/alpha-sniper:ingestion-server && docker push drewdrewthis/alpha-sniper:ingestion-server",
     "start": "nest start",
     "start:dev": "yarn dev:env nest start --watch",
     "start:debug": "nest start --debug --watch",

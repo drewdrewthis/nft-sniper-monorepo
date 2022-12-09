@@ -60,7 +60,7 @@ export class AlchemyService {
         console.error(error);
       });
 
-    await this.cacheManager.set(key, data, 1000 * 60 * 60);
+    await this.cacheManager.set(key, data, 60 * 30);
 
     return data;
   }
