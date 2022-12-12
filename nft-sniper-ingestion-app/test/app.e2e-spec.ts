@@ -6,22 +6,11 @@ import { PrismaService } from '../src/prisma';
 import { WALLET_ALLOW_LIST } from '../src/constants';
 import { SiweMessage } from 'siwe';
 import { ethers } from 'ethers';
-// import 'leaked-handles';
 import * as cookieParser from 'cookie-parser';
 import { env } from '../src/config/joi.schema';
 import * as cookie from 'cookie';
 
 jest.setTimeout(10000);
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function generateRandomAddress() {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { address } = require('ethers').Wallet.createRandom([
-    'just some random wallet',
-  ]);
-
-  console.log(address);
-}
 
 jest.mock('../src/constants.ts', () => {
   const randomAddress = '0xb7028A46433AA534D5b8882658Cc6473B04bD036';

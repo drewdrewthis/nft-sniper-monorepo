@@ -52,6 +52,7 @@ export class ResevoirService {
     const highestBids = await this.fetchHighestBids(tokens);
     const lastSales = await this.fetchLastSales(tokens);
     const currentOwners = await this.fetchCurrentOwners(tokens);
+    const metadata = await this.fetchMetadataForTokens(tokens);
 
     return tokens.map((token) => {
       const tokenKey = buildTokenKey(token);
@@ -61,6 +62,7 @@ export class ResevoirService {
         highestBid: highestBids[tokenKey],
         lastSale: lastSales[tokenKey],
         currentOwner: currentOwners[tokenKey],
+        metadata: metadata[tokenKey],
       };
     });
   }
@@ -191,6 +193,65 @@ export class ResevoirService {
     return bidByToken;
   }
 
+  async fetchMetadataForTokens(tokens: Token[]) {
+    const allmeta = await this.fetchMetadata(tokens);
+
+    return tokens.reduce((acc, token) => {
+      const tokenKey = buildTokenKey(token);
+      const meta = allmeta.tokens?.find((_meta) => {
+        const collectionId = _meta.token?.collection?.id;
+        const tokenId = _meta.token?.tokenId;
+        const key = `${collectionId}:${tokenId}`;
+
+        return tokenKey.toLowerCase() === key.toLowerCase();
+      });
+
+      acc[tokenKey] = meta?.token;
+
+      return acc;
+    }, {} as Record<string, Required<Awaited<ReturnType<typeof this.fetchMetadata>>>['tokens'][0]['token'] | undefined>);
+  }
+
+  private async fetchMetadata(
+    tokens: Token[],
+  ): Promise<paths['/tokens/v5']['get']['responses']['200']['schema']> {
+    const resevoirTokens = tokens.map(buildTokenKey);
+
+    const url = this.baseUrl + '/tokens/v5';
+
+    const makeCall = () =>
+      ResevoirService.http
+        .get<paths['/tokens/v5']['get']['responses']['200']['schema']>(url, {
+          params: {
+            tokens: resevoirTokens,
+            includeAttributes: true,
+            includeTopBid: true,
+            includeDynamicPricing: true,
+            // includeMetadata: 'false',
+            // includeRawData: 'false',
+            // normalizeRoyalties: 'false',
+            // sortBy: 'price',
+            limit: '100',
+          },
+        })
+        .then((response) => {
+          const { data } = response;
+          this.logger.log('Received metadata for tokens', { data });
+          return data;
+        });
+
+    const key = JSON.stringify({
+      ...tokens,
+      url,
+    });
+
+    return this.callAndCacheAndSleep<
+      paths['/tokens/v5']['get']['responses']['200']['schema']
+    >(key, makeCall);
+  }
+
+  // PRIVATE
+
   private async fetchBidsForToken(
     token: Token,
   ): Promise<paths['/orders/bids/v4']['get']['responses']['200']['schema']> {
@@ -306,7 +367,10 @@ export class ResevoirService {
           this.cacheData(key, data);
           return data;
         })
-        .catch((e) => this.logger.error(e));
+        .catch((e) => {
+          this.logger.error(e);
+          throw e;
+        });
     }
 
     // If value, but should refetch -- fetch async but return value sync
@@ -316,7 +380,10 @@ export class ResevoirService {
           this.cacheData(key, data);
           return data;
         })
-        .catch((e) => this.logger.error(e));
+        .catch((e) => {
+          this.logger.error(e);
+          throw e;
+        });
     }
 
     // Return value sync
