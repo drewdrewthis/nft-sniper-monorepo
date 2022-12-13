@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Logger, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Logger,
+  Post,
+  Query,
+  Version,
+} from '@nestjs/common';
 import { NftService } from './nft.service';
 import { DemoNftPayload } from '../demo/types';
 import { NFT } from '@prisma/client';
@@ -26,6 +34,21 @@ export class NftController {
       walletAddress: string;
     },
   ): Promise<DemoNftPayload> {
+    return this.service.getNftDataForWallet(payload.walletAddress);
+  }
+
+  @Get('tracked-data')
+  @Version('2')
+  getTrackedDataForWalletV2(
+    @Query()
+    payload: {
+      walletAddress: string;
+    },
+  ): Promise<DemoNftPayload> {
+    if (payload.walletAddress === 'demo') {
+      return this.service.getNftDataForDemo();
+    }
+
     return this.service.getNftDataForWallet(payload.walletAddress);
   }
 

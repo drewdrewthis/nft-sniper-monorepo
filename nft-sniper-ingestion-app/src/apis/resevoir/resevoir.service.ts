@@ -1,11 +1,11 @@
-import { HttpService } from '@nestjs/axios';
-import { CACHE_MANAGER, Inject, Injectable, Logger } from '@nestjs/common';
-import { Token } from '../../types';
-import { paths } from '@reservoir0x/reservoir-kit-client';
-import { RedisCache } from '@tirke/node-cache-manager-ioredis';
 import * as axiosRateLimit from 'axios-rate-limit';
 import { AxiosInstance } from 'axios';
+import { CACHE_MANAGER, Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '../../config/config.service';
+import { HttpService } from '@nestjs/axios';
+import { RedisCache } from '@tirke/node-cache-manager-ioredis';
+import { Token } from '../../types';
+import { paths } from '@reservoir0x/reservoir-kit-client';
 
 @Injectable()
 export class ResevoirService {
@@ -128,15 +128,13 @@ export class ResevoirService {
     return highestBidsByToken;
   }
 
-  private async fetchLastSale(
-    token: Token,
-  ): Promise<paths['/sales/v4']['get']['responses']['200']['schema']> {
+  private async fetchLastSale(token: Token) {
     const resevoirToken = buildTokenKey(token);
     const url = this.baseUrl + '/sales/v4';
 
     const makeCall = async () =>
       ResevoirService.http
-        .get(url, {
+        .get<paths['/sales/v4']['get']['responses']['200']['schema']>(url, {
           params: {
             token: resevoirToken,
             includeMetadata: 'false',
@@ -227,10 +225,6 @@ export class ResevoirService {
             includeAttributes: true,
             includeTopBid: true,
             includeDynamicPricing: true,
-            // includeMetadata: 'false',
-            // includeRawData: 'false',
-            // normalizeRoyalties: 'false',
-            // sortBy: 'price',
             limit: '100',
           },
         })
@@ -254,9 +248,9 @@ export class ResevoirService {
 
   private async fetchBidsForToken(
     token: Token,
-  ): Promise<paths['/orders/bids/v4']['get']['responses']['200']['schema']> {
+  ): Promise<paths['/orders/bids/v5']['get']['responses']['200']['schema']> {
     const resevoirToken = buildTokenKey(token);
-    const url = this.baseUrl + '/orders/bids/v4';
+    const url = this.baseUrl + '/orders/bids/v5';
 
     const makeCall = () =>
       ResevoirService.http
@@ -322,9 +316,9 @@ export class ResevoirService {
 
   private async fetchListingsForToken(
     token: Token,
-  ): Promise<paths['/orders/asks/v3']['get']['responses']['200']['schema']> {
+  ): Promise<paths['/orders/asks/v4']['get']['responses']['200']['schema']> {
     const resevoirToken = buildTokenKey(token);
-    const url = this.baseUrl + '/orders/asks/v3';
+    const url = this.baseUrl + '/orders/asks/v4';
     const params = {
       token: resevoirToken,
       includePrivate: 'false',

@@ -1,38 +1,25 @@
-import { Injectable } from '@nestjs/common';
-import { Token } from '../types';
-import { ResevoirService } from '../apis/resevoir';
-import { AlchemyService } from '../apis/alchemy/alchemy.service';
-import { DemoNftPayload, Listing, Offer } from './types';
+import { Listing, Offer } from '../types';
+import { NFT } from '../types';
+import { ResevoirService } from '../../apis/resevoir';
+import { Token } from '../../types';
 
-@Injectable()
-export class DemoService {
-  constructor(
-    private readonly alchemyService: AlchemyService,
-    private readonly resevoirService: ResevoirService,
-  ) {}
+export function normalizeMetadata(
+  metadata: Required<
+    Awaited<ReturnType<ResevoirService['fetchAggregateNftData']>>
+  >[0]['metadata'],
+): NFT['metadata'] | void {
+  if (!metadata) return;
+  if (!metadata.image) return;
+  if (!metadata.attributes) return;
 
-  async getNftDemoData(tokens: Token[]): Promise<DemoNftPayload> {
-    // Sanity check
-    if (!tokens?.length) return [];
-
-    const aggregateData = await this.resevoirService.fetchAggregateNftData(
-      tokens,
-    );
-    const metadata = await this.alchemyService.getNFTMetadataBatch(tokens);
-    return aggregateData.map((data, idx) => {
-      return {
-        ...data,
-        offers: data.highestBid ? [normalizeOffer(data, data.highestBid)] : [],
-        historicalPrices: data.lowestListing
-          ? [normalizePrice(data, data.lowestListing)]
-          : [],
-        metadata: (metadata || [])[idx],
-      };
-    });
-  }
+  return {
+    imageUrl: metadata.image,
+    title: metadata?.name || '',
+    description: metadata?.description || '',
+  };
 }
 
-function normalizePrice(
+export function normalizePrice(
   token: Token,
   price: Awaited<
     ReturnType<ResevoirService['fetchAggregateNftData']>
@@ -61,7 +48,7 @@ function normalizePrice(
   };
 }
 
-function normalizeOffer(
+export function normalizeOffer(
   token: Token,
   bid:
     | Awaited<

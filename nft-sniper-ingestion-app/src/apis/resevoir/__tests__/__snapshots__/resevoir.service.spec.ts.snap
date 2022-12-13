@@ -21,6 +21,18 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
     "highestBid": {
       "contract": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
       "createdAt": "2022-12-12T16:17:22.130Z",
+      "criteria": {
+        "data": {
+          "attribute": {
+            "key": "Hat",
+            "value": "Trippy Captain's Hat",
+          },
+          "collection": {
+            "id": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+          },
+        },
+        "kind": "attribute",
+      },
       "expiration": 1670907540,
       "feeBps": 500,
       "feeBreakdown": [
@@ -125,7 +137,7 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
         {
           "floorAskPrice": 67.8469,
           "key": "Background",
-          "onSaleCount": 72,
+          "onSaleCount": 69,
           "tokenCount": 1243,
           "topBidValue": null,
           "value": "Army Green",
@@ -139,9 +151,9 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
           "value": "Dumbfounded",
         },
         {
-          "floorAskPrice": 72.449,
+          "floorAskPrice": 72.8867,
           "key": "Eyes",
-          "onSaleCount": 15,
+          "onSaleCount": 14,
           "tokenCount": 333,
           "topBidValue": null,
           "value": "Eyepatch",
@@ -165,7 +177,7 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
         {
           "floorAskPrice": 67.89,
           "key": "Trait Count",
-          "onSaleCount": 152,
+          "onSaleCount": 149,
           "tokenCount": 2540,
           "topBidValue": null,
           "value": "5",
@@ -219,8 +231,20 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
     },
     "highestBid": {
       "contract": "0x09233d553058c2f42ba751c87816a8e9fae7ef10",
-      "createdAt": "2022-12-12T20:36:03.100Z",
-      "expiration": 1670879123,
+      "createdAt": "2022-12-12T23:19:53.398Z",
+      "criteria": {
+        "data": {
+          "attribute": {
+            "key": "Faction",
+            "value": "Mutant",
+          },
+          "collection": {
+            "id": "0x09233d553058c2f42ba751c87816a8e9fae7ef10",
+          },
+        },
+        "kind": "attribute",
+      },
+      "expiration": 1670888879,
       "feeBps": 1000,
       "feeBreakdown": [
         {
@@ -234,16 +258,16 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
           "recipient": "0x9a7a0670a66a6efe1a15b97f3dc0f8f47d7b11c3",
         },
       ],
-      "id": "0xab33dd64752279814c378ab8498883c81f7299554967798619ac7ce21b5b8dd4",
+      "id": "0x1d5979b92b7fa0c8687a6cc2a112413a41631dc7f552e551a70f16569f3ed5ad",
       "isReservoir": null,
       "kind": "seaport",
       "maker": "0xe4c7cdd3f630404f8dbdcb2ef7bf4f22291e7697",
       "price": {
         "amount": {
-          "decimal": 0.8648,
-          "native": 0.8648,
-          "raw": "864800000000000000",
-          "usd": 1094.9348,
+          "decimal": 0.8706,
+          "native": 0.8706,
+          "raw": "870600000000000000",
+          "usd": 1102.27826,
         },
         "currency": {
           "contract": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
@@ -252,10 +276,10 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
           "symbol": "WETH",
         },
         "netAmount": {
-          "decimal": 0.77832,
-          "native": 0.77832,
-          "raw": "778320000000000000",
-          "usd": 985.44132,
+          "decimal": 0.78354,
+          "native": 0.78354,
+          "raw": "783540000000000000",
+          "usd": 992.05043,
         },
       },
       "quantityFilled": 0,
@@ -272,9 +296,9 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
       "taker": "0x0000000000000000000000000000000000000000",
       "tokenSetId": "list:0x09233d553058c2f42ba751c87816a8e9fae7ef10:0xcdb858ba0a733e28aac55638d096f193f74e194b7c658a6130e880bf6c1708bd",
       "tokenSetSchemaHash": "0x015f68bbe86f68f17eb2b30d55d54e652fafd29cef6f90df2bd219dd8da10a1f",
-      "updatedAt": "2022-12-12T20:36:03.100Z",
-      "validFrom": 1670877362,
-      "validUntil": 1670879123,
+      "updatedAt": "2022-12-12T23:19:53.398Z",
+      "validFrom": 1670887192,
+      "validUntil": 1670888879,
     },
     "lastSale": {
       "amount": "1",
@@ -321,6 +345,14 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
     "lowestListing": {
       "contract": "0x09233d553058c2f42ba751c87816a8e9fae7ef10",
       "createdAt": "2022-12-12T04:27:51.630Z",
+      "criteria": {
+        "data": {
+          "token": {
+            "tokenId": "4329",
+          },
+        },
+        "kind": "token",
+      },
       "expiration": 1671078336,
       "feeBps": 1000,
       "feeBreakdown": [
@@ -385,7 +417,7 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
           "key": "Faction",
           "onSaleCount": 29,
           "tokenCount": 750,
-          "topBidValue": 0.77832,
+          "topBidValue": 0.78354,
           "value": "Mutant",
         },
         {
@@ -485,8 +517,16 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
     },
     "highestBid": {
       "contract": "0x231d3559aa848bf10366fb9868590f01d34bf240",
-      "createdAt": "2022-12-12T20:31:31.522Z",
-      "expiration": 1670880627,
+      "createdAt": "2022-12-12T23:21:06.087Z",
+      "criteria": {
+        "data": {
+          "token": {
+            "tokenId": "8895",
+          },
+        },
+        "kind": "token",
+      },
+      "expiration": 1670889013,
       "feeBps": 750,
       "feeBreakdown": [
         {
@@ -500,16 +540,16 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
           "recipient": "0xff59b4b3d52728f78020414c720164a17c08f499",
         },
       ],
-      "id": "0x107d903b2a7b1cb58d55e811866ec6daec7c05123bb010b66b572766c7ad9cec",
+      "id": "0xde74ef4d7e04154ef78428df2f942f140a336a4523e2081ee799a13f9b039bd7",
       "isReservoir": null,
       "kind": "seaport",
       "maker": "0x6857229e66a09c86e69f947e198d2f9a669178a7",
       "price": {
         "amount": {
-          "decimal": 1.251,
-          "native": 1.251,
-          "raw": "1251000000000000000",
-          "usd": 1583.90776,
+          "decimal": 1.2876,
+          "native": 1.2876,
+          "raw": "1287600000000000000",
+          "usd": 1630.24751,
         },
         "currency": {
           "contract": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
@@ -518,10 +558,10 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
           "symbol": "WETH",
         },
         "netAmount": {
-          "decimal": 1.15718,
-          "native": 1.15718,
-          "raw": "1157175000000000000",
-          "usd": 1465.11468,
+          "decimal": 1.19103,
+          "native": 1.19103,
+          "raw": "1191030000000000000",
+          "usd": 1507.97895,
         },
       },
       "quantityFilled": 0,
@@ -538,9 +578,9 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
       "taker": "0x0000000000000000000000000000000000000000",
       "tokenSetId": "token:0x231d3559aa848bf10366fb9868590f01d34bf240:8895",
       "tokenSetSchemaHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "updatedAt": "2022-12-12T20:31:31.522Z",
-      "validFrom": 1670877090,
-      "validUntil": 1670880627,
+      "updatedAt": "2022-12-12T23:21:06.087Z",
+      "validFrom": 1670887264,
+      "validUntil": 1670889013,
     },
     "lastSale": {
       "amount": "1",
@@ -588,31 +628,31 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
     "metadata": {
       "attributes": [
         {
-          "floorAskPrice": 0.925,
+          "floorAskPrice": 0.8999,
           "key": "Type",
-          "onSaleCount": 975,
+          "onSaleCount": 1055,
           "tokenCount": 7651,
           "topBidValue": null,
           "value": "Human",
         },
         {
-          "floorAskPrice": 0.935,
+          "floorAskPrice": 0.924,
           "key": "Background",
-          "onSaleCount": 205,
+          "onSaleCount": 239,
           "tokenCount": 1658,
           "topBidValue": null,
           "value": "Warm Gray",
         },
         {
-          "floorAskPrice": 0.973,
+          "floorAskPrice": 0.96,
           "key": "Eye",
-          "onSaleCount": 94,
+          "onSaleCount": 107,
           "tokenCount": 765,
           "topBidValue": null,
           "value": "Shaved Brow",
         },
         {
-          "floorAskPrice": 1,
+          "floorAskPrice": 1.2,
           "key": "Hair",
           "onSaleCount": 10,
           "tokenCount": 109,
@@ -622,15 +662,15 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
         {
           "floorAskPrice": 0.98,
           "key": "Primary",
-          "onSaleCount": 10,
+          "onSaleCount": 12,
           "tokenCount": 108,
           "topBidValue": null,
           "value": "Obsidian SMG",
         },
         {
-          "floorAskPrice": 0.9469,
+          "floorAskPrice": 0.94,
           "key": "Mouth",
-          "onSaleCount": 95,
+          "onSaleCount": 97,
           "tokenCount": 724,
           "topBidValue": null,
           "value": "Smoking",
@@ -638,15 +678,15 @@ exports[`ResevoirService should be able to get aggregate data for tokens 1`] = `
         {
           "floorAskPrice": 2,
           "key": "Aura",
-          "onSaleCount": 11,
+          "onSaleCount": 14,
           "tokenCount": 58,
           "topBidValue": null,
           "value": "Ember",
         },
         {
-          "floorAskPrice": 1.28,
+          "floorAskPrice": 1.17,
           "key": "Clothes",
-          "onSaleCount": 12,
+          "onSaleCount": 11,
           "tokenCount": 61,
           "topBidValue": null,
           "value": "Brown Blazer",
@@ -690,6 +730,14 @@ exports[`ResevoirService should be able to get listings for tokens 1`] = `
   "0x09233d553058c2F42ba751C87816a8E9FaE7Ef10:4329": {
     "contract": "0x09233d553058c2f42ba751c87816a8e9fae7ef10",
     "createdAt": "2022-12-12T04:27:51.630Z",
+    "criteria": {
+      "data": {
+        "token": {
+          "tokenId": "4329",
+        },
+      },
+      "kind": "token",
+    },
     "expiration": 1671078336,
     "feeBps": 1000,
     "feeBreakdown": [
@@ -761,7 +809,7 @@ exports[`ResevoirService should be able to get metadata for tokens 1`] = `
         "key": "Faction",
         "onSaleCount": 29,
         "tokenCount": 750,
-        "topBidValue": 0.77832,
+        "topBidValue": 0.78354,
         "value": "Mutant",
       },
       {
@@ -844,31 +892,31 @@ exports[`ResevoirService should be able to get metadata for tokens 1`] = `
   "0x231d3559aa848bf10366fb9868590f01d34bf240:8895": {
     "attributes": [
       {
-        "floorAskPrice": 0.925,
+        "floorAskPrice": 0.8999,
         "key": "Type",
-        "onSaleCount": 975,
+        "onSaleCount": 1055,
         "tokenCount": 7651,
         "topBidValue": null,
         "value": "Human",
       },
       {
-        "floorAskPrice": 0.935,
+        "floorAskPrice": 0.924,
         "key": "Background",
-        "onSaleCount": 205,
+        "onSaleCount": 239,
         "tokenCount": 1658,
         "topBidValue": null,
         "value": "Warm Gray",
       },
       {
-        "floorAskPrice": 0.973,
+        "floorAskPrice": 0.96,
         "key": "Eye",
-        "onSaleCount": 94,
+        "onSaleCount": 107,
         "tokenCount": 765,
         "topBidValue": null,
         "value": "Shaved Brow",
       },
       {
-        "floorAskPrice": 1,
+        "floorAskPrice": 1.2,
         "key": "Hair",
         "onSaleCount": 10,
         "tokenCount": 109,
@@ -878,15 +926,15 @@ exports[`ResevoirService should be able to get metadata for tokens 1`] = `
       {
         "floorAskPrice": 0.98,
         "key": "Primary",
-        "onSaleCount": 10,
+        "onSaleCount": 12,
         "tokenCount": 108,
         "topBidValue": null,
         "value": "Obsidian SMG",
       },
       {
-        "floorAskPrice": 0.9469,
+        "floorAskPrice": 0.94,
         "key": "Mouth",
-        "onSaleCount": 95,
+        "onSaleCount": 97,
         "tokenCount": 724,
         "topBidValue": null,
         "value": "Smoking",
@@ -894,15 +942,15 @@ exports[`ResevoirService should be able to get metadata for tokens 1`] = `
       {
         "floorAskPrice": 2,
         "key": "Aura",
-        "onSaleCount": 11,
+        "onSaleCount": 14,
         "tokenCount": 58,
         "topBidValue": null,
         "value": "Ember",
       },
       {
-        "floorAskPrice": 1.28,
+        "floorAskPrice": 1.17,
         "key": "Clothes",
-        "onSaleCount": 12,
+        "onSaleCount": 11,
         "tokenCount": 61,
         "topBidValue": null,
         "value": "Brown Blazer",
@@ -941,7 +989,7 @@ exports[`ResevoirService should be able to get metadata for tokens 1`] = `
       {
         "floorAskPrice": 67.8469,
         "key": "Background",
-        "onSaleCount": 72,
+        "onSaleCount": 69,
         "tokenCount": 1243,
         "topBidValue": null,
         "value": "Army Green",
@@ -955,9 +1003,9 @@ exports[`ResevoirService should be able to get metadata for tokens 1`] = `
         "value": "Dumbfounded",
       },
       {
-        "floorAskPrice": 72.449,
+        "floorAskPrice": 72.8867,
         "key": "Eyes",
-        "onSaleCount": 15,
+        "onSaleCount": 14,
         "tokenCount": 333,
         "topBidValue": null,
         "value": "Eyepatch",
@@ -981,7 +1029,7 @@ exports[`ResevoirService should be able to get metadata for tokens 1`] = `
       {
         "floorAskPrice": 67.89,
         "key": "Trait Count",
-        "onSaleCount": 152,
+        "onSaleCount": 149,
         "tokenCount": 2540,
         "topBidValue": null,
         "value": "5",
@@ -1022,8 +1070,20 @@ exports[`ResevoirService should be able to get offers/bids for tokens 1`] = `
 {
   "0x09233d553058c2F42ba751C87816a8E9FaE7Ef10:4329": {
     "contract": "0x09233d553058c2f42ba751c87816a8e9fae7ef10",
-    "createdAt": "2022-12-12T20:36:03.100Z",
-    "expiration": 1670879123,
+    "createdAt": "2022-12-12T23:19:53.398Z",
+    "criteria": {
+      "data": {
+        "attribute": {
+          "key": "Faction",
+          "value": "Mutant",
+        },
+        "collection": {
+          "id": "0x09233d553058c2f42ba751c87816a8e9fae7ef10",
+        },
+      },
+      "kind": "attribute",
+    },
+    "expiration": 1670888879,
     "feeBps": 1000,
     "feeBreakdown": [
       {
@@ -1037,16 +1097,16 @@ exports[`ResevoirService should be able to get offers/bids for tokens 1`] = `
         "recipient": "0x9a7a0670a66a6efe1a15b97f3dc0f8f47d7b11c3",
       },
     ],
-    "id": "0xab33dd64752279814c378ab8498883c81f7299554967798619ac7ce21b5b8dd4",
+    "id": "0x1d5979b92b7fa0c8687a6cc2a112413a41631dc7f552e551a70f16569f3ed5ad",
     "isReservoir": null,
     "kind": "seaport",
     "maker": "0xe4c7cdd3f630404f8dbdcb2ef7bf4f22291e7697",
     "price": {
       "amount": {
-        "decimal": 0.8648,
-        "native": 0.8648,
-        "raw": "864800000000000000",
-        "usd": 1094.9348,
+        "decimal": 0.8706,
+        "native": 0.8706,
+        "raw": "870600000000000000",
+        "usd": 1102.27826,
       },
       "currency": {
         "contract": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
@@ -1055,10 +1115,10 @@ exports[`ResevoirService should be able to get offers/bids for tokens 1`] = `
         "symbol": "WETH",
       },
       "netAmount": {
-        "decimal": 0.77832,
-        "native": 0.77832,
-        "raw": "778320000000000000",
-        "usd": 985.44132,
+        "decimal": 0.78354,
+        "native": 0.78354,
+        "raw": "783540000000000000",
+        "usd": 992.05043,
       },
     },
     "quantityFilled": 0,
@@ -1075,14 +1135,22 @@ exports[`ResevoirService should be able to get offers/bids for tokens 1`] = `
     "taker": "0x0000000000000000000000000000000000000000",
     "tokenSetId": "list:0x09233d553058c2f42ba751c87816a8e9fae7ef10:0xcdb858ba0a733e28aac55638d096f193f74e194b7c658a6130e880bf6c1708bd",
     "tokenSetSchemaHash": "0x015f68bbe86f68f17eb2b30d55d54e652fafd29cef6f90df2bd219dd8da10a1f",
-    "updatedAt": "2022-12-12T20:36:03.100Z",
-    "validFrom": 1670877362,
-    "validUntil": 1670879123,
+    "updatedAt": "2022-12-12T23:19:53.398Z",
+    "validFrom": 1670887192,
+    "validUntil": 1670888879,
   },
   "0x231d3559aa848bf10366fb9868590f01d34bf240:8895": {
     "contract": "0x231d3559aa848bf10366fb9868590f01d34bf240",
-    "createdAt": "2022-12-12T20:31:31.522Z",
-    "expiration": 1670880627,
+    "createdAt": "2022-12-12T23:21:06.087Z",
+    "criteria": {
+      "data": {
+        "token": {
+          "tokenId": "8895",
+        },
+      },
+      "kind": "token",
+    },
+    "expiration": 1670889013,
     "feeBps": 750,
     "feeBreakdown": [
       {
@@ -1096,16 +1164,16 @@ exports[`ResevoirService should be able to get offers/bids for tokens 1`] = `
         "recipient": "0xff59b4b3d52728f78020414c720164a17c08f499",
       },
     ],
-    "id": "0x107d903b2a7b1cb58d55e811866ec6daec7c05123bb010b66b572766c7ad9cec",
+    "id": "0xde74ef4d7e04154ef78428df2f942f140a336a4523e2081ee799a13f9b039bd7",
     "isReservoir": null,
     "kind": "seaport",
     "maker": "0x6857229e66a09c86e69f947e198d2f9a669178a7",
     "price": {
       "amount": {
-        "decimal": 1.251,
-        "native": 1.251,
-        "raw": "1251000000000000000",
-        "usd": 1583.90776,
+        "decimal": 1.2876,
+        "native": 1.2876,
+        "raw": "1287600000000000000",
+        "usd": 1630.24751,
       },
       "currency": {
         "contract": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
@@ -1114,10 +1182,10 @@ exports[`ResevoirService should be able to get offers/bids for tokens 1`] = `
         "symbol": "WETH",
       },
       "netAmount": {
-        "decimal": 1.15718,
-        "native": 1.15718,
-        "raw": "1157175000000000000",
-        "usd": 1465.11468,
+        "decimal": 1.19103,
+        "native": 1.19103,
+        "raw": "1191030000000000000",
+        "usd": 1507.97895,
       },
     },
     "quantityFilled": 0,
@@ -1134,13 +1202,25 @@ exports[`ResevoirService should be able to get offers/bids for tokens 1`] = `
     "taker": "0x0000000000000000000000000000000000000000",
     "tokenSetId": "token:0x231d3559aa848bf10366fb9868590f01d34bf240:8895",
     "tokenSetSchemaHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-    "updatedAt": "2022-12-12T20:31:31.522Z",
-    "validFrom": 1670877090,
-    "validUntil": 1670880627,
+    "updatedAt": "2022-12-12T23:21:06.087Z",
+    "validFrom": 1670887264,
+    "validUntil": 1670889013,
   },
   "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D:1860": {
     "contract": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
     "createdAt": "2022-12-12T16:17:22.130Z",
+    "criteria": {
+      "data": {
+        "attribute": {
+          "key": "Hat",
+          "value": "Trippy Captain's Hat",
+        },
+        "collection": {
+          "id": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+        },
+      },
+      "kind": "attribute",
+    },
     "expiration": 1670907540,
     "feeBps": 500,
     "feeBreakdown": [

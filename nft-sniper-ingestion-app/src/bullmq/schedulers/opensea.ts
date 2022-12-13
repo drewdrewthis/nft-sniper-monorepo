@@ -1,6 +1,6 @@
 import { Job, Queue, Worker } from 'bullmq';
 import IORedis from 'ioredis';
-import { Scheduler } from '../../types.js';
+import { Scheduler } from '../../types';
 import { CrawlerServerService } from '../../apis/crawler-server/crawler-server.service';
 
 export class OpenSeaScheduler implements Scheduler {

@@ -7,6 +7,7 @@ import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { NFT } from '@prisma/client';
 import { PrismaService } from '../prisma';
 import { Token } from '../types';
+import { DEMO_NFTS } from '../constants';
 
 class MaxTrackedTokensReached extends Error {}
 
@@ -59,6 +60,13 @@ export class NftService {
   async getNftDataForWallet(walletAddress: string) {
     const trackedNfts = await this.getTrackedNftsForWallet(walletAddress);
     return this.demoService.getNftDemoData(trackedNfts);
+  }
+
+  /**
+   * Get all data for the nfts for the dmeo
+   */
+  async getNftDataForDemo() {
+    return this.demoService.getNftDemoData(DEMO_NFTS);
   }
 
   /** Deprecated */
