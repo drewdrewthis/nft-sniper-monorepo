@@ -1,3 +1,5 @@
+export * from './enhanceApp';
+
 /**
  * Sleep function.
  * @param ms Miliseconds for the sleep
