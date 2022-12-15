@@ -13,6 +13,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "build:image": "docker buildx build --platform=linux/amd64 . -t drewdrewthis/alpha-sniper:ingestion-server && docker push drewdrewthis/alpha-sniper:ingestion-server",
+    "prep_for_deploy": "yarn lint && yarn test && yarn build:image",
     "start": "nest start",
     "start:dev": "yarn dev:env nest start --watch",
     "start:debug": "nest start --debug --watch",

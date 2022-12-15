@@ -2,10 +2,10 @@ import { HttpModule } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 import { DemoService } from '../demo.service';
 import { CacheModule } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { HttpRecordingService } from '../../http-recording';
-import { ResevoirService } from '../../apis/resevoir';
-import { AlchemyService } from '../../apis/alchemy';
+import { ResevoirModule } from '../../apis/resevoir/resevoir.module';
+import { AlchemyModule } from '../../apis/alchemy/alchemy.module';
+import { ConfigService } from '../../config/config.service';
 
 jest.setTimeout(30000);
 
@@ -43,8 +43,13 @@ describe('DemoService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [HttpModule, CacheModule.register()],
-      providers: [DemoService, ResevoirService, AlchemyService, ConfigService],
+      imports: [
+        HttpModule,
+        CacheModule.register({ isGlobal: true }),
+        ResevoirModule,
+        AlchemyModule,
+      ],
+      providers: [DemoService, ConfigService],
     }).compile();
 
     service = module.get<DemoService>(DemoService);
