@@ -5,16 +5,25 @@ import { AppController } from '../app.controller';
 import { AppModule } from '../app.module';
 import { AppService } from '../app.service';
 import { HttpModule } from '@nestjs/axios';
-import { ResevoirModule, ResevoirService } from '../apis/resevoir';
+import { ResevoirModule } from '../apis/resevoir';
+import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from '../auth/auth.module';
 
 describe('AppController', () => {
   let appController: AppController;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      imports: [HttpModule, AlchemyModule, AppModule, ResevoirModule],
+      imports: [
+        HttpModule,
+        AlchemyModule,
+        AppModule,
+        ResevoirModule,
+        ConfigModule,
+        AuthModule,
+      ],
       controllers: [AppController],
-      providers: [AppService, ResevoirService, AlchemyService],
+      providers: [AppService, AlchemyService],
     }).compile();
 
     appController = app.get<AppController>(AppController);

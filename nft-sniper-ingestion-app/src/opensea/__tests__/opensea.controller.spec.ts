@@ -11,7 +11,12 @@ describe('OpenseaController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [OpenseaController],
       providers: [OpenseaService, PrismaService, ConfigService],
-    }).compile();
+    })
+      .overrideProvider(PrismaService)
+      .useValue({
+        saveSingleNftData: jest.fn(),
+      })
+      .compile();
 
     controller = module.get<OpenseaController>(OpenseaController);
   });
