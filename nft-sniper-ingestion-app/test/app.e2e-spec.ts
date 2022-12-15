@@ -368,7 +368,7 @@ describe('AppController (e2e)', () => {
       });
     }
 
-    describe.only('/nft/v2/tracked-data (GET)', () => {
+    describe('/nft/v2/tracked-data (GET)', () => {
       describe('without api authentication', () => {
         it('should be a 401: Unauthorized', () => {
           return request(app.getHttpServer())
@@ -398,6 +398,24 @@ describe('AppController (e2e)', () => {
               actualDate: expect.any(String),
             }),
           ]),
+          lastSale: expect.objectContaining({
+            fillSource: 'opensea.io',
+            timestamp: 1652823463,
+            price: {
+              amount: {
+                decimal: 14.35,
+                native: 14.35,
+                raw: '14350000000000000000',
+                usd: 29071.50282,
+              },
+              currency: {
+                contract: '0x0000000000000000000000000000000000000000',
+                decimals: 18,
+                name: 'Ether',
+                symbol: 'ETH',
+              },
+            },
+          }),
           metadata: expect.objectContaining({
             imageUrl: expect.stringContaining(
               'https://api.reservoir.tools/assets',

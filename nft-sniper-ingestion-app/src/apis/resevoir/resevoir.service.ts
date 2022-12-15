@@ -280,7 +280,7 @@ export class ResevoirService {
 
   // LISTINGS
   async fetchLowestListings(tokens: Token[]) {
-    const hightestListingsByToken: Record<
+    const lowestListingByToken: Record<
       string,
       | Required<
           Awaited<ReturnType<typeof this.fetchListingsForToken>>
@@ -290,13 +290,12 @@ export class ResevoirService {
 
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
-      const listings = (
-        await this.fetchListingsForToken(token)
-      )?.orders?.reverse()[0];
-      hightestListingsByToken[tokenKey] = listings;
+      const listings = ((await this.fetchListingsForToken(token))?.orders ||
+        [])[0];
+      lowestListingByToken[tokenKey] = listings;
     }
 
-    return hightestListingsByToken;
+    return lowestListingByToken;
   }
 
   async fetchListingsForTokens(tokens: Token[]) {
@@ -324,7 +323,7 @@ export class ResevoirService {
       includeRawData: 'false',
       normalizeRoyalties: 'false',
       sortBy: 'price',
-      limit: '50',
+      limit: '1',
     };
 
     const makeCall = () =>

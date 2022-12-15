@@ -42,6 +42,7 @@ export class NftServiceV2 {
         contractAddress: data.contractAddress,
         tokenId: data.tokenId,
         offers: data.highestBid ? [normalizeOffer(data, data.highestBid)] : [],
+        lastSale: data.lastSale,
         historicalPrices: data.lowestListing
           ? [normalizePrice(data, data.lowestListing)]
           : [],
