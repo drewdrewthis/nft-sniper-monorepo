@@ -4,6 +4,7 @@ import { NftService } from './nft.service';
 import { Token } from '../types';
 import { ResevoirService } from '../apis/resevoir/resevoir.service';
 import { normalizeMetadata, normalizeOffer, normalizePrice } from './utils';
+import { NftPayload } from './types';
 
 @Injectable()
 export class NftServiceV2 {
@@ -26,18 +27,20 @@ export class NftServiceV2 {
   /**
    * Get all data for the nfts for the dmeo
    */
-  async getNftDataForDemo() {
+  async getNftDataForDemo(): Promise<NftPayload> {
     return this.getNftDataForTokens(DEMO_NFTS);
   }
 
-  private async getNftDataForTokens(tokens: Token[]) {
+  private async getNftDataForTokens(tokens: Token[]): Promise<NftPayload> {
     // Sanity check
     if (!tokens?.length) return [];
 
     const aggregateData = await this.resevoir.fetchAggregateNftData(tokens);
     return aggregateData.map((data) => {
       return {
-        ...data,
+        // ...data,
+        contractAddress: data.contractAddress,
+        tokenId: data.tokenId,
         offers: data.highestBid ? [normalizeOffer(data, data.highestBid)] : [],
         historicalPrices: data.lowestListing
           ? [normalizePrice(data, data.lowestListing)]

@@ -314,9 +314,7 @@ export class ResevoirService {
     return listingsByTokenKey;
   }
 
-  private async fetchListingsForToken(
-    token: Token,
-  ): Promise<paths['/orders/asks/v4']['get']['responses']['200']['schema']> {
+  private async fetchListingsForToken(token: Token) {
     const resevoirToken = buildTokenKey(token);
     const url = this.baseUrl + '/orders/asks/v4';
     const params = {
@@ -330,11 +328,16 @@ export class ResevoirService {
     };
 
     const makeCall = () =>
-      ResevoirService.http.get(url, { params }).then((response) => {
-        const { data } = response;
-        this.logger.log('Received token listings', { token, data });
-        return data;
-      });
+      ResevoirService.http
+        .get<paths['/orders/asks/v4']['get']['responses']['200']['schema']>(
+          url,
+          { params },
+        )
+        .then((response) => {
+          const { data } = response;
+          this.logger.log('Received token listings', { token, data });
+          return data;
+        });
 
     const key = JSON.stringify({
       ...token,

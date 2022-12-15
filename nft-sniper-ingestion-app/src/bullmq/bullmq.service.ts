@@ -72,7 +72,7 @@ export class BullmqService {
 
   async close() {
     this.logger.log('Quitting Redis');
-    return this.redis.shutdown();
+    // return this.redis.shutdown();
   }
 
   async resetSchedulers(schedulers: Scheduler[]) {

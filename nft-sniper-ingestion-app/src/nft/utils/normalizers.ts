@@ -7,14 +7,14 @@ export function normalizeMetadata(
   metadata: Required<
     Awaited<ReturnType<ResevoirService['fetchAggregateNftData']>>
   >[0]['metadata'],
-): NFT['metadata'] | void {
+): NFT['metadata'] | undefined {
   if (!metadata) return;
   if (!metadata.image) return;
   if (!metadata.attributes) return;
 
   return {
     imageUrl: metadata.image,
-    title: metadata?.name || '',
+    title: `${metadata?.collection?.name} #${metadata.tokenId}`,
     description: metadata?.description || '',
   };
 }

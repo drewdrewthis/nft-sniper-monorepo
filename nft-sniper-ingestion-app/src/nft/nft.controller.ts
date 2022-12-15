@@ -12,12 +12,17 @@ import { DemoNftPayload } from '../demo/types';
 import { NFT } from '@prisma/client';
 import { GetTrackedDataForWalletDto } from './get-tracked-data-for-wallet.dto';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { NftPayload } from './types';
+import { NftServiceV2 } from './nft.service.v2';
 
 @Controller('nft')
 export class NftController {
   logger = new Logger(NftController.name);
 
-  constructor(private readonly service: NftService) {}
+  constructor(
+    private readonly service: NftService,
+    private readonly serviceV2: NftServiceV2,
+  ) {}
 
   @Get('all-metadata')
   async getAllNFTMetadata() {
@@ -44,13 +49,13 @@ export class NftController {
   async getTrackedDataForWalletV2(
     @Query()
     payload: GetTrackedDataForWalletDto,
-  ): Promise<Promise<DemoNftPayload> | void> {
+  ): Promise<Promise<NftPayload> | void> {
     if (payload.walletAddress === 'demo') {
-      return this.service.getNftDataForDemo();
+      return this.serviceV2.getNftDataForDemo();
     }
 
     try {
-      return await this.service.getNftDataForWallet(payload.walletAddress);
+      return await this.serviceV2.getNftDataForWallet(payload.walletAddress);
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
     }

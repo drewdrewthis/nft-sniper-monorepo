@@ -2,9 +2,9 @@ import { HistoricalNftOffer, HistoricalNftPrice } from '@prisma/client';
 import { Token } from '../types';
 
 export interface NFT extends Token {
-  offers: Offer[];
-  historicalPrices: Listing[];
-  metadata: {
+  offers: (Offer | void)[];
+  historicalPrices?: (Listing | void)[];
+  metadata?: {
     imageUrl: string;
     title: string;
     description: string;

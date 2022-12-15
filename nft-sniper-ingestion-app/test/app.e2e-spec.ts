@@ -9,13 +9,18 @@ import { ethers } from 'ethers';
 import { fetchAccessToken, login } from './utils';
 import { enhanceApp } from '../src/utils';
 
-jest.setTimeout(10000);
+jest.setTimeout(20000);
 
 jest.mock('../src/constants.ts', () => {
   const randomAddress = '0xb7028A46433AA534D5b8882658Cc6473B04bD036';
 
   return {
-    DEMO_NFTS: [],
+    DEMO_NFTS: [
+      {
+        contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
+        tokenId: 13961,
+      },
+    ],
     WALLET_ALLOW_LIST: [randomAddress],
   };
 });
@@ -373,8 +378,36 @@ describe('AppController (e2e)', () => {
       });
 
       describe('with api authentication', () => {
+        const wallet = ethers.Wallet.createRandom();
+
+        const expectedNft = {
+          contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
+          tokenId: 13961,
+          offers: [
+            expect.objectContaining({
+              expiresAt: expect.any(String),
+              priceAmount: expect.any(String),
+              priceCurrency: expect.any(String),
+              actualDate: expect.any(String),
+            }),
+          ],
+          historicalPrices: expect.arrayContaining([
+            expect.objectContaining({
+              priceAmount: expect.any(String),
+              priceCurrency: expect.any(String),
+              actualDate: expect.any(String),
+            }),
+          ]),
+          metadata: expect.objectContaining({
+            imageUrl: expect.stringContaining(
+              'https://api.reservoir.tools/assets',
+            ),
+            title: 'CLONE X - X TAKASHI MURAKAMI #13961',
+            description: expect.any(String),
+          }),
+        };
+
         async function getAuthCookie() {
-          const wallet = ethers.Wallet.createRandom();
           const result = await login(app.getHttpServer(), wallet, prisma);
           return result.get('Set-Cookie');
         }
@@ -386,7 +419,32 @@ describe('AppController (e2e)', () => {
               .set('Cookie', await getAuthCookie())
               .expect(200);
 
-            expect(result.body).toEqual(['sdfs']);
+            expect(result.body).toEqual([expectedNft]);
+          });
+        });
+
+        describe('for walletAddress', () => {
+          it('should be a return data', async () => {
+            await prisma.nFT.create({
+              data: {
+                contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
+                tokenId: 13961,
+              },
+            });
+            await prisma.trackedNft.create({
+              data: {
+                walletAddress: wallet.address,
+                contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
+                tokenId: 13961,
+              },
+            });
+
+            const result = await request(app.getHttpServer())
+              .get('/v2/nft/tracked-data?walletAddress=' + wallet.address)
+              .set('Cookie', await getAuthCookie())
+              .expect(200);
+
+            expect(result.body).toEqual([expectedNft]);
           });
         });
       });

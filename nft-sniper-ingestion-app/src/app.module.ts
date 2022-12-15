@@ -87,7 +87,7 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
 export class AppModule {
   constructor(@Inject(CACHE_MANAGER) private readonly cacheManager: any) {}
 
-  async onModuleDestroy() {
-    return this.cacheManager.store.client.shutdown();
-  }
+  // async onModuleDestroy() {
+  //   return this.cacheManager.store.client.shutdown();
+  // }
 }
