@@ -64,6 +64,54 @@ describe('AppController (e2e)', () => {
       .expect('Hello World!');
   });
 
+  describe('/tracked-nfts (GET)', () => {
+    const wallet = ethers.Wallet.createRandom();
+    const contractAddress = ethers.utils.getAddress(
+      '0xc7e4d1dfb2ffda31f27c6047479dfa7998a07d47',
+    );
+    beforeEach(async () => {
+      await prisma.$transaction([
+        prisma.nFT.create({
+          data: {
+            contractAddress,
+            tokenId: 1234,
+          },
+        }),
+        prisma.trackedNft.upsert({
+          where: {
+            contractAddress_tokenId_walletAddress: {
+              walletAddress: wallet.address,
+              contractAddress,
+              tokenId: 1234,
+            },
+          },
+          create: {
+            walletAddress: wallet.address,
+            contractAddress,
+            tokenId: 1234,
+          },
+          update: {},
+        }),
+      ]);
+    });
+
+    it('should return all tracked nfts', async () => {
+      const result = await request(app.getHttpServer())
+        .get('/tracked-nft/all')
+        .expect(200);
+
+      expect(result.body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            contractAddress,
+            tokenId: 1234,
+            walletAddress: wallet.address,
+          }),
+        ]),
+      );
+    });
+  });
+
   describe('/auth/challenge (POST)', () => {
     it('should be OK and return valid nonce', async () => {
       const result = await request(app.getHttpServer())
