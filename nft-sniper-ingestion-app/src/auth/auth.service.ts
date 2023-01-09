@@ -3,6 +3,13 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { SiweMessage } from 'siwe';
 import { SiweUser } from '@prisma/client';
+import { z } from 'zod';
+
+const envSchema = z.object({
+  WEB_APP_API_KEY: z.string(),
+});
+
+const { WEB_APP_API_KEY } = envSchema.parse(process.env);
 
 @Injectable()
 export class AuthService {
@@ -33,6 +40,19 @@ export class AuthService {
       access_token: token,
     }).finally(() => {
       this.afterLogin(user);
+    });
+  }
+
+  async discordLogin(user: { discordId: string }) {
+    console.log(user);
+    const payload = { discordId: user?.discordId };
+
+    if (!user.discordId) throw new Error('Discord ID is required');
+
+    const token = this.jwtService.sign(payload);
+
+    return Promise.resolve({
+      access_token: token,
     });
   }
 
@@ -77,5 +97,9 @@ export class AuthService {
       chainId: 1,
       nonce,
     });
+  }
+
+  validateApiKey(apiKey: string) {
+    return apiKey === WEB_APP_API_KEY;
   }
 }

@@ -5,6 +5,7 @@ import {
   Logger,
   Post,
   Query,
+  UseGuards,
   Version,
 } from '@nestjs/common';
 import { NftService } from './nft.service';
@@ -14,8 +15,10 @@ import { GetTrackedDataForWalletDto } from './get-tracked-data-for-wallet.dto';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { NftPayload } from './types';
 import { NftServiceV2 } from './nft.service.v2';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('nft')
+@UseGuards(AuthGuard(['jwt']))
 export class NftController {
   logger = new Logger(NftController.name);
 
@@ -41,6 +44,7 @@ export class NftController {
       walletAddress: string;
     },
   ): Promise<DemoNftPayload> {
+    console.log(payload);
     return this.service.getNftDataForWallet(payload.walletAddress);
   }
 

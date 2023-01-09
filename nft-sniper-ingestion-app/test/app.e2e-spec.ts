@@ -8,6 +8,7 @@ import { WALLET_ALLOW_LIST } from '../src/constants';
 import { ethers } from 'ethers';
 import { fetchAccessToken, login } from './utils';
 import { enhanceApp } from '../src/utils';
+import { cloneDeep } from 'lodash/fp';
 
 jest.setTimeout(20000);
 
@@ -416,8 +417,69 @@ describe('AppController (e2e)', () => {
       });
     }
 
+    describe('with api key', () => {
+      it.only('should be able to login', async () => {
+        const result = await request(app.getHttpServer())
+          .post('/auth/discord-login')
+          .set('api-key', 'test-api-key')
+          .send({
+            discordID: '12345',
+          })
+          .expect(201);
+
+        console.log(result.headers);
+
+        expect(result.body).toEqual('');
+      });
+    });
+
     describe('/nft/v2/tracked-data (GET)', () => {
-      describe('without api authentication', () => {
+      const expectedNft = {
+        contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
+        tokenId: 13961,
+        offers: [
+          expect.objectContaining({
+            expiresAt: expect.any(String),
+            priceAmount: expect.any(String),
+            priceCurrency: expect.any(String),
+            actualDate: expect.any(String),
+          }),
+        ],
+        historicalPrices: expect.arrayContaining([
+          expect.objectContaining({
+            priceAmount: expect.any(String),
+            priceCurrency: expect.any(String),
+            actualDate: expect.any(String),
+          }),
+        ]),
+        lastSale: expect.objectContaining({
+          fillSource: 'opensea.io',
+          timestamp: 1652823463,
+          price: {
+            amount: {
+              decimal: 14.35,
+              native: 14.35,
+              raw: '14350000000000000000',
+              usd: 29071.50282,
+            },
+            currency: {
+              contract: '0x0000000000000000000000000000000000000000',
+              decimals: 18,
+              name: 'Ether',
+              symbol: 'ETH',
+            },
+          },
+        }),
+        metadata: expect.objectContaining({
+          imageUrl: expect.stringContaining(
+            'https://api.reservoir.tools/assets',
+          ),
+          title: 'CLONE X - X TAKASHI MURAKAMI #13961',
+          description: expect.any(String),
+        }),
+      };
+
+      describe('without jwt authentication', () => {
         it('should be a 401: Unauthorized', () => {
           return request(app.getHttpServer())
             .get('/v2/nft/tracked-data?walletAddress=bad_address')
@@ -425,53 +487,8 @@ describe('AppController (e2e)', () => {
         });
       });
 
-      describe('with api authentication', () => {
+      describe('with jwt authentication', () => {
         const wallet = ethers.Wallet.createRandom();
-
-        const expectedNft = {
-          contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
-          tokenId: 13961,
-          offers: [
-            expect.objectContaining({
-              expiresAt: expect.any(String),
-              priceAmount: expect.any(String),
-              priceCurrency: expect.any(String),
-              actualDate: expect.any(String),
-            }),
-          ],
-          historicalPrices: expect.arrayContaining([
-            expect.objectContaining({
-              priceAmount: expect.any(String),
-              priceCurrency: expect.any(String),
-              actualDate: expect.any(String),
-            }),
-          ]),
-          lastSale: expect.objectContaining({
-            fillSource: 'opensea.io',
-            timestamp: 1652823463,
-            price: {
-              amount: {
-                decimal: 14.35,
-                native: 14.35,
-                raw: '14350000000000000000',
-                usd: 29071.50282,
-              },
-              currency: {
-                contract: '0x0000000000000000000000000000000000000000',
-                decimals: 18,
-                name: 'Ether',
-                symbol: 'ETH',
-              },
-            },
-          }),
-          metadata: expect.objectContaining({
-            imageUrl: expect.stringContaining(
-              'https://api.reservoir.tools/assets',
-            ),
-            title: 'CLONE X - X TAKASHI MURAKAMI #13961',
-            description: expect.any(String),
-          }),
-        };
 
         async function getAuthCookie() {
           const result = await login(app.getHttpServer(), wallet, prisma);

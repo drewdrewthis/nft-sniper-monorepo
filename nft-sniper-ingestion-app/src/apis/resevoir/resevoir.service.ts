@@ -143,7 +143,7 @@ export class ResevoirService {
         })
         .then((response) => {
           const { data } = response;
-          this.logger.log('Received token sales', { token, data });
+          this.logger.log('Token sales data', { token, data });
           return data;
         });
 

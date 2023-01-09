@@ -6,12 +6,14 @@ import {
   Post,
   UseGuards,
   Res,
+  Body,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { Public } from './auth/constants';
 import { Response } from 'express';
+import { ApiKeyAuthGuard } from './auth/apikey-auth.guard';
 
 const ACCESS_TOKEN_COOKIE_KEY = 'alpha_sniper_access_token';
 const ACCESS_TOKEN_EXPIRATION_COOKIE_KEY =
@@ -63,6 +65,32 @@ export class AppController {
     );
 
     return result;
+  }
+
+  @Public()
+  @UseGuards(ApiKeyAuthGuard)
+  @Post('auth/discord-login')
+  async apiKeyLogin(
+    @Body() body: any,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const result = await this.authService.discordLogin(body);
+    const expires = extractExpirationDateFromJWT(result.access_token);
+
+    response.cookie(ACCESS_TOKEN_COOKIE_KEY, result.access_token, {
+      httpOnly: true,
+      secure: true,
+      expires,
+      signed: true,
+    });
+    response.cookie(ACCESS_TOKEN_EXPIRATION_COOKIE_KEY, expires.getTime(), {
+      expires,
+    });
+
+    return {
+      ...result,
+      expires,
+    };
   }
 
   @Post('auth/logout')

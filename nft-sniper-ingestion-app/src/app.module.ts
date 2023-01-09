@@ -79,10 +79,10 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
     BullmqService,
     X2y2Service,
     ConfigService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: JwtAuthGuard,
+    // },
     UsersService,
   ],
 })

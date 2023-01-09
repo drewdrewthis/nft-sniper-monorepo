@@ -1,9 +1,11 @@
-import { Controller, Get, Logger } from '@nestjs/common';
+import { Controller, Get, Logger, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { DEMO_NFTS } from '../constants';
 import { DemoService } from './demo.service';
 import { DemoNftPayload } from './types';
 
 @Controller('demo')
+@UseGuards(AuthGuard(['jwt', 'api-key']))
 export class DemoController {
   logger = new Logger(DemoController.name);
 
