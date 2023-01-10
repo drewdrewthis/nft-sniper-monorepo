@@ -1,4 +1,3 @@
-import { HistoricalNftOffer, HistoricalNftPrice } from '@prisma/client';
 export * from './alchemy';
 export * from './scheduler';
 

@@ -105,7 +105,7 @@ export class ResevoirService {
         });
 
     const key = JSON.stringify({
-      ...token,
+      resevoirToken,
       url,
     });
 
@@ -143,12 +143,12 @@ export class ResevoirService {
         })
         .then((response) => {
           const { data } = response;
-          this.logger.log('Received token sales', { token, data });
+          this.logger.log('Token sales data', { token, data });
           return data;
         });
 
     const key = JSON.stringify({
-      ...token,
+      resevoirToken,
       url,
     });
 
@@ -235,7 +235,7 @@ export class ResevoirService {
         });
 
     const key = JSON.stringify({
-      ...tokens,
+      resevoirTokens,
       url,
     });
 
@@ -271,7 +271,7 @@ export class ResevoirService {
         });
 
     const key = JSON.stringify({
-      ...token,
+      resevoirToken,
       url,
     });
 
@@ -280,7 +280,7 @@ export class ResevoirService {
 
   // LISTINGS
   async fetchLowestListings(tokens: Token[]) {
-    const hightestListingsByToken: Record<
+    const lowestListingByToken: Record<
       string,
       | Required<
           Awaited<ReturnType<typeof this.fetchListingsForToken>>
@@ -290,13 +290,12 @@ export class ResevoirService {
 
     for (const token of tokens) {
       const tokenKey = buildTokenKey(token);
-      const listings = (
-        await this.fetchListingsForToken(token)
-      )?.orders?.reverse()[0];
-      hightestListingsByToken[tokenKey] = listings;
+      const listings = ((await this.fetchListingsForToken(token))?.orders ||
+        [])[0];
+      lowestListingByToken[tokenKey] = listings;
     }
 
-    return hightestListingsByToken;
+    return lowestListingByToken;
   }
 
   async fetchListingsForTokens(tokens: Token[]) {
@@ -324,7 +323,7 @@ export class ResevoirService {
       includeRawData: 'false',
       normalizeRoyalties: 'false',
       sortBy: 'price',
-      limit: '50',
+      limit: '1',
     };
 
     const makeCall = () =>
@@ -340,7 +339,7 @@ export class ResevoirService {
         });
 
     const key = JSON.stringify({
-      ...token,
+      resevoirToken,
       url,
     });
 
@@ -359,28 +358,25 @@ export class ResevoirService {
 
     // If no value, must wait for data
     if (!value) {
-      return fetchFn()
-        .then((data) => {
-          this.cacheData(key, data);
-          return data;
-        })
-        .catch((e) => {
-          this.logger.error(e);
-          throw e;
-        });
+      const data = await fetchFn().catch((e) => {
+        this.logger.error(e);
+        throw e;
+      });
+
+      await this.cacheData(key, data);
+      return data;
     }
 
     // If value, but should refetch -- fetch async but return value sync
     if (await this.shouldRefetchKey(key)) {
-      fetchFn()
-        .then((data) => {
-          this.cacheData(key, data);
-          return data;
-        })
-        .catch((e) => {
-          this.logger.error(e);
-          throw e;
-        });
+      const data = await fetchFn().catch((e) => {
+        this.logger.error(e);
+        throw e;
+      });
+
+      await this.cacheData(key, data);
+
+      return data;
     }
 
     // Return value sync
@@ -388,8 +384,10 @@ export class ResevoirService {
   }
 
   async cacheData(key: string, data: unknown) {
-    this.cacheManager.set(key, data, 0);
-    this.cacheManager.set(this.getCreatedAtKey(key), Date.now());
+    await this.cacheManager.set(key, data, 0);
+    const createdAtKey = this.getCreatedAtKey(key);
+    console.log(createdAtKey);
+    await this.cacheManager.set(createdAtKey, Date.now());
   }
 
   static KEY_RETENTION_MS = 60000;

@@ -24,7 +24,6 @@ import endpoints from './config/endpoints';
 import { NftModule } from './nft/nft.module';
 import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft-offer.service';
 import { ResevoirModule } from './apis/resevoir/resevoir.module';
-import { DemoModule } from './demo/demo.module';
 import { redisStore } from 'cache-manager-ioredis-yet';
 import type { RedisOptions } from 'ioredis';
 import { WalletAllowListModule } from './wallet-allow-list/wallet-allow-list.module';
@@ -34,6 +33,7 @@ import { UsersModule } from './users/users.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { UsersService } from './users/users.service';
+import { TrackedNftModule } from './tracked-nft/tracked-nft.module';
 
 const { REDIS_HOST, REDIS_PORT } = process.env;
 
@@ -62,11 +62,11 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
     }),
     NftModule,
     ResevoirModule,
-    DemoModule,
     ConfigModule,
     WalletAllowListModule,
     AuthModule,
     UsersModule,
+    TrackedNftModule,
   ],
   controllers: [AppController],
   providers: [
@@ -77,17 +77,13 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
     BullmqService,
     X2y2Service,
     ConfigService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: JwtAuthGuard,
+    // },
     UsersService,
   ],
 })
 export class AppModule {
   constructor(@Inject(CACHE_MANAGER) private readonly cacheManager: any) {}
-
-  // async onModuleDestroy() {
-  //   return this.cacheManager.store.client.shutdown();
-  // }
 }

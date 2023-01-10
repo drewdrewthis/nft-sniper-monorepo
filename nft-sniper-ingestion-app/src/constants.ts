@@ -31,6 +31,14 @@ export const DEMO_NFTS = [
     contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
     tokenId: 13961,
   },
+  {
+    contractAddress: '0x231d3559aa848bf10366fb9868590f01d34bf240',
+    tokenId: 4070,
+  },
+  {
+    contractAddress: '0x231d3559aa848bf10366fb9868590f01d34bf240',
+    tokenId: 7284,
+  },
 ];
 
 export const WALLET_ALLOW_LIST = [
