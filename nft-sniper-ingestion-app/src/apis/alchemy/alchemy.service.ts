@@ -49,7 +49,7 @@ export class AlchemyService {
       return value;
     }
 
-    console.log('Fetching token metadata from Alchemy', tokens);
+    this.logger.log('Fetching token metadata from Alchemy', tokens);
 
     const data = await this.httpService.axiosRef
       .request<Alchemy.NftMetadata[]>(options)

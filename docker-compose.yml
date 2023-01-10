@@ -22,7 +22,7 @@ services:
       - CRAWLER_SERVER_CRAWL_ENDPOINT=http://nft-s-LoadB-1KDIVO32FBA42-623d747c98bbc393.elb.us-east-1.amazonaws.com:3001/crawl
       - OPENSEA_SCHEDULER_FREQUENCY_MS=0
       - X2Y2_SCHEDULER_FREQUENCY_MS=0
-      - MAX_TRACKABLE_TOKEN_COUNT=10
+      - MAX_TRACKABLE_TOKEN_COUNT=25
       - GIT_SHA=${GIT_SHA}
     depends_on:
       - redis-server

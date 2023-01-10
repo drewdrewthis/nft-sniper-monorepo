@@ -21,10 +21,7 @@ export class HistoricalNftOfferController {
   }
 
   @Get('/current')
-  async getLatestListingPrice(
-    @Query()
-    options: {},
-  ) {
+  async getLatestListingPrice() {
     return this.service.getAllLastestOffers();
   }
 }
