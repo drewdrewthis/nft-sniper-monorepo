@@ -105,7 +105,7 @@ export class ResevoirService {
         });
 
     const key = JSON.stringify({
-      ...token,
+      resevoirToken,
       url,
     });
 
@@ -148,7 +148,7 @@ export class ResevoirService {
         });
 
     const key = JSON.stringify({
-      ...token,
+      resevoirToken,
       url,
     });
 
@@ -235,7 +235,7 @@ export class ResevoirService {
         });
 
     const key = JSON.stringify({
-      ...tokens,
+      resevoirTokens,
       url,
     });
 
@@ -271,7 +271,7 @@ export class ResevoirService {
         });
 
     const key = JSON.stringify({
-      ...token,
+      resevoirToken,
       url,
     });
 
@@ -339,7 +339,7 @@ export class ResevoirService {
         });
 
     const key = JSON.stringify({
-      ...token,
+      resevoirToken,
       url,
     });
 
@@ -358,28 +358,25 @@ export class ResevoirService {
 
     // If no value, must wait for data
     if (!value) {
-      return fetchFn()
-        .then((data) => {
-          this.cacheData(key, data);
-          return data;
-        })
-        .catch((e) => {
-          this.logger.error(e);
-          throw e;
-        });
+      const data = await fetchFn().catch((e) => {
+        this.logger.error(e);
+        throw e;
+      });
+
+      await this.cacheData(key, data);
+      return data;
     }
 
     // If value, but should refetch -- fetch async but return value sync
     if (await this.shouldRefetchKey(key)) {
-      fetchFn()
-        .then((data) => {
-          this.cacheData(key, data);
-          return data;
-        })
-        .catch((e) => {
-          this.logger.error(e);
-          throw e;
-        });
+      const data = await fetchFn().catch((e) => {
+        this.logger.error(e);
+        throw e;
+      });
+
+      await this.cacheData(key, data);
+
+      return data;
     }
 
     // Return value sync
@@ -387,8 +384,10 @@ export class ResevoirService {
   }
 
   async cacheData(key: string, data: unknown) {
-    this.cacheManager.set(key, data, 0);
-    this.cacheManager.set(this.getCreatedAtKey(key), Date.now());
+    await this.cacheManager.set(key, data, 0);
+    const createdAtKey = this.getCreatedAtKey(key);
+    console.log(createdAtKey);
+    await this.cacheManager.set(createdAtKey, Date.now());
   }
 
   static KEY_RETENTION_MS = 60000;

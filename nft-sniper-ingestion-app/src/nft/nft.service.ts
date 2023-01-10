@@ -1,7 +1,6 @@
 import * as ethers from 'ethers';
 import { AlchemyService } from '../apis/alchemy/alchemy.service';
 import { ConfigService } from '../config/config.service';
-import { DemoService } from '../demo/demo.service';
 import { HistoricalNftOfferService } from '../historical-nft-offer/historical-nft-offer.service';
 import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { NFT } from '@prisma/client';
@@ -19,7 +18,6 @@ export class NftService {
     private readonly prisma: PrismaService,
     private readonly alchemy: AlchemyService,
     private readonly historialOffersService: HistoricalNftOfferService,
-    private readonly demoService: DemoService,
     private readonly configService: ConfigService,
   ) {}
 
@@ -51,22 +49,6 @@ export class NftService {
         },
       },
     });
-  }
-
-  /**
-   * Get all data for the nfts associated with this wallet
-   * @param walletAddress
-   */
-  async getNftDataForWallet(walletAddress: string) {
-    const trackedNfts = await this.getTrackedNftsForWallet(walletAddress);
-    return this.demoService.getNftDemoData(trackedNfts);
-  }
-
-  /**
-   * Get all data for the nfts for the dmeo
-   */
-  async getNftDataForDemo() {
-    return this.demoService.getNftDemoData(DEMO_NFTS);
   }
 
   /** Deprecated */

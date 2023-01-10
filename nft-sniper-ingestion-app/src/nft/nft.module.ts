@@ -3,7 +3,6 @@ import { NftController } from './nft.controller';
 import { HttpModule } from '@nestjs/axios';
 import { NftService } from './nft.service';
 import { ResevoirModule } from '../apis/resevoir/resevoir.module';
-import { DemoModule } from '../demo/demo.module';
 import { AlchemyModule } from '../apis/alchemy/alchemy.module';
 import { PrismaModule } from '../prisma/prisma.module';
 import { HistoricalNftOfferModule } from '../historical-nft-offer/historical-nft-offer.module';
@@ -14,7 +13,6 @@ import { NftServiceV2 } from './nft.service.v2';
   imports: [
     HttpModule,
     ResevoirModule,
-    DemoModule,
     AlchemyModule,
     PrismaModule,
     HistoricalNftOfferModule,

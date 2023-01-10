@@ -44,7 +44,6 @@ export class AuthService {
   }
 
   async discordLogin(user: { discordId: string }) {
-    console.log(user);
     const payload = { discordId: user?.discordId };
 
     if (!user.discordId) throw new Error('Discord ID is required');

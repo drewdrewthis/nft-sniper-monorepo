@@ -24,7 +24,6 @@ import endpoints from './config/endpoints';
 import { NftModule } from './nft/nft.module';
 import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft-offer.service';
 import { ResevoirModule } from './apis/resevoir/resevoir.module';
-import { DemoModule } from './demo/demo.module';
 import { redisStore } from 'cache-manager-ioredis-yet';
 import type { RedisOptions } from 'ioredis';
 import { WalletAllowListModule } from './wallet-allow-list/wallet-allow-list.module';
@@ -63,7 +62,6 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
     }),
     NftModule,
     ResevoirModule,
-    DemoModule,
     ConfigModule,
     WalletAllowListModule,
     AuthModule,
@@ -88,8 +86,4 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
 })
 export class AppModule {
   constructor(@Inject(CACHE_MANAGER) private readonly cacheManager: any) {}
-
-  // async onModuleDestroy() {
-  //   return this.cacheManager.store.client.shutdown();
-  // }
 }

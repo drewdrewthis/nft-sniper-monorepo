@@ -8,7 +8,6 @@ import { WALLET_ALLOW_LIST } from '../src/constants';
 import { ethers } from 'ethers';
 import { fetchAccessToken, login } from './utils';
 import { enhanceApp } from '../src/utils';
-import { cloneDeep } from 'lodash/fp';
 
 jest.setTimeout(20000);
 
@@ -16,10 +15,12 @@ jest.mock('../src/constants.ts', () => {
   const randomAddress = '0xb7028A46433AA534D5b8882658Cc6473B04bD036';
 
   return {
+    // This will occasionally have to be updated so that we
+    // test a token with all the data we need
     DEMO_NFTS: [
       {
-        contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
-        tokenId: 13961,
+        contractAddress: '0x231d3559aa848bf10366fb9868590f01d34bf240',
+        tokenId: 4070,
       },
     ],
     WALLET_ALLOW_LIST: [randomAddress],
@@ -170,54 +171,6 @@ describe('AppController (e2e)', () => {
       expect(parsed['alpha_sniper_access_token']).toEqual(
         expect.stringContaining('ey'),
       );
-    });
-  });
-
-  describe('/demo/nft-data (GET)', () => {
-    describe('without valid token', () => {
-      it('should be UNAUTHORIZED', async () => {
-        return request(app.getHttpServer())
-          .get('/demo/nft-data')
-          .set('Authorization', `Bearer bad-token`)
-          .expect(401);
-      });
-    });
-
-    describe('with valid cookie', () => {
-      it('should be OK and return token with valid login', async () => {
-        const wallet = ethers.Wallet.createRandom();
-        const result = await login(app.getHttpServer(), wallet, prisma);
-        const cookies = result.get('Set-Cookie');
-
-        return (
-          request(app.getHttpServer())
-            .get('/demo/nft-data')
-            .set('Cookie', cookies)
-            .expect(200)
-            // This returns an empty array because there aren't any tokens to fetch
-            .expect([])
-        );
-      });
-    });
-
-    describe('with valid token', () => {
-      it('should be OK and return token with valid login', async () => {
-        const wallet = ethers.Wallet.createRandom();
-        const { access_token } = await fetchAccessToken(
-          app.getHttpServer(),
-          wallet,
-          prisma,
-        );
-
-        return (
-          request(app.getHttpServer())
-            .get('/demo/nft-data')
-            .set('Authorization', `Bearer ${access_token}`)
-            .expect(200)
-            // This returns an empty array because there aren't any tokens to fetch
-            .expect([])
-        );
-      });
     });
   });
 
@@ -418,25 +371,26 @@ describe('AppController (e2e)', () => {
     }
 
     describe('with api key', () => {
-      it.only('should be able to login', async () => {
+      it('should be able to login', async () => {
         const result = await request(app.getHttpServer())
           .post('/auth/discord-login')
           .set('api-key', 'test-api-key')
           .send({
-            discordID: '12345',
+            discordId: '12345',
           })
           .expect(201);
 
-        console.log(result.headers);
-
-        expect(result.body).toEqual('');
+        expect(result.body).toMatchObject({
+          access_token: expect.stringContaining('ey'),
+          expires: expect.any(String),
+        });
       });
     });
 
     describe('/nft/v2/tracked-data (GET)', () => {
       const expectedNft = {
-        contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
-        tokenId: 13961,
+        contractAddress: '0x231d3559aa848bf10366fb9868590f01d34bf240',
+        tokenId: 4070,
         offers: [
           expect.objectContaining({
             expiresAt: expect.any(String),
@@ -453,14 +407,14 @@ describe('AppController (e2e)', () => {
           }),
         ]),
         lastSale: expect.objectContaining({
-          fillSource: 'opensea.io',
-          timestamp: 1652823463,
+          fillSource: expect.any(String),
+          timestamp: expect.any(Number),
           price: {
             amount: {
-              decimal: 14.35,
-              native: 14.35,
-              raw: '14350000000000000000',
-              usd: 29071.50282,
+              decimal: expect.any(Number),
+              native: expect.any(Number),
+              raw: expect.any(String),
+              usd: expect.any(Number),
             },
             currency: {
               contract: '0x0000000000000000000000000000000000000000',
@@ -474,7 +428,7 @@ describe('AppController (e2e)', () => {
           imageUrl: expect.stringContaining(
             'https://api.reservoir.tools/assets',
           ),
-          title: 'CLONE X - X TAKASHI MURAKAMI #13961',
+          title: expect.any(String),
           description: expect.any(String),
         }),
       };
@@ -487,7 +441,31 @@ describe('AppController (e2e)', () => {
         });
       });
 
-      describe('with jwt authentication', () => {
+      describe('with unsigned jwt authentication', () => {
+        async function getToken() {
+          const result = await request(app.getHttpServer())
+            .post('/auth/discord-login')
+            .set('api-key', 'test-api-key')
+            .send({
+              discordId: '12345',
+            })
+            .expect(201);
+          return result.body.access_token;
+        }
+
+        describe('for demo', () => {
+          it('should be a return data', async () => {
+            const result = await request(app.getHttpServer())
+              .get('/v2/nft/tracked-data?walletAddress=demo')
+              .set('Cookie', [`alpha_sniper_access_token=${await getToken()}`])
+              .expect(200);
+
+            expect(result.body).toEqual([expectedNft]);
+          });
+        });
+      });
+
+      describe('with signed jwt authentication', () => {
         const wallet = ethers.Wallet.createRandom();
 
         async function getAuthCookie() {
@@ -510,15 +488,15 @@ describe('AppController (e2e)', () => {
           it('should be a return data', async () => {
             await prisma.nFT.create({
               data: {
-                contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
-                tokenId: 13961,
+                contractAddress: '0x231d3559aa848bf10366fb9868590f01d34bf240',
+                tokenId: 4070,
               },
             });
             await prisma.trackedNft.create({
               data: {
                 walletAddress: wallet.address,
-                contractAddress: '0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b',
-                tokenId: 13961,
+                contractAddress: '0x231d3559aa848bf10366fb9868590f01d34bf240',
+                tokenId: 4070,
               },
             });
 
