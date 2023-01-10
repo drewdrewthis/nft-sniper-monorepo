@@ -6,9 +6,7 @@ import { enhanceApp } from './utils';
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: ['error', 'warn', 'debug'],
-  });
+  const app = await NestFactory.create(AppModule);
   app.enableCors({
     // prettier-ignore
     origin: [
