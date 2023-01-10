@@ -16,8 +16,8 @@ GIT_TAG="aws-deploy"
 echo "Committing changes"
 git add . && git commit -m "Deploying to AWS ECS"
 
-echo "Committing changes"
-git add . && git commit -m "Deploying to AWS ECS"
+echo "Pushing changes"
+git push
 
 echo "Creating tag ${GIT_TAG}"
 git tag -a ${GIT_TAG}
