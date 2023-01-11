@@ -33,7 +33,11 @@ export class TrackedNftService {
         },
       },
       include: {
-        trackedNft2s: true,
+        trackedNft2s: {
+          where: {
+            isActive: true,
+          },
+        },
       },
     });
 

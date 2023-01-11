@@ -45,6 +45,16 @@ export async function createTrackedNfts(args: { app: INestApplication }) {
     }),
   );
 
+  // Deactivate one of the tracked NFTs
+  await prisma.trackedNft2.update({
+    where: {
+      id: trackedNfts[0].id,
+    },
+    data: {
+      isActive: false,
+    },
+  });
+
   // Create wallets
   await prisma.wallet.create({
     data: {

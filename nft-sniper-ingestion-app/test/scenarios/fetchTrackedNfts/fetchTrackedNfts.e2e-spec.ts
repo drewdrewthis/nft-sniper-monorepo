@@ -34,9 +34,23 @@ describe('Scenario: Fetching tracked NFTs (e2e)', () => {
         userUuid: user.uuid,
       });
 
-      expect(results?.[0].tokenId).toBe(nfts[0].tokenId);
-      expect(results?.[0].tokenId).toBe(trackedNfts[0].tokenId);
-      expect(results).toHaveLength(3);
+      expect(results?.[0].tokenId).toBe(nfts[1].tokenId);
+      expect(results?.[0].tokenId).toBe(trackedNfts[1].tokenId);
+      expect(results).toHaveLength(2);
+    });
+
+    it('should return only active nfts', async () => {
+      const { user, nfts, trackedNfts } = await createTrackedNfts({ app });
+
+      const results = await fetchTrackedNftsUserUUid({
+        app,
+        userUuid: user.uuid,
+      });
+
+      expect(results?.[0].tokenId).toBe(nfts[1].tokenId);
+      expect(results?.[0].tokenId).toBe(trackedNfts[1].tokenId);
+      expect(trackedNfts).toHaveLength(3);
+      expect(results).toHaveLength(2);
     });
   });
 
@@ -52,9 +66,9 @@ describe('Scenario: Fetching tracked NFTs (e2e)', () => {
         walletAddress,
       });
 
-      expect(results?.[0].tokenId).toBe(nfts[0].tokenId);
-      expect(results?.[0].tokenId).toBe(trackedNfts[0].tokenId);
-      expect(results).toHaveLength(3);
+      expect(results?.[0].tokenId).toBe(nfts[1].tokenId);
+      expect(results?.[0].tokenId).toBe(trackedNfts[1].tokenId);
+      expect(results).toHaveLength(2);
     });
   });
 
@@ -70,9 +84,9 @@ describe('Scenario: Fetching tracked NFTs (e2e)', () => {
         discordId,
       });
 
-      expect(results?.[0].tokenId).toBe(nfts[0].tokenId);
-      expect(results?.[0].tokenId).toBe(trackedNfts[0].tokenId);
-      expect(results).toHaveLength(3);
+      expect(results?.[0].tokenId).toBe(nfts[1].tokenId);
+      expect(results?.[0].tokenId).toBe(trackedNfts[1].tokenId);
+      expect(results).toHaveLength(2);
     });
   });
 });
