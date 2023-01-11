@@ -54,11 +54,44 @@ export class TrackedNftService {
       tokenId,
     });
 
-    return this.prisma.trackedNft2.create({
-      data: {
+    return this.prisma.trackedNft2.upsert({
+      where: {
+        nFTId_userUuid: {
+          nFTId: nft.id,
+          userUuid: data.userUuid,
+        },
+      },
+      update: {
+        isActive: true,
+      },
+      create: {
         ...data,
         tokenId,
         nFTId: nft.id,
+      },
+    });
+  }
+
+  async softDelete(data: CreateTrackedNftDto) {
+    const tokenId = Number(data.tokenId);
+
+    const trackedNft = await this.prisma.trackedNft2.findFirst({
+      where: {
+        ...data,
+        tokenId,
+      },
+    });
+
+    if (!trackedNft) {
+      throw new Error('Tracked NFT not found');
+    }
+
+    return this.prisma.trackedNft2.update({
+      where: {
+        id: trackedNft.id,
+      },
+      data: {
+        isActive: false,
       },
     });
   }

@@ -51,6 +51,7 @@ model TrackedNft2 {
   updatedAt       DateTime @updatedAt
   tokenId         Int
   contractAddress String
+  isActive        Boolean  @default(true)
 
   User     User   @relation(fields: [userUuid], references: [uuid])
   userUuid String

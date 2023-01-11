@@ -4,6 +4,7 @@ import { Public } from '../auth/constants';
 import { FindTrackedNftsForUserDto } from './find-tracked-nfts-for-user.dto';
 import { TrackedNftService } from './tracked-nft.service';
 import { CreateTrackedNftDto } from './v2/create-tracked-nft.dto';
+import { RemoveTrackedNftDto } from './v2/remove-tracked-nft.dto';
 
 @UseGuards(ApiKeyAuthGuard)
 @Controller('tracked-nft')
@@ -24,5 +25,10 @@ export class TrackedNftController {
   @Post('add')
   async add(@Body() payload: CreateTrackedNftDto) {
     return this.service.create(payload);
+  }
+
+  @Post('remove')
+  async remove(@Body() payload: RemoveTrackedNftDto) {
+    return this.service.softDelete(payload);
   }
 }

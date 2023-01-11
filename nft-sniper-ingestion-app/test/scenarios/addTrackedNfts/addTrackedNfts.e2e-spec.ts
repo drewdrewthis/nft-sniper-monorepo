@@ -36,6 +36,7 @@ describe('Scenario: Adding tracked NFTs (e2e)', () => {
       expect(result?.tokenId).toBe(1234);
       expect(result?.contractAddress).toBe(contractAddress);
       expect(result?.userUuid).toBe(user.uuid);
+      expect(result?.isActive).toBe(true);
     });
   });
 });
