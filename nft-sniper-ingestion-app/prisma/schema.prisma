@@ -25,10 +25,12 @@ model NFT {
   historicalPrices HistoricalNftPrice[]
   historicalOffers HistoricalNftOffer[]
   TrackedNft       TrackedNft[]
+  TrackedNft2      TrackedNft2[]
 
   @@unique([contractAddress, tokenId])
 }
 
+// Deprecated. Use TrackedNft2 instead
 model TrackedNft {
   id              Int      @id @default(autoincrement())
   createdAt       DateTime @default(now())
@@ -40,6 +42,23 @@ model TrackedNft {
   NFT           NFT    @relation(fields: [contractAddress, tokenId], references: [contractAddress, tokenId])
 
   @@unique([contractAddress, tokenId, walletAddress])
+}
+
+// This model associates NFTs with users that want to track them
+model TrackedNft2 {
+  id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  tokenId         Int
+  contractAddress String
+
+  User     User   @relation(fields: [userUuid], references: [uuid])
+  userUuid String
+
+  NFT   NFT @relation(fields: [nFTId], references: [id])
+  nFTId Int
+
+  @@unique([nFTId, userUuid])
 }
 
 model Marketplace {
@@ -141,6 +160,7 @@ model User {
 
   discordUsers DiscordUser[]
   wallets      Wallet[]
+  trackedNft2s TrackedNft2[]
 }
 
 model Wallet {

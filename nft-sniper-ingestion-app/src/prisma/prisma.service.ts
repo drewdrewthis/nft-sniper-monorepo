@@ -77,9 +77,10 @@ export class PrismaService extends PrismaClient {
       this.walletAllowList.deleteMany(),
       this.siweUser.deleteMany(),
       this.trackedNft.deleteMany(),
-      this.nFT.deleteMany(),
       this.discordUser.deleteMany(),
       this.wallet.deleteMany(),
+      this.trackedNft2.deleteMany(),
+      this.nFT.deleteMany(),
       this.user.deleteMany(),
     ]);
   }

@@ -8,8 +8,6 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findOrCreate(walletAddress: string) {
-    // await this.validateAddress(walletAddress);
-
     const nonce = generateNonce();
 
     return this.prisma.siweUser.upsert({

@@ -53,6 +53,17 @@ export class UserService {
     });
   }
 
+  async findBy(args: {
+    walletAddress?: string;
+    discordId?: string;
+    uuid?: string;
+  }) {
+    const { walletAddress, discordId, uuid } = args;
+    if (uuid) return this.findOne(uuid);
+    if (discordId) return this.findUserByDiscordId(discordId);
+    if (walletAddress) return this.findUserByWalletAddress(walletAddress);
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
