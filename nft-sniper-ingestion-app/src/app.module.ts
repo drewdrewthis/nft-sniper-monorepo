@@ -34,6 +34,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { UsersService } from './users/users.service';
 import { TrackedNftModule } from './tracked-nft/tracked-nft.module';
 import { UserModule } from './user/user.module';
+import { WalletModule } from './wallet/wallet.module';
 import configuration from './config/configuration';
 
 const { REDIS_HOST, REDIS_PORT } = process.env;
@@ -69,6 +70,7 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
     UsersModule,
     TrackedNftModule,
     UserModule,
+    WalletModule,
   ],
   controllers: [AppController],
   providers: [

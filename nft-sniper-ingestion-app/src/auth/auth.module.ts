@@ -11,6 +11,7 @@ import { ApiKeyStrategy } from './api-key.strategy';
 import { AuthController } from './auth.controller';
 import { UserService } from '../user/user.service';
 import { ConfigService } from '../config/config.service';
+import { WalletService } from '../wallet/wallet.service';
 
 @Module({
   imports: [
@@ -23,12 +24,13 @@ import { ConfigService } from '../config/config.service';
     PrismaModule,
   ],
   providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy,
     ApiKeyStrategy,
-    UserService,
+    AuthService,
     ConfigService,
+    JwtStrategy,
+    LocalStrategy,
+    UserService,
+    WalletService,
   ],
   exports: [AuthService],
   controllers: [AuthController],

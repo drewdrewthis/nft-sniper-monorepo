@@ -32,10 +32,8 @@ export async function teardown(args: {
 
   try {
     await prisma.cleanDb();
-    console.log('Finished tests.');
     await app.getHttpServer().close();
     app.close();
-    console.log('Finished shutting down');
   } catch (e) {
     console.error(e);
   }
