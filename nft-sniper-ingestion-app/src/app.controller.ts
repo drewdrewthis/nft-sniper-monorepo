@@ -6,14 +6,12 @@ import {
   Post,
   UseGuards,
   Res,
-  Body,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { Public } from './auth/constants';
 import { Response } from 'express';
-import { ApiKeyAuthGuard } from './auth/apikey-auth.guard';
 
 const ACCESS_TOKEN_COOKIE_KEY = 'alpha_sniper_access_token';
 const ACCESS_TOKEN_EXPIRATION_COOKIE_KEY =
@@ -66,7 +64,6 @@ export class AppController {
 
     return result;
   }
-
 
   @Post('auth/logout')
   async logout(@Res({ passthrough: true }) response: Response) {

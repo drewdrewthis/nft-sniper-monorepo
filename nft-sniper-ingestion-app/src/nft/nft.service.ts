@@ -6,7 +6,6 @@ import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { NFT } from '@prisma/client';
 import { PrismaService } from '../prisma';
 import { Token } from '../types';
-import { DEMO_NFTS } from '../constants';
 
 class MaxTrackedTokensReached extends Error {}
 

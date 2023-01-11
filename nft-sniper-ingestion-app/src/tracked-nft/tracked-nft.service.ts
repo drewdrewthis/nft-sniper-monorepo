@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma';
 import { FindTrackedNftsForUserDto } from './find-tracked-nfts-for-user.dto';
+import { CreateTrackedNftDto } from './v2/create-tracked-nft.dto';
+import { NftServiceV2 } from '../nft/nft.service.v2';
 
 @Injectable()
 export class TrackedNftService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly nftService: NftServiceV2,
+  ) {}
 
   async getTrackedNfts() {
     return this.prisma.trackedNft.findMany();
@@ -39,5 +44,22 @@ export class TrackedNftService {
     }
 
     return users[0].trackedNft2s;
+  }
+
+  async create(data: CreateTrackedNftDto) {
+    const tokenId = Number(data.tokenId);
+
+    const nft = await this.nftService.findOrCreate({
+      ...data,
+      tokenId,
+    });
+
+    return this.prisma.trackedNft2.create({
+      data: {
+        ...data,
+        tokenId,
+        nFTId: nft.id,
+      },
+    });
   }
 }

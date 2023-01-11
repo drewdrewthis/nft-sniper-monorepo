@@ -5,6 +5,8 @@ import { Token } from '../types';
 import { ResevoirService } from '../apis/resevoir/resevoir.service';
 import { normalizeMetadata, normalizeOffer, normalizePrice } from './utils';
 import { NftPayload } from './types';
+import { ethers } from 'ethers';
+import { PrismaService } from '../prisma';
 
 @Injectable()
 export class NftServiceV2 {
@@ -13,7 +15,26 @@ export class NftServiceV2 {
   constructor(
     private readonly serviceV1: NftService,
     private readonly resevoir: ResevoirService,
+    private readonly prisma: PrismaService,
   ) {}
+
+  async findOrCreate(payload: { tokenId: number; contractAddress: string }) {
+    const { tokenId, contractAddress } = payload;
+
+    this.logger.log('Received request to add nft', payload);
+    ethers.utils.getAddress(contractAddress);
+
+    return this.prisma.nFT.upsert({
+      where: {
+        contractAddress_tokenId: { contractAddress, tokenId },
+      },
+      create: {
+        tokenId: Number(tokenId),
+        contractAddress,
+      },
+      update: {},
+    });
+  }
 
   /**
    * Get all data for the nfts associated with this wallet
