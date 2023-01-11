@@ -34,6 +34,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { UsersService } from './users/users.service';
 import { TrackedNftModule } from './tracked-nft/tracked-nft.module';
+import { UserModule } from './user/user.module';
 
 const { REDIS_HOST, REDIS_PORT } = process.env;
 
@@ -67,6 +68,7 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
     AuthModule,
     UsersModule,
     TrackedNftModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [

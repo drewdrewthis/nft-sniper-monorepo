@@ -30,14 +30,14 @@ model NFT {
 }
 
 model TrackedNft {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
   tokenId         Int
   contractAddress String
-  walletAddress   String
-  NFT             NFT    @relation(fields: [contractAddress, tokenId], references: [contractAddress, tokenId])
+
+  walletAddress String
+  NFT           NFT    @relation(fields: [contractAddress, tokenId], references: [contractAddress, tokenId])
 
   @@unique([contractAddress, tokenId, walletAddress])
 }
@@ -132,4 +132,29 @@ model SiweUser {
 
   walletAddress String @unique
   nonce         String
+}
+
+model User {
+  uuid      String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  discordUsers DiscordUser[]
+}
+
+model Wallet {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  walletAddress String   @unique
+}
+
+model DiscordUser {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  discordId String   @unique
+
+  User     User   @relation(fields: [userUuid], references: [uuid])
+  userUuid String
 }

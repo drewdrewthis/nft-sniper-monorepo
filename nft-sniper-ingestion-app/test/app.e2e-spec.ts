@@ -48,6 +48,7 @@ describe('AppController (e2e)', () => {
     await prisma.cleanDb();
   });
 
+  
   afterAll(async () => {
     try {
       console.log('Finished tests.');
