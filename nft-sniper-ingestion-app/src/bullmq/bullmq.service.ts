@@ -29,9 +29,8 @@ export class BullmqService {
     private x2yx: X2y2Service,
     private crawlerServerService: CrawlerServerService,
   ) {
-    const redisUrl = `${configService.get('REDIS_HOST')}:${configService.get(
-      'REDIS_PORT',
-    )}`;
+    const { REDIS_HOST, REDIS_PORT } = this.configService.envVars;
+    const redisUrl = `${REDIS_HOST}:${REDIS_PORT}`;
 
     this.redis = new IORedis(redisUrl, {
       maxRetriesPerRequest: null,

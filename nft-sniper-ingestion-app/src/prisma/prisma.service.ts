@@ -78,6 +78,8 @@ export class PrismaService extends PrismaClient {
       this.siweUser.deleteMany(),
       this.trackedNft.deleteMany(),
       this.nFT.deleteMany(),
+      this.discordUser.deleteMany(),
+      this.user.deleteMany(),
     ]);
   }
 }

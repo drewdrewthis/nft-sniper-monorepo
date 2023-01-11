@@ -20,7 +20,6 @@ import { HttpModule } from '@nestjs/axios';
 import { HistoricalNftPriceModule } from './historical-nft-price/historical-nft-price.module';
 import { HistoricalNftOfferModule } from './historical-nft-offer/historical-nft-offer.module';
 import { AlchemyModule } from './apis/alchemy/alchemy.module';
-import endpoints from './config/endpoints';
 import { NftModule } from './nft/nft.module';
 import { HistoricalNftOfferService } from './historical-nft-offer/historical-nft-offer.service';
 import { ResevoirModule } from './apis/resevoir/resevoir.module';
@@ -35,6 +34,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { UsersService } from './users/users.service';
 import { TrackedNftModule } from './tracked-nft/tracked-nft.module';
 import { UserModule } from './user/user.module';
+import configuration from './config/configuration';
 
 const { REDIS_HOST, REDIS_PORT } = process.env;
 
@@ -43,7 +43,7 @@ const { REDIS_HOST, REDIS_PORT } = process.env;
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: schema,
-      load: [endpoints],
+      load: [configuration],
     }),
     PrismaModule,
     OpenseaModule,

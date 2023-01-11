@@ -8,6 +8,9 @@ import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
 import { PrismaModule } from '../prisma/prisma.module';
 import { ApiKeyStrategy } from './api-key.strategy';
+import { AuthController } from './auth.controller';
+import { UserService } from '../user/user.service';
+import { ConfigService } from '../config/config.service';
 
 @Module({
   imports: [
@@ -19,7 +22,15 @@ import { ApiKeyStrategy } from './api-key.strategy';
     }),
     PrismaModule,
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, ApiKeyStrategy],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    ApiKeyStrategy,
+    UserService,
+    ConfigService,
+  ],
   exports: [AuthService],
+  controllers: [AuthController],
 })
 export class AuthModule {}

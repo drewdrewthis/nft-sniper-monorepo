@@ -156,5 +156,5 @@ model DiscordUser {
   discordId String   @unique
 
   User     User   @relation(fields: [userUuid], references: [uuid])
-  userUuid String
+  userUuid String @unique
 }

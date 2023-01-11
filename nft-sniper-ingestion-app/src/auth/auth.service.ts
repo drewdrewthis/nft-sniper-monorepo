@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { SiweMessage } from 'siwe';
 import { SiweUser } from '@prisma/client';
 import { z } from 'zod';
+import { UserService } from '../user/user.service';
 
 const envSchema = z.object({
   WEB_APP_API_KEY: z.string(),
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private userService: UserService,
   ) {}
 
   /** Validate is registered user */
@@ -43,11 +45,13 @@ export class AuthService {
     });
   }
 
-  async discordLogin(user: { discordId: string }) {
-    const payload = { discordId: user?.discordId };
+  async discordLogin(args: { discordId: string }) {
+    const { discordId } = args;
+    if (!discordId) throw new Error('Discord ID is required');
 
-    if (!user.discordId) throw new Error('Discord ID is required');
+    await this.userService.findOrCreateUserByDiscordId(discordId);
 
+    const payload = { discordId };
     const token = this.jwtService.sign(payload);
 
     return Promise.resolve({

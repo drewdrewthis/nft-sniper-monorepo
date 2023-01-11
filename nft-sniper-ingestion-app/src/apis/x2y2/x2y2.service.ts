@@ -1,4 +1,3 @@
-import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { RawAxiosRequestHeaders } from 'axios';
@@ -12,6 +11,7 @@ import {
 import { compact, groupBy } from 'lodash/fp';
 import { normalizeData } from './helpers';
 import { sleep } from '../../utils';
+import { ConfigService } from '../../config/config.service';
 
 @Injectable()
 export class X2y2Service {
@@ -24,11 +24,11 @@ export class X2y2Service {
     private readonly httpService: HttpService,
   ) {
     this.headers = {
-      'X-API-Key': configService.getOrThrow('X2Y2_API_KEY'),
+      'X-API-Key': configService.envVars.X2Y2_API_KEY,
       accept: 'application/json',
     };
 
-    this.endpoint = configService.getOrThrow<string>('X2Y2_API');
+    this.endpoint = configService.getOrThrow('jwt')['X2Y2_API'];
   }
 
   async fetchNormalizedTokenData(tokens: Token[]) {

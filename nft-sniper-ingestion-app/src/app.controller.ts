@@ -67,39 +67,6 @@ export class AppController {
     return result;
   }
 
-  @Public()
-  @UseGuards(ApiKeyAuthGuard)
-  @Post('auth/discord-login')
-  async apiKeyLogin(
-    @Body() body: any,
-    @Res({ passthrough: true }) response: Response,
-  ) {
-    try {
-      const result = await this.authService.discordLogin(body);
-      const expires = extractExpirationDateFromJWT(result.access_token);
-
-      response.cookie(ACCESS_TOKEN_COOKIE_KEY, result.access_token, {
-        httpOnly: true,
-        secure: true,
-        expires,
-        signed: true,
-      });
-
-      response.cookie(ACCESS_TOKEN_EXPIRATION_COOKIE_KEY, expires.getTime(), {
-        expires,
-      });
-
-      // TODO: only return the result.
-      return {
-        ...result,
-        expires,
-      };
-    } catch (err) {
-      this.logger.error('Failed to login with discord id');
-      this.logger.debug(body);
-      throw err;
-    }
-  }
 
   @Post('auth/logout')
   async logout(@Res({ passthrough: true }) response: Response) {

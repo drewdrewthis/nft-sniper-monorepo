@@ -12,7 +12,9 @@ export async function setup() {
 
   const app = moduleFixture.createNestApplication();
   const prisma = app.get(PrismaService);
+
   enhanceApp(app);
+
   await app.init();
   await prisma.cleanDb();
 
