@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { setup, teardown } from '../setup';
+import { setup, teardown } from '../../setup';
 import { INestApplication } from '@nestjs/common';
-import { PrismaService } from '../../src/prisma';
+import { PrismaService } from '../../../src/prisma';
 import {
   registerUserWithDiscordId,
   registerUserWithWalletAddress,
   registerUserWithWalletAddressAndDiscordId,
-} from './regiserUsers';
+} from './utils';
 import { ethers } from 'ethers';
 
 jest.setTimeout(20000);

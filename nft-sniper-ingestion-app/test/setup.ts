@@ -16,7 +16,6 @@ export async function setup() {
   enhanceApp(app);
 
   await app.init();
-  await prisma.cleanDb();
 
   return {
     app,

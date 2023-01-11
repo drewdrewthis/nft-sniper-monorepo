@@ -25,7 +25,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:migrate:postgres": "yarn test:env yarn prisma migrate dev",
-    "test:e2e": "yarn jest --config ./test/jest-e2e.ts"
+    "test:e2e": "yarn jest --runInBand --config ./test/jest-e2e.ts"
   },
   "dependencies": {
     "@bull-board/express": "^4.6.3",

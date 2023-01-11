@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { setup, teardown } from '../setup';
+import { setup, teardown } from '../../setup';
 import { loginWithDiscord } from './loginWithDiscord';
 import { INestApplication } from '@nestjs/common';
-import { PrismaService } from '../../src/prisma';
+import { PrismaService } from '../../../src/prisma';
 
 jest.setTimeout(20000);
 
